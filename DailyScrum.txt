@@ -8,7 +8,7 @@ Project proposal: Simple Jira, a tool used to manage development process
 3. Need assistant
 
 Server Name:
-simplejira..database.windows.net
+simplejira.database.windows.net
 
 Server admin:
 sqladmin
