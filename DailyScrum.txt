@@ -1,0 +1,8 @@
+Day 01: 2020-Dec-17
+1. Done:
+Team members: Khalil Hanna , Ying LUO
+Project proposal: Simple Jira, a tool used to manage development process
+2. Todo:
+*study project requirements
+*design draft version database tables
+3. Need assistant
