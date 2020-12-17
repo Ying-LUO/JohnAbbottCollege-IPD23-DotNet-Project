@@ -13,3 +13,9 @@ D:\JohnAbbottCollege\IPD23Project\Team9SimpleJira\obj\Debug\Team9SimpleJira.cspr
 D:\JohnAbbottCollege\IPD23Project\Team9SimpleJira\obj\Debug\Team9SimpleJira.csproj.CoreCompileInputs.cache
 D:\JohnAbbottCollege\IPD23Project\Team9SimpleJira\obj\Debug\Team9SimpleJira.exe
 D:\JohnAbbottCollege\IPD23Project\Team9SimpleJira\obj\Debug\Team9SimpleJira.pdb
+D:\JohnAbbottCollege\IPD23Project\Team9SimpleJira\bin\Debug\EntityFramework.dll
+D:\JohnAbbottCollege\IPD23Project\Team9SimpleJira\bin\Debug\EntityFramework.SqlServer.dll
+D:\JohnAbbottCollege\IPD23Project\Team9SimpleJira\bin\Debug\EntityFramework.xml
+D:\JohnAbbottCollege\IPD23Project\Team9SimpleJira\bin\Debug\EntityFramework.SqlServer.xml
+D:\JohnAbbottCollege\IPD23Project\Team9SimpleJira\obj\Debug\Team9SimpleJira_Content.g.cs
+D:\JohnAbbottCollege\IPD23Project\Team9SimpleJira\obj\Debug\Team9SimpleJira.csproj.CopyComplete

@@ -26,6 +26,5 @@ namespace Team9SimpleJira
         }
     
         public virtual DbSet<Doctor> Doctors { get; set; }
-        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
     }
 }
