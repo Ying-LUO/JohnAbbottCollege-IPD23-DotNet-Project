@@ -5,6 +5,7 @@ Project proposal: Simple Jira, a tool used to manage development process
 2. Todo:
 *study project requirements
 *design draft version database tables
+*project proposal draft
 3. Need assistant
 
 Server Name:
