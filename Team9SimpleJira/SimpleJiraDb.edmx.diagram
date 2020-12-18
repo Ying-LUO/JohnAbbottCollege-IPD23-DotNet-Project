@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="80fc0c8dabc34b80810eb4cd57feedbb" Name="Diagram1">
+        <EntityTypeShape EntityType="SimpleJiraDBModel.Issue" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleJiraDBModel.Project" Width="1.5" PointX="1.125" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleJiraDBModel.Sprint" Width="1.5" PointX="3.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleJiraDBModel.Team" Width="1.5" PointX="0.875" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleJiraDBModel.User" Width="1.5" PointX="3.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleJiraDBModel.UserStory" Width="1.5" PointX="5.5" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="SimpleJiraDBModel.FK_Issues_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleJiraDBModel.FK_Issues_UserStoryId" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleJiraDBModel.FK_Sprints_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleJiraDBModel.FK_Sprints_Teams" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleJiraDBModel.FK_Users_Teams" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleJiraDBModel.FK_UserStories_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

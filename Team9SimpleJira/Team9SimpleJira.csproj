@@ -67,6 +67,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Issue.cs">
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Issues.xaml.cs">
       <DependentUpon>Issues.xaml</DependentUpon>
     </Compile>
@@ -75,6 +78,9 @@
     </Compile>
     <Compile Include="Person.cs">
       <DependentUpon>SimpleJira.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Project.cs">
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
     </Compile>
     <Compile Include="SimpleJira.Context.cs">
       <AutoGen>True</AutoGen>
@@ -91,15 +97,42 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SimpleJira.edmx</DependentUpon>
     </Compile>
+    <Compile Include="SimpleJiraDb.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleJiraDb.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleJiraDb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleJiraDb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleJiraDb.edmx</DependentUpon>
+    </Compile>
     <Compile Include="SimpleJiraDbContext.cs" />
+    <Compile Include="Sprint.cs">
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Sprints.xaml.cs">
       <DependentUpon>Sprints.xaml</DependentUpon>
     </Compile>
     <Compile Include="SprintsAddEditDlg.xaml.cs">
       <DependentUpon>SprintsAddEditDlg.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Team.cs">
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Users.xaml.cs">
       <DependentUpon>Users.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserStory.cs">
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
     </Compile>
     <Page Include="Issues.xaml">
       <SubType>Designer</SubType>
@@ -164,6 +197,13 @@
     <None Include="SimpleJira.edmx.diagram">
       <DependentUpon>SimpleJira.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="SimpleJiraDb.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SimpleJiraDb.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="SimpleJiraDb.edmx.diagram">
+      <DependentUpon>SimpleJiraDb.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -178,6 +218,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SimpleJira.edmx</DependentUpon>
       <LastGenOutput>SimpleJira.cs</LastGenOutput>
+    </Content>
+    <Content Include="SimpleJiraDb.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SimpleJiraDb.edmx</DependentUpon>
+      <LastGenOutput>SimpleJiraDb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SimpleJiraDb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SimpleJiraDb.edmx</DependentUpon>
+      <LastGenOutput>SimpleJiraDb.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
