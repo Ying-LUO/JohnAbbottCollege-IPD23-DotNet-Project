@@ -76,26 +76,8 @@
     <Compile Include="IssuesAddEditDlg.xaml.cs">
       <DependentUpon>IssuesAddEditDlg.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Person.cs">
-      <DependentUpon>SimpleJira.tt</DependentUpon>
-    </Compile>
     <Compile Include="Project.cs">
       <DependentUpon>SimpleJiraDb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SimpleJira.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleJira.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SimpleJira.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleJira.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SimpleJira.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleJira.edmx</DependentUpon>
     </Compile>
     <Compile Include="SimpleJiraDb.Context.cs">
       <AutoGen>True</AutoGen>
@@ -190,13 +172,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="SimpleJira.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SimpleJira.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="SimpleJira.edmx.diagram">
-      <DependentUpon>SimpleJira.edmx</DependentUpon>
-    </None>
     <EntityDeploy Include="SimpleJiraDb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SimpleJiraDb.Designer.cs</LastGenOutput>
@@ -209,16 +184,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SimpleJira.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SimpleJira.edmx</DependentUpon>
-      <LastGenOutput>SimpleJira.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="SimpleJira.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SimpleJira.edmx</DependentUpon>
-      <LastGenOutput>SimpleJira.cs</LastGenOutput>
-    </Content>
     <Content Include="SimpleJiraDb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SimpleJiraDb.edmx</DependentUpon>
