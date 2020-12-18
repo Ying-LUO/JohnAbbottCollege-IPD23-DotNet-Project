@@ -1,6 +1,37 @@
 USE SimpleJiraDB;
 GO
 
+/***** LIST OF ALL USER DEFINED TABLES ******/
+select *
+from sys.all_objects
+where [type]= 'U'
+;
+go
+
+/***** LIST OF ALL THE CONSTRIANTS ******/
+SELECT OBJECT_NAME(OBJECT_ID) AS NameofConstraint,
+SCHEMA_NAME(schema_id) AS SchemaName,
+OBJECT_NAME(parent_object_id) AS TableName,
+type_desc AS ConstraintType
+FROM sys.objects
+WHERE type_desc LIKE '%CONSTRAINT';
+GO
+
+
+/***** DISABLE ALL THE CONSTRAINT BEFORE DROP TABLES ******/
+DECLARE @sql NVARCHAR(MAX) = N'';
+
+SELECT @sql += N'
+ALTER TABLE ' + QUOTENAME(OBJECT_SCHEMA_NAME(parent_object_id))
+    + '.' + QUOTENAME(OBJECT_NAME(parent_object_id)) + 
+    ' DROP CONSTRAINT ' + QUOTENAME(name) + ';'
+FROM sys.foreign_keys;
+
+PRINT @sql;
+EXEC sp_executesql @sql;
+
+
+/***** DROP TABLES ******/
 DROP TABLE Projects;
 DROP TABLE Sprints;
 DROP TABLE UserStories;
@@ -84,6 +115,7 @@ CREATE TABLE UserStories
 	Photo VARBINARY(MAX) NULL,
 	Status nvarchar(20) NOT NULL,
 	OwnerId int NOT NULL,
+	SprintId int NOT NULL,
 	CONSTRAINT PK_UserStories PRIMARY KEY CLUSTERED (UserStoryId ASC)
 )
 ;
@@ -91,9 +123,10 @@ go
 
 ALTER TABLE UserStories
 ADD
-	CONSTRAINT CK_UserStories_Point CHECK (Point<100 AND Point>0),
+	CONSTRAINT CK_UserStories_Point CHECK (Point<101 AND Point>0),
 	CONSTRAINT CK_UserStories_Status CHECK (Status IN ('Todo', 'Documenting', 'Pending for Validation', 'Ready', 'DEV','TEST','DONE')),
-	CONSTRAINT FK_UserStories_Users FOREIGN KEY (OwnerId) REFERENCES Users(UserId)
+	CONSTRAINT FK_UserStories_Users FOREIGN KEY (OwnerId) REFERENCES Users(UserId),
+	CONSTRAINT FK_UserStories_Sprints FOREIGN KEY (SprintId) REFERENCES Sprints(SprintId)
 ;
 go
 
@@ -102,7 +135,7 @@ CREATE TABLE Issues
 (
 	IssueId int IDENTITY(1,1) NOT NULL, -- auto-generated number
 	Name nvarchar(20) NOT NULL,
-	Description nvarchar(200) NOT NULL,
+	Description nvarchar(255) NOT NULL,
 	StartDate DATETIME NOT NULL,
 	CompleteDate DATETIME NULL,
 	Priority int NOT NULL,
@@ -111,6 +144,7 @@ CREATE TABLE Issues
 	Status nvarchar(20) NOT NULL,
 	OwnerId int NOT NULL,
 	UserStoryId int NOT NULL,
+	SprintId int NOT NULL,
 	CONSTRAINT PK_Issues PRIMARY KEY CLUSTERED (IssueId ASC)
 )
 ;
@@ -122,7 +156,8 @@ ADD
 	CONSTRAINT CK_Issues_Category CHECK (Status IN ('UserStory', 'Defect', 'Task', 'Backlog')),
 	CONSTRAINT CK_Issues_Status CHECK (Status IN ('Todo', 'InProcess', 'Blocked', 'UnderReview', 'UnderVerification', 'Verified', 'Resolved')),
 	CONSTRAINT FK_Issues_Users FOREIGN KEY (OwnerId) REFERENCES Users(UserId),
-	CONSTRAINT FK_Issues_UserStoryId FOREIGN KEY (UserStoryId) REFERENCES UserStories(UserStoryId)
+	CONSTRAINT FK_Issues_UserStories FOREIGN KEY (UserStoryId) REFERENCES UserStories(UserStoryId),
+	CONSTRAINT FK_Issues_Sprints FOREIGN KEY (SprintId) REFERENCES Sprints(SprintId)
 ;
 go
 
