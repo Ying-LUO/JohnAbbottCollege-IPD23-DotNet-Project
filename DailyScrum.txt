@@ -1,15 +1,30 @@
 Day 01: 2020-Dec-17
+
+Ying:
 1. Done:
 Team members: Khalil Hanna , Ying LUO
 Project proposal: Simple Jira, a tool used to manage development process
+Daily Scrum meeting: 8:30am in the morning
+
 2. Todo:
 *study project requirements
 *design draft version database tables
 *project proposal draft
-https://ying-luo.atlassian.net/wiki/spaces/IP/overview?homepageId=65605
+
 3. Need assistant
+After database change, how to implement the change in entity framework?
 
 User: sqladmin
 Server: simplejira.database.windows.net
 Database: SimpleJiraDB
 Password: StrongPWD123
+
+Day 02: 2020-Dec-18
+
+Ying:
+1. Done:
+*design draft version database tables
+*project proposal draft
+https://ying-luo.atlassian.net/wiki/spaces/IP/pages/65621/Team+9-Project+Proposal
+
+2. Todo:
