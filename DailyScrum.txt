@@ -6,13 +6,10 @@ Project proposal: Simple Jira, a tool used to manage development process
 *study project requirements
 *design draft version database tables
 *project proposal draft
+https://ying-luo.atlassian.net/wiki/spaces/IP/overview?homepageId=65605
 3. Need assistant
 
-Server Name:
-simplejira.database.windows.net
-
-Server admin:
-sqladmin
-
-Password:
-StrongPWD123
+User: sqladmin
+Server: simplejira.database.windows.net
+Database: SimpleJiraDB
+Password: StrongPWD123
