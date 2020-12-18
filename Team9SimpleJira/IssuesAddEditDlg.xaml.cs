@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Team9SimpleJira
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for IssuesAddEditDlg.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class IssuesAddEditDlg : Window
     {
-        public MainWindow()
+        public IssuesAddEditDlg()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            frame.NavigationService.Navigate(new Sprints());
         }
     }
 }

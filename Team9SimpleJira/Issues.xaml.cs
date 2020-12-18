@@ -16,18 +16,18 @@ using System.Windows.Shapes;
 namespace Team9SimpleJira
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Issues.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Issues : Page
     {
-        public MainWindow()
+        public Issues()
         {
             InitializeComponent();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void SprintDetails_Click(object sender, RoutedEventArgs e)
         {
-            frame.NavigationService.Navigate(new Sprints());
+            this.NavigationService.Navigate(new Sprints());
         }
     }
 }
