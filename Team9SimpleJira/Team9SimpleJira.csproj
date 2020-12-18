@@ -70,6 +70,9 @@
     <Compile Include="Issues.xaml.cs">
       <DependentUpon>Issues.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IssuesAddEditDlg.xaml.cs">
+      <DependentUpon>IssuesAddEditDlg.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Person.cs">
       <DependentUpon>SimpleJira.tt</DependentUpon>
     </Compile>
@@ -92,10 +95,17 @@
     <Compile Include="Sprints.xaml.cs">
       <DependentUpon>Sprints.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SprintsAddEditDlg.xaml.cs">
+      <DependentUpon>SprintsAddEditDlg.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Users.xaml.cs">
       <DependentUpon>Users.xaml</DependentUpon>
     </Compile>
     <Page Include="Issues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IssuesAddEditDlg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -112,6 +122,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Sprints.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SprintsAddEditDlg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
