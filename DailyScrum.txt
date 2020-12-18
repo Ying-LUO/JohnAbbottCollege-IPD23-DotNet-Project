@@ -19,8 +19,9 @@ Server: simplejira.database.windows.net
 Database: SimpleJiraDB
 Password: StrongPWD123
 
+==============================================================================
 Day 02: 2020-Dec-18
-
+==============================================================================
 Ying:
 1. Done:
 *design draft version database tables
@@ -28,3 +29,25 @@ Ying:
 https://ying-luo.atlassian.net/wiki/spaces/IP/pages/65621/Team+9-Project+Proposal
 
 2. Todo:
+
+
+
+
+
+Khalil:
+1- Done:
+	*Mockups for project proposal draft
+	*Working on the proposal
+	*Setup the project environment
+
+2- Todo:
+	*Fix the database first issue since the entity is not created.
+	*Discuss what we have now and agree about the final version
+	*Finish the project setup.
+	*Working on the design.
+	*Create the user stories in Trello
+
+3- Need assistant
+    I am Ok for now.
+
+================================================================================
