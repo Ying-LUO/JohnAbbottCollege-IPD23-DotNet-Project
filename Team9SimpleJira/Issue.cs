@@ -19,13 +19,15 @@ namespace Team9SimpleJira
         public string Description { get; set; }
         public System.DateTime StartDate { get; set; }
         public Nullable<System.DateTime> CompleteDate { get; set; }
-        public int Priority { get; set; }
+        public string Priority { get; set; }
         public byte[] Photo { get; set; }
         public string Category { get; set; }
         public string Status { get; set; }
         public int OwnerId { get; set; }
         public int UserStoryId { get; set; }
+        public int SprintId { get; set; }
     
+        public virtual Sprint Sprint { get; set; }
         public virtual User User { get; set; }
         public virtual UserStory UserStory { get; set; }
     }

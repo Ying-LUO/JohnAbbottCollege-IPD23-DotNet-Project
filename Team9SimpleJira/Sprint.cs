@@ -14,6 +14,13 @@ namespace Team9SimpleJira
     
     public partial class Sprint
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Sprint()
+        {
+            this.Issues = new HashSet<Issue>();
+            this.UserStories = new HashSet<UserStory>();
+        }
+    
         public int SprintId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -23,7 +30,11 @@ namespace Team9SimpleJira
         public int ProjectId { get; set; }
         public int OwnerId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Issue> Issues { get; set; }
         public virtual Project Project { get; set; }
         public virtual Team Team { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserStory> UserStories { get; set; }
     }
 }

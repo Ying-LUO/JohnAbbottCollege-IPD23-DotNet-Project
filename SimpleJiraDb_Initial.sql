@@ -84,8 +84,8 @@ CREATE TABLE Sprints
 	SprintId int IDENTITY(1,1) NOT NULL, -- auto-generated number
 	Name nvarchar(20) NOT NULL,
 	Description nvarchar(255) NOT NULL,
-	StartDate DATETIME NOT NULL,
-	ReleaseDate DATETIME NULL,
+	StartDate DATE NOT NULL,
+	ReleaseDate DATE NULL,
 	Status nvarchar(20) NOT NULL,
 	ProjectId int NOT NULL,
 	OwnerId int NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE UserStories
 	UserStoryId int IDENTITY(1,1) NOT NULL, -- auto-generated number
 	Name nvarchar(20) NOT NULL,
 	Description nvarchar(255) NOT NULL,
-	StartDate DATETIME NOT NULL,
+	CreateDate DATETIME NOT NULL,
 	CompleteDate DATETIME NULL,
 	Point int NOT NULL,
 	Photo VARBINARY(MAX) NULL,
@@ -124,7 +124,7 @@ go
 ALTER TABLE UserStories
 ADD
 	CONSTRAINT CK_UserStories_Point CHECK (Point<101 AND Point>0),
-	CONSTRAINT CK_UserStories_Status CHECK (Status IN ('Todo', 'Documenting', 'Pending for Validation', 'Ready', 'DEV','TEST','DONE')),
+	CONSTRAINT CK_UserStories_Status CHECK (Status IN ('Todo', 'Documenting', 'InValidation', 'Ready', 'DEV','TEST','DONE')),
 	CONSTRAINT FK_UserStories_Users FOREIGN KEY (OwnerId) REFERENCES Users(UserId),
 	CONSTRAINT FK_UserStories_Sprints FOREIGN KEY (SprintId) REFERENCES Sprints(SprintId)
 ;
@@ -138,7 +138,7 @@ CREATE TABLE Issues
 	Description nvarchar(255) NOT NULL,
 	StartDate DATETIME NOT NULL,
 	CompleteDate DATETIME NULL,
-	Priority int NOT NULL,
+	Priority nvarchar(10) NOT NULL,
 	Photo VARBINARY(MAX) NULL,
 	Category nvarchar(20) NOT NULL,
 	Status nvarchar(20) NOT NULL,
@@ -152,8 +152,8 @@ go
 
 ALTER TABLE Issues
 ADD
-	CONSTRAINT CK_Issues_Priority CHECK (Priority<6 AND Priority >0),
-	CONSTRAINT CK_Issues_Category CHECK (Status IN ('UserStory', 'Defect', 'Task', 'Backlog')),
+	CONSTRAINT CK_Issues_Priority CHECK (Priority IN ('VeryLow', 'Low', 'Medium', 'High', 'VeryHigh')), 
+	CONSTRAINT CK_Issues_Category CHECK (Status IN ('Defect', 'Task')),
 	CONSTRAINT CK_Issues_Status CHECK (Status IN ('Todo', 'InProcess', 'Blocked', 'UnderReview', 'UnderVerification', 'Verified', 'Resolved')),
 	CONSTRAINT FK_Issues_Users FOREIGN KEY (OwnerId) REFERENCES Users(UserId),
 	CONSTRAINT FK_Issues_UserStories FOREIGN KEY (UserStoryId) REFERENCES UserStories(UserStoryId),

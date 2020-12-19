@@ -10,13 +10,13 @@
 namespace Team9SimpleJira
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Person
+    public partial class sp_helpdiagrams_Result
     {
-        public int PersonId { get; set; }
-        public string FullName { get; set; }
-        public string Phone { get; set; }
-        public string Cell { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }
