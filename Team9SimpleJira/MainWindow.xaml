@@ -1,13 +1,12 @@
-﻿<Window x:Class="Team9SimpleJira.MainWindow" Loaded="Window_Loaded"
+﻿<Window x:Class="Team9SimpleJira.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Team9SimpleJira"
         mc:Ignorable="d"
-        Title="Simple Jira" Height="500" Width="900">
+        Title="Simple Jira Application" Height="450" Width="800">
     <Grid>
-        <Frame Content="Frame" Name="frame" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="800" NavigationUIVisibility="Hidden" Margin="42,9,0,0"/>
-
+        
     </Grid>
 </Window>

@@ -59,3 +59,19 @@ Khalil:
 ==============================================================================
 Day 03: 2020-Dec-21 Monday
 ==============================================================================
+Ying:
+1. Done:
+*
+
+2. Todo:
+*working on detailed system design
+*redesign the layout of mainwindow(under review)
+-->with menu bar on top
+-->grid slipper in middle
+-->treeview on left for project node
+-->tab page for each sprint on right, with detail textboxs/buttons inside
+-->new dialog window for photos
+
+
+3. Need assistant:
+*None till now
