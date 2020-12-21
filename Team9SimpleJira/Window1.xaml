@@ -1,0 +1,114 @@
+﻿<Window x:Class="Team9SimpleJira.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Team9SimpleJira"
+        mc:Ignorable="d"
+        Height="550" Width="1080"
+        FontFamily="Century Gothic" WindowStartupLocation="CenterScreen" MinWidth="800" MinHeight="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <!--<RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />-->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.RowSpan="1"  Background="#FF254068">
+            <TextBlock Text="Project Tracker" HorizontalAlignment="Center" Margin="10" FontSize="16" FontWeight="Medium" Foreground="#FFEDEEF0" />
+        </Grid>
+        <Border Grid.Column="2" Background="#FF254068" />
+        <Grid Grid.Row="2" Background="#FF254068" >
+            <Button Content="Projects" Margin="10,10,10,400" Foreground="#FFF5EFEF" Height="40" BorderBrush="{x:Null}" FontSize="14" Click="Button_Click">
+                <Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="project2.png" AlignmentX="Left" Opacity="0.7" />
+                </Button.Background>
+            </Button>
+            <Button Content="Users" Margin="10,391,10,88" Foreground="#FFF5EFEF" Height="40" BorderBrush="{x:Null}" FontSize="14">
+                <Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="user.png" AlignmentX="Left" Opacity="0.7" />
+                </Button.Background>
+            </Button>
+            <Button Content="Issues" Margin="10,198,10,231" Foreground="#FFF5EFEF" Height="40" BorderBrush="{x:Null}" FontSize="14" RenderTransformOrigin="0.5,-0.275">
+                <Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="issue.png" AlignmentX="Left" Opacity="0.7" />
+                </Button.Background>
+            </Button>
+            <Button Content="User Stories" Margin="10,136,-12,293" Foreground="#FFF5EFEF" Height="40" BorderBrush="{x:Null}" FontSize="14" RenderTransformOrigin="0.513,-0.1">
+                <Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="userStory.png" AlignmentX="Left" Opacity="0.7" />
+                </Button.Background>
+            </Button>
+            <Button Content="Sprints" Margin="10,78,10,351" Foreground="#FFF5EFEF" Height="40" BorderBrush="{x:Null}" FontSize="14">
+                <Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="sprint.png" AlignmentX="Left" Opacity="0.7" />
+                </Button.Background>
+            </Button>
+            <Button Content="Teams" Margin="10,456,10,23" Foreground="#FFF5EFEF" Height="40" BorderBrush="{x:Null}" FontSize="14">
+                <Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="team2.png" AlignmentX="Left" Opacity="0.7" />
+                </Button.Background>
+            </Button>
+            <Button Content="Add Project" Margin="957,-45,-882,0" Foreground="#FFF5EFEF" Height="40" BorderBrush="{x:Null}" FontSize="14" Click="Button_Click" VerticalAlignment="Top" Background="#FF254068" >
+
+            </Button>
+        </Grid>
+        <ScrollViewer Foreground="{x:Null}" Grid.Row="1" Grid.Column="1" >
+            <StackPanel>
+                <TextBlock Text="Projects Dashboard" Margin="20" FontSize="14" FontWeight="Medium" Foreground="#FF254068"/>
+                <StackPanel Margin="20 0" Height="264">
+                    <!--<ItemsControl Name="lvProjects" ItemsSource="{Binding Project}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>-->
+                    <Border Margin="10" Width="232" Height="235" CornerRadius="8"  BorderBrush="#FFB1B5BB"
+                                    BorderThickness="1" >
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="1" Color="#FFDBE5EE"/>
+                        </Border.Effect>
+                        <StackPanel Margin="0,0,-1,-1" >
+                            <Border Height="107" CornerRadius="8" Margin="10,10,10,5"  BorderBrush="#FFB1B5BB"
+                                     BorderThickness="1" >
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="1" Color="#FFDBE5EE"/>
+                                </Border.Effect>
+                                <Border.Background>
+                                    <ImageBrush ImageSource="{Binding ProjectImage}" />
+                                </Border.Background>
+                            </Border>
+                            <Border>
+                                
+                            </Border>
+                            
+                                <TextBlock Margin="10" FontSize="12" Foreground="#FF254068" Height="62"/>
+                           
+                            <Button Height="27" RenderTransformOrigin="0.556,-0.111" Margin="194,0,10,0" BorderBrush="White">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="edit.png"/>
+                                </Button.Background>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                    <!--<ItemsControl Name="lvProjects" ItemsSource="{Binding Project}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>-->
+                    <!--</DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>-->
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

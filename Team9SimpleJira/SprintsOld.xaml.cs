@@ -12,29 +12,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Team9SimpleJira.UserControls;
 
 namespace Team9SimpleJira
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SprintsOld.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SprintsOld : Page
     {
-        public MainWindow()
+        public SprintsOld()
         {
             InitializeComponent();
-            this.contentControl.Content = new Projects();
         }
 
-        private void btSprints_Click(object sender, RoutedEventArgs e)
+        private void SprintBacklog_Click(object sender, RoutedEventArgs e)
         {
-            this.contentControl.Content = new Sprints();
+            this.NavigationService.Navigate(new Issues());
         }
 
-        private void btProjects_Click(object sender, RoutedEventArgs e)
+        private void Users_Click(object sender, RoutedEventArgs e)
         {
-            this.contentControl.Content = new Projects();
+            this.NavigationService.Navigate(new Users());
         }
     }
 }
