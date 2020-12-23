@@ -75,3 +75,41 @@ Ying:
 
 3. Need assistant:
 *None till now
+
+
+
+Khalil:
+1- Done:
+	*Fix the database first issue since the entity is not created.
+	*Discuss what we have now and agree about the final version
+	*Finish the project setup.
+	*Working on the design.
+	*Create the user stories in Trello
+
+2- Todo:
+	*finalize the database design
+	*Continue working on the design draft.
+	  -Discuss the draft with team mate
+	*Update Trello
+
+3- Need assistant
+    Question about best practice to switch between multiple windows in desktop applications
+
+============================================================================================
+Day 03: 2020-Dec-22 Tuesday
+============================================================================================
+Khalil:
+
+1- Done:
+	*finalize the database design
+	*Main page design
+	*Update Trello
+
+2- Todo:
+	
+	*Continue working on the design draft.
+	*Update Trello
+
+3- Need assistant
+    	N/A
+

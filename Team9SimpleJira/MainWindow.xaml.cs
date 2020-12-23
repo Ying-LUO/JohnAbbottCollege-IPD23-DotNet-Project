@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Team9SimpleJira.UserControls;
 
 namespace Team9SimpleJira
 {
@@ -23,6 +24,7 @@ namespace Team9SimpleJira
         public MainWindow()
         {
             InitializeComponent();
+<<<<<<< HEAD
             LoadDataFromDb();
         }
 
@@ -84,6 +86,19 @@ namespace Team9SimpleJira
                 DefectView.Visibility = Visibility.Hidden;
                 TaskView.Visibility = Visibility.Visible;
             }
+=======
+            this.contentControl.Content = new Projects();
+        }
+
+        private void btSprints_Click(object sender, RoutedEventArgs e)
+        {
+            this.contentControl.Content = new Sprints();
+        }
+
+        private void btProjects_Click(object sender, RoutedEventArgs e)
+        {
+            this.contentControl.Content = new Projects();
+>>>>>>> a5426b05c9dfddcc4bd48cdf6e7d09eec4c8ac28
         }
     }
 }

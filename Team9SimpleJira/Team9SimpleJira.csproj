@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{15A62E4B-AAD1-464A-8A29-B8B084A85727}</ProjectGuid>
+    <ProjectGuid>{A789D23F-671A-49E6-B9E0-6A8E11180C34}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Team9SimpleJira</RootNamespace>
     <AssemblyName>Team9SimpleJira</AssemblyName>
@@ -74,38 +74,73 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Issue.cs">
-      <DependentUpon>SimpleJiraModel.tt</DependentUpon>
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Issues.xaml.cs">
+      <DependentUpon>Issues.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IssuesAddEditDlg.xaml.cs">
+      <DependentUpon>IssuesAddEditDlg.xaml</DependentUpon>
     </Compile>
     <Compile Include="Project.cs">
-      <DependentUpon>SimpleJiraModel.tt</DependentUpon>
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
     </Compile>
-    <Compile Include="SimpleJiraModel.Context.cs">
+    <Compile Include="ProjectTest.cs" />
+    <Compile Include="SimpleJiraDb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleJiraModel.Context.tt</DependentUpon>
+      <DependentUpon>SimpleJiraDb.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="SimpleJiraModel.cs">
+    <Compile Include="SimpleJiraDb.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleJiraModel.tt</DependentUpon>
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
     </Compile>
-    <Compile Include="SimpleJiraModel.Designer.cs">
+    <Compile Include="SimpleJiraDb.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleJiraModel.edmx</DependentUpon>
+      <DependentUpon>SimpleJiraDb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="SimpleJiraDbContext.cs" />
     <Compile Include="Sprint.cs">
-      <DependentUpon>SimpleJiraModel.tt</DependentUpon>
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="SprintsOld.xaml.cs">
+      <DependentUpon>SprintsOld.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SprintsAddEditDlg.xaml.cs">
+      <DependentUpon>SprintsAddEditDlg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SprintTestTest.cs" />
     <Compile Include="Team.cs">
-      <DependentUpon>SimpleJiraModel.tt</DependentUpon>
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>SimpleJiraModel.tt</DependentUpon>
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Projects.xaml.cs">
+      <DependentUpon>Projects.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Sprints.xaml.cs">
+      <DependentUpon>Sprints.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Users.xaml.cs">
+      <DependentUpon>Users.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserStory.cs">
-      <DependentUpon>SimpleJiraModel.tt</DependentUpon>
+      <DependentUpon>SimpleJiraDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Issues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IssuesAddEditDlg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -118,6 +153,30 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SprintsOld.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SprintsAddEditDlg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Projects.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Sprints.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Users.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -142,32 +201,61 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="SimpleJiraModel.edmx">
+    <EntityDeploy Include="SimpleJiraDb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SimpleJiraModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>SimpleJiraDb.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="SimpleJiraModel.edmx.diagram">
-      <DependentUpon>SimpleJiraModel.edmx</DependentUpon>
+    <None Include="SimpleJiraDb.edmx.diagram">
+      <DependentUpon>SimpleJiraDb.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SimpleJiraModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SimpleJiraModel.edmx</DependentUpon>
-      <LastGenOutput>SimpleJiraModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="SimpleJiraModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SimpleJiraModel.edmx</DependentUpon>
-      <LastGenOutput>SimpleJiraModel.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="team2.png" />
+    <Resource Include="sprint.png" />
+    <Resource Include="userStory.png" />
+    <Resource Include="user.png" />
+    <Resource Include="UserControls\edit.png" />
+    <Resource Include="UserControls\team2.png" />
+    <Resource Include="UserControls\sprint.png" />
+    <Resource Include="UserControls\userStory.png" />
+    <Resource Include="UserControls\issue.png" />
+    <Resource Include="UserControls\user.png" />
+    <Resource Include="UserControls\project2.png" />
+    <Resource Include="Icons\add.png" />
+    <Resource Include="Icons\addProject.png" />
+    <Resource Include="Icons\edit.png" />
+    <Resource Include="Icons\issue.png" />
+    <Resource Include="Icons\project.png" />
+    <Resource Include="Icons\project2.png" />
+    <Resource Include="Icons\sprint.png" />
+    <Resource Include="Icons\team.png" />
+    <Resource Include="Icons\team2.png" />
+    <Resource Include="Icons\user.png" />
+    <Resource Include="Icons\user2.png" />
+    <Resource Include="Icons\userStory.png" />
+    <Resource Include="project2.png" />
+    <Resource Include="issue.png" />
+    <Resource Include="Icons\p1.png" />
+    <Content Include="Icons\projectTheme1.jfif" />
+    <Resource Include="Icons\projectTheme2.gif" />
+    <Content Include="SimpleJiraDb.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SimpleJiraDb.edmx</DependentUpon>
+      <LastGenOutput>SimpleJiraDb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SimpleJiraDb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SimpleJiraDb.edmx</DependentUpon>
+      <LastGenOutput>SimpleJiraDb.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
