@@ -96,3 +96,20 @@ Khalil:
     Question about best practice to switch between multiple windows in desktop applications
 
 ============================================================================================
+Day 03: 2020-Dec-22 Tuesday
+============================================================================================
+Khalil:
+
+1- Done:
+	*finalize the database design
+	*Main page design
+	*Update Trello
+
+2- Todo:
+	
+	*Continue working on the design draft.
+	*Update Trello
+
+3- Need assistant
+    	N/A
+
