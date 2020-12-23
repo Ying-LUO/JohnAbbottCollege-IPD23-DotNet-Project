@@ -44,7 +44,7 @@ GO
 CREATE TABLE Teams
 (
 	TeamId int IDENTITY(1,1) NOT NULL, -- auto-generated number
-	Name nvarchar(20) NOT NULL,
+	Name nvarchar(50) NOT NULL,
 	CONSTRAINT PK_Teams PRIMARY KEY CLUSTERED (TeamId ASC)
 )
 ;
@@ -54,8 +54,8 @@ go
 CREATE TABLE Users
 (
 	UserId int IDENTITY(1,1) NOT NULL, -- auto-generated number
-	Name nvarchar(30) NOT NULL,
-	Role nvarchar(20) NOT NULL,
+	Name nvarchar(50) NOT NULL,
+	Role nvarchar(50) NOT NULL,
 	TeamId int NOT NULL,
 	CONSTRAINT PK_Users PRIMARY KEY CLUSTERED (UserId ASC)
 )
@@ -72,7 +72,7 @@ go
 CREATE TABLE Projects
 (
 	ProjectId int IDENTITY(1,1) NOT NULL, -- auto-generated number
-	Name nvarchar(20) NOT NULL,
+	Name nvarchar(50) NOT NULL,
 	CONSTRAINT PK_Projects PRIMARY KEY CLUSTERED (ProjectId ASC)
 )
 ;
@@ -82,11 +82,11 @@ go
 CREATE TABLE Sprints
 (
 	SprintId int IDENTITY(1,1) NOT NULL, -- auto-generated number
-	Name nvarchar(20) NOT NULL,
+	Name nvarchar(100) NOT NULL,
 	Description nvarchar(255) NOT NULL,
 	StartDate DATE NOT NULL,
 	ReleaseDate DATE NULL,
-	Status nvarchar(20) NOT NULL,
+	Status nvarchar(50) NOT NULL,
 	ProjectId int NOT NULL,
 	OwnerId int NOT NULL,
 	CONSTRAINT PK_Sprints PRIMARY KEY CLUSTERED (SprintId ASC)
@@ -107,13 +107,13 @@ go
 CREATE TABLE UserStories
 (
 	UserStoryId int IDENTITY(1,1) NOT NULL, -- auto-generated number
-	Name nvarchar(20) NOT NULL,
+	Name nvarchar(100) NOT NULL,
 	Description nvarchar(255) NOT NULL,
 	CreateDate DATETIME NOT NULL,
 	CompleteDate DATETIME NULL,
 	Point int NOT NULL,
 	Photo VARBINARY(MAX) NULL,
-	Status nvarchar(20) NOT NULL,
+	Status nvarchar(50) NOT NULL,
 	OwnerId int NOT NULL,
 	SprintId int NOT NULL,
 	CONSTRAINT PK_UserStories PRIMARY KEY CLUSTERED (UserStoryId ASC)
@@ -134,14 +134,14 @@ go
 CREATE TABLE Issues
 (
 	IssueId int IDENTITY(1,1) NOT NULL, -- auto-generated number
-	Name nvarchar(20) NOT NULL,
+	Name nvarchar(100) NOT NULL,
 	Description nvarchar(255) NOT NULL,
 	StartDate DATETIME NOT NULL,
 	CompleteDate DATETIME NULL,
-	Priority nvarchar(10) NOT NULL,
+	Priority nvarchar(50) NOT NULL,
 	Photo VARBINARY(MAX) NULL,
-	Category nvarchar(20) NOT NULL,
-	Status nvarchar(20) NOT NULL,
+	Category nvarchar(50) NOT NULL,
+	Status nvarchar(50) NOT NULL,
 	OwnerId int NOT NULL,
 	UserStoryId int NOT NULL,
 	SprintId int NOT NULL,
@@ -153,8 +153,8 @@ go
 ALTER TABLE Issues
 ADD
 	CONSTRAINT CK_Issues_Priority CHECK (Priority IN ('VeryLow', 'Low', 'Medium', 'High', 'VeryHigh')), 
-	CONSTRAINT CK_Issues_Category CHECK (Status IN ('Defect', 'Task')),
-	CONSTRAINT CK_Issues_Status CHECK (Status IN ('Todo', 'InProcess', 'Blocked', 'UnderReview', 'UnderVerification', 'Verified', 'Resolved')),
+	CONSTRAINT CK_Issues_Category CHECK (Category IN ('Defect', 'Task')),
+	CONSTRAINT CK_Issues_Status CHECK (Status IN ('Todo', 'InProcess', 'Blocked', 'Verified', 'Resolved')),
 	CONSTRAINT FK_Issues_Users FOREIGN KEY (OwnerId) REFERENCES Users(UserId),
 	CONSTRAINT FK_Issues_UserStories FOREIGN KEY (UserStoryId) REFERENCES UserStories(UserStoryId),
 	CONSTRAINT FK_Issues_Sprints FOREIGN KEY (SprintId) REFERENCES Sprints(SprintId)

@@ -1,0 +1,540 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SimpleJiraDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Issues">
+          <Key>
+            <PropertyRef Name="IssueId" />
+          </Key>
+          <Property Name="IssueId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="CompleteDate" Type="datetime" />
+          <Property Name="Priority" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+          <Property Name="UserStoryId" Type="int" Nullable="false" />
+          <Property Name="SprintId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sprints">
+          <Key>
+            <PropertyRef Name="SprintId" />
+          </Key>
+          <Property Name="SprintId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="ReleaseDate" Type="date" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="TeamId" />
+          </Key>
+          <Property Name="TeamId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserStories">
+          <Key>
+            <PropertyRef Name="UserStoryId" />
+          </Key>
+          <Property Name="UserStoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CompleteDate" Type="datetime" />
+          <Property Name="Point" Type="int" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+          <Property Name="SprintId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Issues_Sprints">
+          <End Role="Sprints" Type="Self.Sprints" Multiplicity="1" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sprints">
+              <PropertyRef Name="SprintId" />
+            </Principal>
+            <Dependent Role="Issues">
+              <PropertyRef Name="SprintId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issues_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Issues">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issues_UserStories">
+          <End Role="UserStories" Type="Self.UserStories" Multiplicity="1" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserStories">
+              <PropertyRef Name="UserStoryId" />
+            </Principal>
+            <Dependent Role="Issues">
+              <PropertyRef Name="UserStoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sprints_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="Sprints" Type="Self.Sprints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="Sprints">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sprints_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Sprints" Type="Self.Sprints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="Sprints">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserStories_Sprints">
+          <End Role="Sprints" Type="Self.Sprints" Multiplicity="1" />
+          <End Role="UserStories" Type="Self.UserStories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sprints">
+              <PropertyRef Name="SprintId" />
+            </Principal>
+            <Dependent Role="UserStories">
+              <PropertyRef Name="SprintId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserStories_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserStories" Type="Self.UserStories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserStories">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SimpleJiraDBModelStoreContainer">
+          <EntitySet Name="Issues" EntityType="Self.Issues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sprints" EntityType="Self.Sprints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserStories" EntityType="Self.UserStories" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Issues_Sprints" Association="Self.FK_Issues_Sprints">
+            <End Role="Sprints" EntitySet="Sprints" />
+            <End Role="Issues" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issues_Users" Association="Self.FK_Issues_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Issues" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issues_UserStories" Association="Self.FK_Issues_UserStories">
+            <End Role="UserStories" EntitySet="UserStories" />
+            <End Role="Issues" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sprints_Projects" Association="Self.FK_Sprints_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Sprints" EntitySet="Sprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sprints_Teams" Association="Self.FK_Sprints_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Sprints" EntitySet="Sprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Teams" Association="Self.FK_Users_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserStories_Sprints" Association="Self.FK_UserStories_Sprints">
+            <End Role="Sprints" EntitySet="Sprints" />
+            <End Role="UserStories" EntitySet="UserStories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserStories_Users" Association="Self.FK_UserStories_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserStories" EntitySet="UserStories" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SimpleJiraDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Issue">
+          <Key>
+            <PropertyRef Name="IssueId" />
+          </Key>
+          <Property Name="IssueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompleteDate" Type="DateTime" Precision="3" />
+          <Property Name="Priority" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="UserStoryId" Type="Int32" Nullable="false" />
+          <Property Name="SprintId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Sprint" Relationship="Self.FK_Issues_Sprints" FromRole="Issues" ToRole="Sprints" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Issues_Users" FromRole="Issues" ToRole="Users" />
+          <NavigationProperty Name="UserStory" Relationship="Self.FK_Issues_UserStories" FromRole="Issues" ToRole="UserStories" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Sprints" Relationship="Self.FK_Sprints_Projects" FromRole="Projects" ToRole="Sprints" />
+        </EntityType>
+        <EntityType Name="Sprint">
+          <Key>
+            <PropertyRef Name="SprintId" />
+          </Key>
+          <Property Name="SprintId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ReleaseDate" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Issues" Relationship="Self.FK_Issues_Sprints" FromRole="Sprints" ToRole="Issues" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_Sprints_Projects" FromRole="Sprints" ToRole="Projects" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Sprints_Teams" FromRole="Sprints" ToRole="Teams" />
+          <NavigationProperty Name="UserStories" Relationship="Self.FK_UserStories_Sprints" FromRole="Sprints" ToRole="UserStories" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamId" />
+          </Key>
+          <Property Name="TeamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Sprints" Relationship="Self.FK_Sprints_Teams" FromRole="Teams" ToRole="Sprints" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Teams" FromRole="Teams" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Issues" Relationship="Self.FK_Issues_Users" FromRole="Users" ToRole="Issues" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Users_Teams" FromRole="Users" ToRole="Teams" />
+          <NavigationProperty Name="UserStories" Relationship="Self.FK_UserStories_Users" FromRole="Users" ToRole="UserStories" />
+        </EntityType>
+        <EntityType Name="UserStory">
+          <Key>
+            <PropertyRef Name="UserStoryId" />
+          </Key>
+          <Property Name="UserStoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompleteDate" Type="DateTime" Precision="3" />
+          <Property Name="Point" Type="Int32" Nullable="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="SprintId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Issues" Relationship="Self.FK_Issues_UserStories" FromRole="UserStories" ToRole="Issues" />
+          <NavigationProperty Name="Sprint" Relationship="Self.FK_UserStories_Sprints" FromRole="UserStories" ToRole="Sprints" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserStories_Users" FromRole="UserStories" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Issues_Sprints">
+          <End Role="Sprints" Type="Self.Sprint" Multiplicity="1" />
+          <End Role="Issues" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sprints">
+              <PropertyRef Name="SprintId" />
+            </Principal>
+            <Dependent Role="Issues">
+              <PropertyRef Name="SprintId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issues_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Issues" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Issues">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Issues_UserStories">
+          <End Role="UserStories" Type="Self.UserStory" Multiplicity="1" />
+          <End Role="Issues" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserStories">
+              <PropertyRef Name="UserStoryId" />
+            </Principal>
+            <Dependent Role="Issues">
+              <PropertyRef Name="UserStoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sprints_Projects">
+          <End Role="Projects" Type="Self.Project" Multiplicity="1" />
+          <End Role="Sprints" Type="Self.Sprint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="Sprints">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sprints_Teams">
+          <End Role="Teams" Type="Self.Team" Multiplicity="1" />
+          <End Role="Sprints" Type="Self.Sprint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="Sprints">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserStories_Sprints">
+          <End Role="Sprints" Type="Self.Sprint" Multiplicity="1" />
+          <End Role="UserStories" Type="Self.UserStory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sprints">
+              <PropertyRef Name="SprintId" />
+            </Principal>
+            <Dependent Role="UserStories">
+              <PropertyRef Name="SprintId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Teams">
+          <End Role="Teams" Type="Self.Team" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserStories_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserStories" Type="Self.UserStory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserStories">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SimpleJiraDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Issues" EntityType="Self.Issue" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="Sprints" EntityType="Self.Sprint" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserStories" EntityType="Self.UserStory" />
+          <AssociationSet Name="FK_Issues_Sprints" Association="Self.FK_Issues_Sprints">
+            <End Role="Sprints" EntitySet="Sprints" />
+            <End Role="Issues" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issues_Users" Association="Self.FK_Issues_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Issues" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Issues_UserStories" Association="Self.FK_Issues_UserStories">
+            <End Role="UserStories" EntitySet="UserStories" />
+            <End Role="Issues" EntitySet="Issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sprints_Projects" Association="Self.FK_Sprints_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Sprints" EntitySet="Sprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sprints_Teams" Association="Self.FK_Sprints_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Sprints" EntitySet="Sprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserStories_Sprints" Association="Self.FK_UserStories_Sprints">
+            <End Role="Sprints" EntitySet="Sprints" />
+            <End Role="UserStories" EntitySet="UserStories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Teams" Association="Self.FK_Users_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserStories_Users" Association="Self.FK_UserStories_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserStories" EntitySet="UserStories" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SimpleJiraDBModelStoreContainer" CdmEntityContainer="SimpleJiraDBEntities">
+          <EntitySetMapping Name="Issues">
+            <EntityTypeMapping TypeName="SimpleJiraDBModel.Issue">
+              <MappingFragment StoreEntitySet="Issues">
+                <ScalarProperty Name="IssueId" ColumnName="IssueId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="UserStoryId" ColumnName="UserStoryId" />
+                <ScalarProperty Name="SprintId" ColumnName="SprintId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="SimpleJiraDBModel.Project">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sprints">
+            <EntityTypeMapping TypeName="SimpleJiraDBModel.Sprint">
+              <MappingFragment StoreEntitySet="Sprints">
+                <ScalarProperty Name="SprintId" ColumnName="SprintId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="SimpleJiraDBModel.Team">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SimpleJiraDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserStories">
+            <EntityTypeMapping TypeName="SimpleJiraDBModel.UserStory">
+              <MappingFragment StoreEntitySet="UserStories">
+                <ScalarProperty Name="UserStoryId" ColumnName="UserStoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="SprintId" ColumnName="SprintId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

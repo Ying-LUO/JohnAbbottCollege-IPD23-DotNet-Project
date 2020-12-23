@@ -61,7 +61,7 @@ Day 03: 2020-Dec-21 Monday
 ==============================================================================
 Ying:
 1. Done:
-*
+* Half-way on the main window design
 
 2. Todo:
 *working on detailed system design
@@ -113,3 +113,38 @@ Khalil:
 3- Need assistant
     	N/A
 
+Ying:
+1. Done:
+* Finished the main window xml and database binding to all main object
+* Finished study on material design
+
+2. Todo:
+* keep on the rest dialogs
+
+
+3. Need assistant:
+*None till now
+
+============================================================================================
+Day 04: 2020-Dec-23 Wednesday
+============================================================================================
+Khalil:
+
+1- Done:
+
+2- Todo:
+
+3- Need assistant
+    	N/A
+
+Ying:
+1. Done:
+* Resolve the conflict code commit problem
+* Recreate database with modifications
+
+2. Todo:
+* Working on user login 
+
+
+3. Need assistant:
+*None till now
