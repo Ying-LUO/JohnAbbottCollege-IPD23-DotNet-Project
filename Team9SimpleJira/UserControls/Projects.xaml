@@ -66,9 +66,9 @@
             <StackPanel>
                 <TextBlock Text="Projects Dashboard" Margin="20" FontSize="14" FontWeight="Medium" Foreground="#FF254068"/>
                 <StackPanel Margin="20 0">
-                    <ItemsControl Name="lvProjects" ItemsSource="{Binding ProjectTest}">
+                    <!--<ItemsControl Name="lvProjects" ItemsSource="{Binding ProjectTest}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate>-->
                                 <Border Margin="10" Width="205" Height="216" CornerRadius="8"  BorderBrush="#FFB1B5BB"
                                     BorderThickness="1" >
                                     <Border.Effect>
@@ -94,14 +94,14 @@
                                     </StackPanel>
                                 </Border>
 
-                            </DataTemplate>
+                            <!--</DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                    </ItemsControl>
+                    </ItemsControl>-->
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
