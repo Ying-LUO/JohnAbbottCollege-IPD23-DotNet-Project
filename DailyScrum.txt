@@ -131,8 +131,12 @@ Day 04: 2020-Dec-23 Wednesday
 Khalil:
 
 1- Done:
+	*Continue working on the design draft.
+	*Update Trello
 
 2- Todo:
+	*Working on dialogs design
+	*Update Trello
 
 3- Need assistant
     	N/A
