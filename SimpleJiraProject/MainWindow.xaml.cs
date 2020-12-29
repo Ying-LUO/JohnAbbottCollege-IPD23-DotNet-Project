@@ -139,11 +139,13 @@ namespace SimpleJiraProject
                         MessageBox.Show($"Welcome! {currentUser.Name} from {cmbLoginTeam.SelectedItem.ToString()}", "Login Information");
                         tblTeam.Text = cmbLoginTeam.SelectedItem.ToString();
                         tblUser.Text = currentUser.Name;
-                        btSwitchUser.Content = "Swtich User";
+                        btLogOut.Content = "Log out";
                         MenuList.SelectedIndex = 0;
                         LoadDataFromDb();
                         tbLoginUserName.Text = string.Empty;
                         cmbLoginTeam.SelectedIndex = -1;
+                        btManageTeam.Visibility = Visibility.Hidden;
+                        btManageUser.Visibility = Visibility.Hidden;
                     }
                     else
                     {
@@ -160,24 +162,68 @@ namespace SimpleJiraProject
 
         private void btManageUser_Click(object sender, RoutedEventArgs e)
         {
-            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(currentUser);
+            int index = 1;
+            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(index);
             userManagementDialog.Owner = this;
             userManagementDialog.ShowDialog();
+            try
+            {
+                using (simpleJiraDB = new SimpleJiraDBEntities())
+                {
+                    cmbLoginTeam.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+                    cmbLoginTeam.Items.Refresh();
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error connecting to database:\n" + ex.Message, "Error Information");
+            }
         }
 
         private void btManageTeam_Click(object sender, RoutedEventArgs e)
         {
-            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(currentUser);
+            int index = 0;
+            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(index);
             userManagementDialog.Owner = this;
             userManagementDialog.ShowDialog();
-
+            try
+            {
+                using (simpleJiraDB = new SimpleJiraDBEntities())
+                {
+                    cmbLoginTeam.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+                    cmbLoginTeam.Items.Refresh();
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error connecting to database:\n" + ex.Message, "Error Information");
+            }
         }
 
-        private void btSwitchUser_Click(object sender, RoutedEventArgs e)
+        private void btLogOut_Click(object sender, RoutedEventArgs e)
         {
+            currentUser = null;
             MenuList.SelectedIndex = -1;
             HiddenView();
             LoginView.Visibility = Visibility.Visible;
+            btManageTeam.Visibility = Visibility.Visible;
+            btManageUser.Visibility = Visibility.Visible;
+            tblTeam.Text = string.Empty;
+            tblUser.Text = string.Empty;
+            btLogOut.Content = "LogIn";
         }
+
+        private void btMyAccount_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentUser == null)
+            {
+                MessageBox.Show("Please login first", "Login Information");
+                return;
+            }
+            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(currentUser);
+            userManagementDialog.Owner = this;
+            userManagementDialog.ShowDialog();
+        }
+
     }
 }

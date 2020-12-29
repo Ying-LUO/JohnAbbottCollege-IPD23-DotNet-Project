@@ -26,10 +26,10 @@
         <Grid Height="60" VerticalAlignment="Top" Background="SteelBlue">
             <TextBlock Text="Simple Jira Application" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="User Management" Content="My Account" x:Name="btMyAccount" Click="btManageUser_Click" VerticalAlignment="Center" FontSize="18" />
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="User Management" Content="My Account" x:Name="btMyAccount" Click="btMyAccount_Click"  VerticalAlignment="Center" FontSize="18" />
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
                     <StackPanel Width="150">
-                        <Button Content="Login" Name="btSwitchUser" Click="btSwitchUser_Click"/>
+                        <Button Content="Login" Name="btLogOut" Click="btLogOut_Click"/>
                         <Button Content="Team Management" Name="btManageTeam" Click="btManageTeam_Click"/>
                         <Button Content="User Management" Name="btManageUser" Click="btManageUser_Click"/>
                         <Separator />
@@ -110,7 +110,7 @@
             <Grid Width="280" Height="320" VerticalAlignment="Bottom" Margin="0, 100">
                 <TextBox Text="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
                 <StackPanel>
-                    <ComboBox x:Name="cmbLoginTeam" Foreground="Gray" materialDesign:HintAssist.Hint="TEAM" Style="{StaticResource MaterialDesignComboBox}" Margin="0, 60" HorizontalAlignment="Left" Width="280" />
+                    <ComboBox x:Name="cmbLoginTeam" Foreground="Gray" materialDesign:HintAssist.Hint="TEAM" Style="{StaticResource MaterialDesignComboBox}" Margin="0, 60" HorizontalAlignment="Left" Width="280"/>
                     <TextBox x:Name="tbLoginUserName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0, 0" />
                     </StackPanel>
             </Grid>
