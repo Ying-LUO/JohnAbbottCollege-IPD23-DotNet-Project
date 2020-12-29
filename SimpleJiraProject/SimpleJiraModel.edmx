@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SimpleJiraDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SimpleJiraDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Issues">
           <Key>
             <PropertyRef Name="IssueId" />
@@ -20,7 +20,6 @@
           <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="OwnerId" Type="int" Nullable="false" />
           <Property Name="UserStoryId" Type="int" Nullable="false" />
-          <Property Name="SprintId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Projects">
           <Key>
@@ -28,6 +27,7 @@
           </Key>
           <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Sprints">
           <Key>
@@ -40,7 +40,6 @@
           <Property Name="ReleaseDate" Type="date" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ProjectId" Type="int" Nullable="false" />
-          <Property Name="OwnerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Teams">
           <Key>
@@ -73,18 +72,6 @@
           <Property Name="OwnerId" Type="int" Nullable="false" />
           <Property Name="SprintId" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Issues_Sprints">
-          <End Role="Sprints" Type="Self.Sprints" Multiplicity="1" />
-          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sprints">
-              <PropertyRef Name="SprintId" />
-            </Principal>
-            <Dependent Role="Issues">
-              <PropertyRef Name="SprintId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Issues_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
@@ -109,6 +96,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Projects_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Sprints_Projects">
           <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
           <End Role="Sprints" Type="Self.Sprints" Multiplicity="*" />
@@ -118,18 +117,6 @@
             </Principal>
             <Dependent Role="Sprints">
               <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sprints_Teams">
-          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
-          <End Role="Sprints" Type="Self.Sprints" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Teams">
-              <PropertyRef Name="TeamId" />
-            </Principal>
-            <Dependent Role="Sprints">
-              <PropertyRef Name="OwnerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -176,10 +163,6 @@
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserStories" EntityType="Self.UserStories" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Issues_Sprints" Association="Self.FK_Issues_Sprints">
-            <End Role="Sprints" EntitySet="Sprints" />
-            <End Role="Issues" EntitySet="Issues" />
-          </AssociationSet>
           <AssociationSet Name="FK_Issues_Users" Association="Self.FK_Issues_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Issues" EntitySet="Issues" />
@@ -188,12 +171,12 @@
             <End Role="UserStories" EntitySet="UserStories" />
             <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
+          <AssociationSet Name="FK_Projects_Teams" Association="Self.FK_Projects_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
           <AssociationSet Name="FK_Sprints_Projects" Association="Self.FK_Sprints_Projects">
             <End Role="Projects" EntitySet="Projects" />
-            <End Role="Sprints" EntitySet="Sprints" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sprints_Teams" Association="Self.FK_Sprints_Teams">
-            <End Role="Teams" EntitySet="Teams" />
             <End Role="Sprints" EntitySet="Sprints" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_Teams" Association="Self.FK_Users_Teams">
@@ -209,8 +192,7 @@
             <End Role="UserStories" EntitySet="UserStories" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SimpleJiraDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -229,8 +211,6 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OwnerId" Type="Int32" Nullable="false" />
           <Property Name="UserStoryId" Type="Int32" Nullable="false" />
-          <Property Name="SprintId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sprint" Relationship="Self.FK_Issues_Sprints" FromRole="Issues" ToRole="Sprints" />
           <NavigationProperty Name="User" Relationship="Self.FK_Issues_Users" FromRole="Issues" ToRole="Users" />
           <NavigationProperty Name="UserStory" Relationship="Self.FK_Issues_UserStories" FromRole="Issues" ToRole="UserStories" />
         </EntityType>
@@ -240,6 +220,8 @@
           </Key>
           <Property Name="ProjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Projects_Teams" FromRole="Projects" ToRole="Teams" />
           <NavigationProperty Name="Sprints" Relationship="Self.FK_Sprints_Projects" FromRole="Projects" ToRole="Sprints" />
         </EntityType>
         <EntityType Name="Sprint">
@@ -253,10 +235,7 @@
           <Property Name="ReleaseDate" Type="DateTime" Precision="0" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <Property Name="OwnerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Issues" Relationship="Self.FK_Issues_Sprints" FromRole="Sprints" ToRole="Issues" />
           <NavigationProperty Name="Project" Relationship="Self.FK_Sprints_Projects" FromRole="Sprints" ToRole="Projects" />
-          <NavigationProperty Name="Team" Relationship="Self.FK_Sprints_Teams" FromRole="Sprints" ToRole="Teams" />
           <NavigationProperty Name="UserStories" Relationship="Self.FK_UserStories_Sprints" FromRole="Sprints" ToRole="UserStories" />
         </EntityType>
         <EntityType Name="Team">
@@ -265,7 +244,7 @@
           </Key>
           <Property Name="TeamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Sprints" Relationship="Self.FK_Sprints_Teams" FromRole="Teams" ToRole="Sprints" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_Projects_Teams" FromRole="Teams" ToRole="Projects" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Users_Teams" FromRole="Teams" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
@@ -298,18 +277,6 @@
           <NavigationProperty Name="Sprint" Relationship="Self.FK_UserStories_Sprints" FromRole="UserStories" ToRole="Sprints" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserStories_Users" FromRole="UserStories" ToRole="Users" />
         </EntityType>
-        <Association Name="FK_Issues_Sprints">
-          <End Role="Sprints" Type="Self.Sprint" Multiplicity="1" />
-          <End Role="Issues" Type="Self.Issue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sprints">
-              <PropertyRef Name="SprintId" />
-            </Principal>
-            <Dependent Role="Issues">
-              <PropertyRef Name="SprintId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Issues_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Issues" Type="Self.Issue" Multiplicity="*" />
@@ -334,6 +301,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Projects_Teams">
+          <End Role="Teams" Type="Self.Team" Multiplicity="1" />
+          <End Role="Projects" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Sprints_Projects">
           <End Role="Projects" Type="Self.Project" Multiplicity="1" />
           <End Role="Sprints" Type="Self.Sprint" Multiplicity="*" />
@@ -343,18 +322,6 @@
             </Principal>
             <Dependent Role="Sprints">
               <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sprints_Teams">
-          <End Role="Teams" Type="Self.Team" Multiplicity="1" />
-          <End Role="Sprints" Type="Self.Sprint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Teams">
-              <PropertyRef Name="TeamId" />
-            </Principal>
-            <Dependent Role="Sprints">
-              <PropertyRef Name="OwnerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -401,10 +368,6 @@
           <EntitySet Name="Teams" EntityType="Self.Team" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserStories" EntityType="Self.UserStory" />
-          <AssociationSet Name="FK_Issues_Sprints" Association="Self.FK_Issues_Sprints">
-            <End Role="Sprints" EntitySet="Sprints" />
-            <End Role="Issues" EntitySet="Issues" />
-          </AssociationSet>
           <AssociationSet Name="FK_Issues_Users" Association="Self.FK_Issues_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Issues" EntitySet="Issues" />
@@ -413,12 +376,12 @@
             <End Role="UserStories" EntitySet="UserStories" />
             <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
+          <AssociationSet Name="FK_Projects_Teams" Association="Self.FK_Projects_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
           <AssociationSet Name="FK_Sprints_Projects" Association="Self.FK_Sprints_Projects">
             <End Role="Projects" EntitySet="Projects" />
-            <End Role="Sprints" EntitySet="Sprints" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sprints_Teams" Association="Self.FK_Sprints_Teams">
-            <End Role="Teams" EntitySet="Teams" />
             <End Role="Sprints" EntitySet="Sprints" />
           </AssociationSet>
           <AssociationSet Name="FK_UserStories_Sprints" Association="Self.FK_UserStories_Sprints">
@@ -454,7 +417,6 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
                 <ScalarProperty Name="UserStoryId" ColumnName="UserStoryId" />
-                <ScalarProperty Name="SprintId" ColumnName="SprintId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -463,6 +425,7 @@
               <MappingFragment StoreEntitySet="Projects">
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -476,7 +439,6 @@
                 <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

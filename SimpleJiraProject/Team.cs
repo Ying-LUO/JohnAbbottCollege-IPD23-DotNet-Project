@@ -17,7 +17,7 @@ namespace SimpleJiraProject
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Team()
         {
-            this.Sprints = new HashSet<Sprint>();
+            this.Projects = new HashSet<Project>();
             this.Users = new HashSet<User>();
         }
     
@@ -25,7 +25,7 @@ namespace SimpleJiraProject
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sprint> Sprints { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
     }

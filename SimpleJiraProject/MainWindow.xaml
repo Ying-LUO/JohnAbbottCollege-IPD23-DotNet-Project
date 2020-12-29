@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
+        TextElement.FontSize="14"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
@@ -14,16 +14,24 @@
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="White"
         Title="Simple Jira Application" Height="600" Width="1080" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid Height="60" VerticalAlignment="Top" Background="SteelBlue">
             <TextBlock Text="Simple Jira Application" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBox Text="Options" VerticalAlignment="Center" FontSize="18"/>
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="User Management" Content="My Account" x:Name="btMyAccount" Click="btManageUser_Click" VerticalAlignment="Center" FontSize="18" />
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
                     <StackPanel Width="150">
-                        <Button Content="New Project" />
-                        <Button Content="New Sprint" />
-                        <Button Content="New User Story" />
+                        <Button Content="Login" Name="btSwitchUser" Click="btSwitchUser_Click"/>
+                        <Button Content="Team Management" Name="btManageTeam" Click="btManageTeam_Click"/>
+                        <Button Content="User Management" Name="btManageUser" Click="btManageUser_Click"/>
                         <Separator />
                         <Button Content="Exit" Name="btExit" Click="btExit_Click"/>
                     </StackPanel>
@@ -32,8 +40,23 @@
         </Grid>
         <Grid x:Name="GridMenu"  Width="200" HorizontalAlignment="Left" Background="LightSteelBlue" >
             <StackPanel >
-                <Grid Height="130" Background="White">
-                    <TextBlock Text="Consider to place a image here" />
+                <Grid Height="130">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="20" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Team" Grid.Row="1" Grid.Column="1"/>
+                    <TextBlock Margin="15 0" x:Name="tblTeam" Grid.Row="2" Grid.Column="1"/>
+                    <Label Content="User"  Grid.Row="3" Grid.Column="1"/>
+                    <TextBlock Margin="15 0" x:Name="tblUser" Grid.Row="4" Grid.Column="1"/>
                 </Grid>
                 <ListView x:Name="MenuList" SelectionChanged="MenuList_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  Foreground="SteelBlue">
                     <ListViewItem Height="60" >
@@ -69,15 +92,43 @@
                 </ListView>
             </StackPanel>
         </Grid>
-        <Grid x:Name="ProjectView" Visibility="Visible" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-
-            <WrapPanel>
-                <materialDesign:Card>
-                    <ContentControl x:Name="ProjectContent" />
-                </materialDesign:Card>
-            </WrapPanel>
+        <Grid x:Name="LoginView" Visibility="Visible" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Rectangle Height="520" VerticalAlignment="Top" Width="400">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
+                        <GradientStop Color="AliceBlue" />
+                        <GradientStop Color="SteelBlue" Offset="1"/>
+                        <GradientStop Color="CadetBlue" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle Width="280" Height="380" Fill="White" VerticalAlignment="Bottom" Margin="290,0,290,100" RadiusY="8" RadiusX="8">
+                <Rectangle.Effect>
+                    <DropShadowEffect Color="Gray" Direction="0" BlurRadius="15" RenderingBias="Quality" ShadowDepth="5"/>
+                </Rectangle.Effect>
+            </Rectangle>
+            <Grid Width="280" Height="320" VerticalAlignment="Bottom" Margin="0, 100">
+                <TextBox Text="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
+                <StackPanel>
+                    <ComboBox x:Name="cmbLoginTeam" Foreground="Gray" materialDesign:HintAssist.Hint="TEAM" Style="{StaticResource MaterialDesignComboBox}" Margin="0, 60" HorizontalAlignment="Left" Width="280" />
+                    <TextBox x:Name="tbLoginUserName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0, 0" />
+                    </StackPanel>
+            </Grid>
+            <Button VerticalAlignment="Bottom" Margin="0, 85" Width="150" Content="LOGIN" FontSize="18" x:Name="btLogin" Click="btLogin_Click"/>
+            <TextBlock Text="Login with your team and user name(not case sensitive)" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" Cursor="Help" FontSize="15"/>
         </Grid>
-        <Grid x:Name="SprintView" Visibility="Visible" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+        <Grid x:Name="ProjectView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <ListView x:Name="ProjectListView">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding ProjectId}" Header="Project Id" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                        <GridViewColumn DisplayMemberBinding="{Binding TeamId}" Header="Team Id" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        <Grid x:Name="SprintView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <ListView x:Name="SprintListView">
                 <ListView.View>
                     <GridView>
@@ -87,7 +138,6 @@
                         <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" />
                         <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
                         <GridViewColumn DisplayMemberBinding="{Binding ProjectId}" Header="ProjectId" />
-                        <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -119,7 +169,6 @@
                         <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priority" />
                         <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
                         <GridViewColumn DisplayMemberBinding="{Binding UserStoryId}" Header="UserStoryId" />
-                        <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="SprintId" />
                         <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
                     </GridView>
                 </ListView.View>
@@ -136,11 +185,44 @@
                         <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priority" />
                         <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
                         <GridViewColumn DisplayMemberBinding="{Binding UserStoryId}" Header="UserStoryId" />
-                        <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="SprintId" />
                         <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
+        <materialDesign:PopupBox
+            Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="32"
+            Grid.Row="1">
+            <StackPanel>
+                <Button
+                    ToolTip="New"
+                    Click="btNew_Click"
+                    Content="{materialDesign:PackIcon Kind=OpenInNew, Size=20}"/>
+
+                <Button
+                    ToolTip="Update"
+                    Click="btUpdate_Click"
+                    Background="{DynamicResource PrimaryHueLightBrush}"
+                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                    Content="{materialDesign:PackIcon Kind=Update, Size=20}"/>
+
+                <Button
+                    ToolTip="Delete"
+                    Click="btDelete_Click"
+                    Content="{materialDesign:PackIcon Kind=Delete, Size=20}">
+                    <!-- mix up the colours by bringing in a named palette (see merged dictionaries at top) -->
+                    <Button.Background>
+                        <SolidColorBrush Color="{StaticResource Primary300}"/>
+                    </Button.Background>
+
+                    <Button.Foreground>
+                        <SolidColorBrush Color="{StaticResource Primary300Foreground}"/>
+                    </Button.Foreground>
+                </Button>
+            </StackPanel>
+        </materialDesign:PopupBox>
     </Grid>
 </Window>
