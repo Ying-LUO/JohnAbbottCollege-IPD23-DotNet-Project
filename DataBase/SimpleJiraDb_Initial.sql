@@ -50,6 +50,10 @@ CREATE TABLE Teams
 ;
 go
 
+ALTER TABLE Teams
+ADD UNIQUE (Name);
+go
+
 /***** Table No. 2 - Users ****/
 CREATE TABLE Users
 (
@@ -63,6 +67,10 @@ CREATE TABLE Users
 go
 
 ALTER TABLE Users
+ADD UNIQUE (Name);
+go
+
+ALTER TABLE Users
 ADD
 	CONSTRAINT FK_Users_Teams FOREIGN KEY (TeamId) REFERENCES Teams(TeamId)
 ;
@@ -73,10 +81,15 @@ CREATE TABLE Projects
 (
 	ProjectId int IDENTITY(1,1) NOT NULL, -- auto-generated number
 	Name nvarchar(50) NOT NULL,
+	TeamId INTEGER NOT NULL;
 	CONSTRAINT PK_Projects PRIMARY KEY CLUSTERED (ProjectId ASC)
 )
 ;
 go
+
+ALTER TABLE Projects
+ADD CONSTRAINT FK_Projects_Teams FOREIGN KEY (TeamId) REFERENCES Teams(TeamId);
+
 
 /***** Table No. 4 - Sprints ****/
 CREATE TABLE Sprints
@@ -88,7 +101,6 @@ CREATE TABLE Sprints
 	ReleaseDate DATE NULL,
 	Status nvarchar(50) NOT NULL,
 	ProjectId int NOT NULL,
-	OwnerId int NOT NULL,
 	CONSTRAINT PK_Sprints PRIMARY KEY CLUSTERED (SprintId ASC)
 )
 ;
@@ -97,7 +109,6 @@ go
 ALTER TABLE Sprints
 ADD
 	CONSTRAINT CK_Sprints_Status CHECK (Status IN ('Planning', 'Ongoing', 'Released')),
-	CONSTRAINT FK_Sprints_Teams FOREIGN KEY (OwnerId) REFERENCES Teams(TeamId),
 	CONSTRAINT FK_Sprints_Projects FOREIGN KEY (ProjectId) REFERENCES Projects(ProjectId)
 ;
 go
@@ -144,7 +155,6 @@ CREATE TABLE Issues
 	Status nvarchar(50) NOT NULL,
 	OwnerId int NOT NULL,
 	UserStoryId int NOT NULL,
-	SprintId int NOT NULL,
 	CONSTRAINT PK_Issues PRIMARY KEY CLUSTERED (IssueId ASC)
 )
 ;
@@ -156,8 +166,7 @@ ADD
 	CONSTRAINT CK_Issues_Category CHECK (Category IN ('Defect', 'Task')),
 	CONSTRAINT CK_Issues_Status CHECK (Status IN ('Todo', 'InProcess', 'Blocked', 'Verified', 'Resolved')),
 	CONSTRAINT FK_Issues_Users FOREIGN KEY (OwnerId) REFERENCES Users(UserId),
-	CONSTRAINT FK_Issues_UserStories FOREIGN KEY (UserStoryId) REFERENCES UserStories(UserStoryId),
-	CONSTRAINT FK_Issues_Sprints FOREIGN KEY (SprintId) REFERENCES Sprints(SprintId)
+	CONSTRAINT FK_Issues_UserStories FOREIGN KEY (UserStoryId) REFERENCES UserStories(UserStoryId)
 ;
 go
 

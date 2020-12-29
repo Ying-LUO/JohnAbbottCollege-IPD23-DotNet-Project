@@ -22,7 +22,9 @@ namespace SimpleJiraProject
     
         public int ProjectId { get; set; }
         public string Name { get; set; }
+        public int TeamId { get; set; }
     
+        public virtual Team Team { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sprint> Sprints { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,20 +21,43 @@ namespace SimpleJiraProject
     /// </summary>
     public partial class MainWindow : Window
     {
+        SimpleJiraDBEntities simpleJiraDB;
+        User currentUser;
+        List<Project> currentTeamProjectList;
+        List<Sprint> currentSprintList;
+
         public MainWindow()
         {
             InitializeComponent();
-            LoadDataFromDb();
+            try
+            {
+                using (simpleJiraDB = new SimpleJiraDBEntities())
+                {
+                    cmbLoginTeam.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+                }
+            }
+            catch (SystemException ex)
+            {
+                MessageBox.Show("Fatal error connecting to database:\n" + ex.Message, "Error Information");
+                Environment.Exit(1);
+            }
         }
 
         private void LoadDataFromDb()
         {
-            SimpleJiraDBEntities simpleJiraDB = new SimpleJiraDBEntities();
-            ProjectContent.Content = simpleJiraDB.Projects.ToList<Project>();
-            SprintListView.ItemsSource = simpleJiraDB.Sprints.ToList<Sprint>();
-            UserStoryListView.ItemsSource = simpleJiraDB.UserStories.ToList<UserStory>();
-            TaskListView.ItemsSource = simpleJiraDB.Issues.Where(i => i.Category == "Task").ToList<Issue>();
-            DefectListView.ItemsSource = simpleJiraDB.Issues.Where(i => i.Category == "Defect").ToList<Issue>();
+            using (simpleJiraDB = new SimpleJiraDBEntities())
+            {
+                currentTeamProjectList = simpleJiraDB.Projects.Where(p=>p.TeamId == currentUser.TeamId).ToList<Project>();
+                ProjectListView.ItemsSource = currentTeamProjectList;
+                IEnumerable<int> projectIds = currentTeamProjectList.Select(p => p.ProjectId).Distinct();
+
+                currentSprintList = simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
+                SprintListView.ItemsSource = currentSprintList;
+
+                UserStoryListView.ItemsSource = simpleJiraDB.UserStories.Where(u=>u.OwnerId == currentUser.UserId).ToList<UserStory>();
+                TaskListView.ItemsSource = simpleJiraDB.Issues.Where(i => i.Category == "Task").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
+                DefectListView.ItemsSource = simpleJiraDB.Issues.Where(i => i.Category == "Defect").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
+            }
         }
 
         private void btExit_Click(object sender, RoutedEventArgs e)
@@ -42,48 +66,118 @@ namespace SimpleJiraProject
             //Application.Current.Shutdown();
         }
 
+        private void HiddenView()
+        {
+            LoginView.Visibility = Visibility.Hidden;
+            ProjectView.Visibility = Visibility.Hidden;
+            SprintView.Visibility = Visibility.Hidden;
+            UserStoryView.Visibility = Visibility.Hidden;
+            DefectView.Visibility = Visibility.Hidden;
+            TaskView.Visibility = Visibility.Hidden;
+        }
+
         private void MenuList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MenuList.SelectedIndex == 0)
+            switch (MenuList.SelectedIndex)
             {
-                ProjectView.Visibility = Visibility.Visible;
-                SprintView.Visibility = Visibility.Hidden;
-                UserStoryView.Visibility = Visibility.Hidden;
-                DefectView.Visibility = Visibility.Hidden;
-                TaskView.Visibility = Visibility.Hidden;
+                case 0:
+                    HiddenView();
+                    ProjectView.Visibility = Visibility.Visible;
+                    break;
+                case 1:
+                    HiddenView();
+                    SprintView.Visibility = Visibility.Visible;
+                    break;
+                case 2:
+                    HiddenView();
+                    UserStoryView.Visibility = Visibility.Visible;
+                    break;
+                case 3:
+                    HiddenView();
+                    DefectView.Visibility = Visibility.Visible;
+                    break;
+                case 4:
+                    HiddenView();
+                    TaskView.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    HiddenView();
+                    break;
             }
-            if (MenuList.SelectedIndex == 1)
+        }
+
+        private void btNew_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btLogin_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                ProjectView.Visibility = Visibility.Hidden;
-                SprintView.Visibility = Visibility.Visible;
-                UserStoryView.Visibility = Visibility.Hidden;
-                DefectView.Visibility = Visibility.Hidden;
-                TaskView.Visibility = Visibility.Hidden;
+                if (string.IsNullOrEmpty(tbLoginUserName.Text)||string.IsNullOrEmpty(cmbLoginTeam.SelectedItem.ToString()))
+                {
+                    MessageBox.Show("Please choose a Team and input your User Name", "Login Information");
+                    return;
+                }
+                using (simpleJiraDB = new SimpleJiraDBEntities())
+                {
+                    int currentTeamId = simpleJiraDB.Teams.SingleOrDefault(t => t.Name.Equals(cmbLoginTeam.SelectedItem.ToString())).TeamId;
+                    currentUser = simpleJiraDB.Users.Where(u => u.Name.Equals(tbLoginUserName.Text)).Where(ut => ut.TeamId.Equals(currentTeamId)).FirstOrDefault();
+                    if (currentUser != null)
+                    {
+                        MessageBox.Show($"Welcome! {currentUser.Name} from {cmbLoginTeam.SelectedItem.ToString()}", "Login Information");
+                        tblTeam.Text = cmbLoginTeam.SelectedItem.ToString();
+                        tblUser.Text = currentUser.Name;
+                        btSwitchUser.Content = "Swtich User";
+                        MenuList.SelectedIndex = 0;
+                        LoadDataFromDb();
+                        tbLoginUserName.Text = string.Empty;
+                        cmbLoginTeam.SelectedIndex = -1;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Cannot find {tbLoginUserName.Text} in {cmbLoginTeam.SelectedItem.ToString()}", "Login Information");
+                        return;
+                    }
+                }
             }
-            if (MenuList.SelectedIndex == 2)
+            catch (SqlException ex)
             {
-                ProjectView.Visibility = Visibility.Hidden;
-                SprintView.Visibility = Visibility.Hidden;
-                UserStoryView.Visibility = Visibility.Visible;
-                DefectView.Visibility = Visibility.Hidden;
-                TaskView.Visibility = Visibility.Hidden;
+                MessageBox.Show("Error Login into system:\n" + ex.Message, "Error Information");
             }
-            if (MenuList.SelectedIndex == 3)
-            {
-                ProjectView.Visibility = Visibility.Hidden;
-                SprintView.Visibility = Visibility.Hidden;
-                UserStoryView.Visibility = Visibility.Hidden;
-                DefectView.Visibility = Visibility.Visible;
-                TaskView.Visibility = Visibility.Hidden;
-            }
-            if (MenuList.SelectedIndex == 4)
-            {
-                ProjectView.Visibility = Visibility.Hidden;
-                SprintView.Visibility = Visibility.Hidden;
-                UserStoryView.Visibility = Visibility.Hidden;
-                DefectView.Visibility = Visibility.Hidden;
-                TaskView.Visibility = Visibility.Visible;
-            }
+        }
+
+        private void btManageUser_Click(object sender, RoutedEventArgs e)
+        {
+            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(currentUser);
+            userManagementDialog.Owner = this;
+            userManagementDialog.ShowDialog();
+        }
+
+        private void btManageTeam_Click(object sender, RoutedEventArgs e)
+        {
+            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(currentUser);
+            userManagementDialog.Owner = this;
+            userManagementDialog.ShowDialog();
+
+        }
+
+        private void btSwitchUser_Click(object sender, RoutedEventArgs e)
+        {
+            MenuList.SelectedIndex = -1;
+            HiddenView();
+            LoginView.Visibility = Visibility.Visible;
         }
     }
 }

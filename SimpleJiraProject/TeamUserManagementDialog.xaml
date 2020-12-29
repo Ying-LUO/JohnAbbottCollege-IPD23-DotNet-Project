@@ -1,0 +1,116 @@
+﻿<Window x:Class="SimpleJiraProject.TeamUserManagementDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:local="clr-namespace:SimpleJiraProject"
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner"  WindowStyle="None" Foreground="White"
+        Title="Team And User Management" Height="450" Width="800">
+    <Grid>
+        <Grid Height="60" VerticalAlignment="Top" Background="SteelBlue">
+            <TextBlock Text="Simple Jira Application" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" IsCancel="True">
+                <materialDesign:PackIcon Kind="Power" />
+            </Button>
+        </Grid>
+        <Grid VerticalAlignment="Center" Height="350" Margin="0 40 0 0">
+            <TabControl>
+                <TabItem Header="Team Management">
+                    <StackPanel Margin="0 20">
+                        <ComboBox Name="cmbNewTeamList" Selected="cmbNewTeamList_Selected" FontSize="24"
+                              materialDesign:HintAssist.Hint="Choose or Input New Team"
+                              IsEditable="True">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <Button Height="50" x:Name="btTeam" FontSize="24" Click="btTeam_Click"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            ToolTip="MaterialDesignOutlinedButton">
+                            Add New Team
+                         </Button>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="User Management">
+                    <StackPanel Margin="0 20">
+                        <ComboBox Name="cmbTeamList"  FontSize="24"
+                              materialDesign:HintAssist.Hint="Choose Your Team"
+                              IsEditable="False">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <ComboBox Name="cmbNewUserList" Selected="cmbNewUserList_Selected"  FontSize="24"
+                              materialDesign:HintAssist.Hint="Choose or Input New User"
+                              IsEditable="True">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <ComboBox Name="cmbNewRoleList" FontSize="24"
+                              materialDesign:HintAssist.Hint="Choose or Input New Role"
+                              IsEditable="True">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <Button Height="50" FontSize="24" x:Name="btUser" Click="btUser_Click"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            ToolTip="MaterialDesignOutlinedButton">
+                            Add New User
+                        </Button>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="My Account">
+                    <StackPanel Margin="0 20">
+                        <ComboBox Name="cmbTeamListMyAccount"  FontSize="24"
+                              materialDesign:HintAssist.Hint="Choose Your Team"
+                              IsEditable="False">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <TextBox
+                          materialDesign:HintAssist.Hint="User Name"
+                          materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                          materialDesign:HintAssist.FloatingScale="0.50"
+                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                          FontSize="24" />
+                        <TextBox
+                          materialDesign:HintAssist.Hint="User Role"
+                          materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                          materialDesign:HintAssist.FloatingScale="0.50"
+                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                          FontSize="24" />
+                        <Button Height="50" FontSize="24" x:Name="btUpdateMyAccount" Click="btUpdateMyAccount_Click"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            ToolTip="MaterialDesignOutlinedButton">
+                            Update My Account
+                        </Button>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        <StatusBar VerticalAlignment="Bottom">
+            <TextBlock Text="Current User" />
+        </StatusBar>
+    </Grid>
+</Window>

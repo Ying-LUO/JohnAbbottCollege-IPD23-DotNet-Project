@@ -25,9 +25,7 @@ namespace SimpleJiraProject
         public string Status { get; set; }
         public int OwnerId { get; set; }
         public int UserStoryId { get; set; }
-        public int SprintId { get; set; }
     
-        public virtual Sprint Sprint { get; set; }
         public virtual User User { get; set; }
         public virtual UserStory UserStory { get; set; }
     }
