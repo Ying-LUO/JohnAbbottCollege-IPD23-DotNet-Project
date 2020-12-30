@@ -122,7 +122,7 @@
             </TabControl>
         </Grid>
         <StatusBar VerticalAlignment="Bottom">
-            <TextBlock Text="Current User" />
+            <TextBlock x:Name="tblStatus" />
         </StatusBar>
     </Grid>
 </Window>

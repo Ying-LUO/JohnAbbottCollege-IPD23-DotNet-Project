@@ -53,26 +53,26 @@ namespace SimpleJiraProject
             tiMyAccount.Visibility = Visibility.Visible;
             tiTeam.Visibility = Visibility.Hidden;
             tiUser.Visibility = Visibility.Hidden;
+
+            tblStatus.Text = $"Current User: {currentUser.Name}, {currentUser.Role} From {currentUser.Team.Name}";
         }
 
         private void ResetAndLoadDataFromDB()
         {
             try
             {
-                using (simpleJiraDB = new SimpleJiraDBEntities())
-                {
-                    cmbNewTeamList.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
-                    cmbNewTeamList.Items.Refresh();
+                simpleJiraDB = new SimpleJiraDBEntities();
+                cmbNewTeamList.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
+                cmbNewTeamList.Items.Refresh();
 
-                    cmbTeamList.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
-                    cmbTeamList.Items.Refresh();
+                cmbTeamList.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
+                cmbTeamList.Items.Refresh();
 
-                    cmbTeamListMyAccount.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
-                    cmbTeamListMyAccount.Items.Refresh();
+                cmbTeamListMyAccount.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
+                cmbTeamListMyAccount.Items.Refresh();
 
-                    cmbNewRoleList.ItemsSource = simpleJiraDB.Users.AsEnumerable().Select(u => u.Role).Distinct().ToList<string>();
-                    cmbNewRoleList.Items.Refresh();
-                }
+                cmbNewRoleList.ItemsSource = simpleJiraDB.Users.AsEnumerable().Select(u => u.Role).Distinct().ToList<string>();
+                cmbNewRoleList.Items.Refresh();
 
                 tbRoleMyAccount.Text = string.Empty;
                 tbTeamUpdate.Text = string.Empty;
@@ -115,25 +115,22 @@ namespace SimpleJiraProject
         {
             try
             {
-                using (simpleJiraDB = new SimpleJiraDBEntities())
+                if (cmbTeamList.SelectedItem != null)
                 {
-                    if (cmbTeamList.SelectedItem != null)
-                    {
-                        List<string> userList = simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).AsEnumerable().Select(u => u.Name).ToList<string>();
+                    List<string> userList = simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).AsEnumerable().Select(u => u.Name).ToList<string>();
                         
-                        if (userList != null)
-                        {
-                            cmbNewUserList.ItemsSource = userList;
-                            cmbNewUserList.Items.Refresh();
-                            cmbNewUserList.Text = string.Empty;
-                            cmbNewUserList.SelectedIndex = -1;
-                        }
-                        else
-                        {
-                            cmbNewUserList.Text = string.Empty;
-                        }
-                    }    
-                }
+                    if (userList != null)
+                    {
+                        cmbNewUserList.ItemsSource = userList;
+                        cmbNewUserList.Items.Refresh();
+                        cmbNewUserList.Text = string.Empty;
+                        cmbNewUserList.SelectedIndex = -1;
+                    }
+                    else
+                    {
+                        cmbNewUserList.Text = string.Empty;
+                    }
+                }    
             }
             catch (SqlException ex)
             {
@@ -164,39 +161,36 @@ namespace SimpleJiraProject
                     MessageBox.Show("Please input value", "User Information");
                     return;
                 }
-                using (simpleJiraDB = new SimpleJiraDBEntities())
+                if (cmbNewUserList.SelectedItem != null)
                 {
-                    if (cmbNewUserList.SelectedItem != null)
-                    {
-                        User userUpdate = simpleJiraDB.Users.Where(u => u.Name.Equals(cmbNewUserList.SelectedItem.ToString())).FirstOrDefault<User>();
+                    User userUpdate = simpleJiraDB.Users.Where(u => u.Name.Equals(cmbNewUserList.SelectedItem.ToString())).FirstOrDefault<User>();
 
-                        if (userUpdate != null)
+                    if (userUpdate != null)
+                    {
+                        if (string.IsNullOrEmpty(tbUserUpdate.Text))
                         {
-                            if (string.IsNullOrEmpty(tbUserUpdate.Text))
-                            {
-                                MessageBox.Show("Please enter new user name","User Information");
-                                return;
-                            }
-                            userUpdate.Name = tbUserUpdate.Text;
-                            userUpdate.Role = cmbNewRoleList.Text;
-                            simpleJiraDB.SaveChanges();
-                            MessageBox.Show("User Updated", "User Information");
-                            ResetAndLoadDataFromDB();
+                            MessageBox.Show("Please enter new user name","User Information");
+                            return;
                         }
-                        else
-                        {
-                            MessageBox.Show("Cannot find user to update", "User Information");
-                        }
+                        userUpdate.Name = tbUserUpdate.Text;
+                        userUpdate.Role = cmbNewRoleList.Text;
+                        simpleJiraDB.SaveChanges();
+                        MessageBox.Show("User Updated", "User Information");
+                        ResetAndLoadDataFromDB();
                     }
                     else
                     {
-                        Team teamForUser = simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
-                        User newUser = new User { Team = teamForUser, Name = cmbNewUserList.Text, Role = cmbNewRoleList.Text };
-                        simpleJiraDB.Users.Add(newUser);
-                        simpleJiraDB.SaveChanges();
-                        MessageBox.Show("Added new User", "User Information");
-                        ResetAndLoadDataFromDB();
+                        MessageBox.Show("Cannot find user to update", "User Information");
                     }
+                }
+                else
+                {
+                    Team teamForUser = simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
+                    User newUser = new User { Team = teamForUser, Name = cmbNewUserList.Text, Role = cmbNewRoleList.Text };
+                    simpleJiraDB.Users.Add(newUser);
+                    simpleJiraDB.SaveChanges();
+                    MessageBox.Show("Added new User", "User Information");
+                    ResetAndLoadDataFromDB();
                 }
             }
             catch (DbUpdateException ex) 
@@ -219,37 +213,33 @@ namespace SimpleJiraProject
                     MessageBox.Show("Please input value", "Team Information");
                     return;
                 }
-                
-                using (simpleJiraDB = new SimpleJiraDBEntities())
+                if (cmbNewTeamList.SelectedItem != null)
                 {
-                    if (cmbNewTeamList.SelectedItem != null)
+                    Team teamUpdate = simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbNewTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
+                    if (teamUpdate != null)
                     {
-                        Team teamUpdate = simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbNewTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
-                        if (teamUpdate != null)
+                        if (string.IsNullOrEmpty(tbTeamUpdate.Text))
                         {
-                            if (string.IsNullOrEmpty(tbTeamUpdate.Text))
-                            {
-                                MessageBox.Show("Please enter new team name", "User Information");
-                                return;
-                            }
-                            teamUpdate.Name = tbTeamUpdate.Text;
-                            simpleJiraDB.SaveChanges();
-                            MessageBox.Show("Team Updated", "Team Information");
-                            ResetAndLoadDataFromDB();
+                            MessageBox.Show("Please enter new team name", "User Information");
+                            return;
                         }
-                        else
-                        {
-                            MessageBox.Show("Cannot find team to update", "User Information");
-                        }
+                        teamUpdate.Name = tbTeamUpdate.Text;
+                        simpleJiraDB.SaveChanges();
+                        MessageBox.Show("Team Updated", "Team Information");
+                        ResetAndLoadDataFromDB();
                     }
                     else
                     {
-                        Team newTeam = new Team { Name = cmbNewTeamList.Text };
-                        simpleJiraDB.Teams.Add(newTeam);
-                        simpleJiraDB.SaveChanges();
-                        MessageBox.Show("Added new Team", "Team Information");
-                        ResetAndLoadDataFromDB();
+                        MessageBox.Show("Cannot find team to update", "User Information");
                     }
+                }
+                else
+                {
+                    Team newTeam = new Team { Name = cmbNewTeamList.Text };
+                    simpleJiraDB.Teams.Add(newTeam);
+                    simpleJiraDB.SaveChanges();
+                    MessageBox.Show("Added new Team", "Team Information");
+                    ResetAndLoadDataFromDB();
                 }
             }
             catch (DbUpdateException ex) 
@@ -272,21 +262,19 @@ namespace SimpleJiraProject
                     MessageBox.Show("Please input value", "User Information");
                     return;
                 }
-                using (simpleJiraDB = new SimpleJiraDBEntities())
+                User myAccount = simpleJiraDB.Users.Include("Team").Where(u => u.UserId == currentUserInDialog.UserId).FirstOrDefault<User>();
+                if (myAccount != null)
                 {
-                    User myAccount = simpleJiraDB.Users.Include("Team").Where(u => u.UserId == currentUserInDialog.UserId).FirstOrDefault<User>();
-                    if (myAccount != null)
-                    {
-                        myAccount.Name = tbUserNameMyAccount.Text;
-                        myAccount.Role = tbRoleMyAccount.Text;
-                        simpleJiraDB.SaveChanges();
-                        MessageBox.Show("My Account updated", "User Information");
-                        ResetAndLoadDataFromDB();
+                    myAccount.Name = tbUserNameMyAccount.Text;
+                    myAccount.Role = tbRoleMyAccount.Text;
+                    simpleJiraDB.SaveChanges();
+                    MessageBox.Show("My Account updated", "User Information");
+                    tblStatus.Text = $"Update Current User To : {tbUserNameMyAccount.Text}, {tbRoleMyAccount.Text} From {cmbTeamListMyAccount.SelectedItem.ToString()}";
+                    ResetAndLoadDataFromDB();
                     }
-                    else
-                    {
-                        MessageBox.Show("Cannot find this user to update", "User Information");
-                    }
+                else
+                {
+                    MessageBox.Show("Cannot find this user to update", "User Information");
                 }
             }
             catch (DbUpdateException ex)

@@ -26,7 +26,7 @@
         <Grid Height="60" VerticalAlignment="Top" Background="SteelBlue">
             <TextBlock Text="Simple Jira Application" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="User Management" Content="My Account" x:Name="btMyAccount" Click="btMyAccount_Click"  VerticalAlignment="Center" FontSize="18" />
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="Update User Information" Content="My Account" x:Name="btMyAccount" Click="btMyAccount_Click"  VerticalAlignment="Center" FontSize="18" Visibility="Hidden"/>
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
                     <StackPanel Width="150">
                         <Button Content="Login" Name="btLogOut" Click="btLogOut_Click"/>
@@ -40,23 +40,27 @@
         </Grid>
         <Grid x:Name="GridMenu"  Width="200" HorizontalAlignment="Left" Background="LightSteelBlue" >
             <StackPanel >
-                <Grid Height="130">
+                <Grid Height="150">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20" />
+                        <RowDefinition Height="10" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
-                        <RowDefinition Height="20" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20"/>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Content="Team" Grid.Row="1" Grid.Column="1"/>
-                    <TextBlock Margin="15 0" x:Name="tblTeam" Grid.Row="2" Grid.Column="1"/>
+                    <TextBlock Margin="20 0" x:Name="tblTeam" Grid.Row="2" Grid.Column="1"/>
                     <Label Content="User"  Grid.Row="3" Grid.Column="1"/>
-                    <TextBlock Margin="15 0" x:Name="tblUser" Grid.Row="4" Grid.Column="1"/>
+                    <TextBlock Margin="20 0" x:Name="tblUser" Grid.Row="4" Grid.Column="1"/>
+                    <Label Content="Role"  Grid.Row="5" Grid.Column="1"/>
+                    <TextBlock Margin="20 0" x:Name="tblRole" Grid.Row="6" Grid.Column="1"/>
                 </Grid>
                 <ListView x:Name="MenuList" SelectionChanged="MenuList_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  Foreground="SteelBlue">
                     <ListViewItem Height="60" >
@@ -92,8 +96,8 @@
                 </ListView>
             </StackPanel>
         </Grid>
-        <Grid x:Name="LoginView" Visibility="Visible" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Rectangle Height="520" VerticalAlignment="Top" Width="400">
+        <Grid x:Name="LoginView" Visibility="Visible" Height="540" Width="880" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Rectangle Height="520" VerticalAlignment="Top">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
                         <GradientStop Color="AliceBlue" />
@@ -104,7 +108,7 @@
             </Rectangle>
             <Rectangle Width="280" Height="380" Fill="White" VerticalAlignment="Bottom" Margin="290,0,290,100" RadiusY="8" RadiusX="8">
                 <Rectangle.Effect>
-                    <DropShadowEffect Color="Gray" Direction="0" BlurRadius="15" RenderingBias="Quality" ShadowDepth="5"/>
+                    <DropShadowEffect Color="Gray" Direction="50" BlurRadius="15" ShadowDepth="5"/>
                 </Rectangle.Effect>
             </Rectangle>
             <Grid Width="280" Height="320" VerticalAlignment="Bottom" Margin="0, 100">
