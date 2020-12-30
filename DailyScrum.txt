@@ -152,3 +152,64 @@ Ying:
 
 3. Need assistant:
 *None till now
+
+============================================================================================
+Day 05: 2020-Dec-28 Monday
+============================================================================================
+Khalil:
+
+1- Done:
+	*Continue working on the design draft.
+	*Update Trello
+
+2- Todo:
+	*Working on dialogs design
+	*Update Trello
+
+3- Need assistant
+    	N/A
+
+Ying:
+1. Done:
+* update database script, add foreign key from teams table to projects;
+* remove foreign key of teams from sprints table, keep foreign key with projects;
+* remove foreign key of sprints from issues table, since foreign key with user stories indicated sprints;
+* add login view to retrieve current team and user;
+* add team and user management dialog -- under construction
+
+2. Todo:
+* Keep working on team and user management features
+
+
+3. Need assistant:
+*None till now
+
+============================================================================================
+Day 06: 2020-Dec-29 Tuesday
+============================================================================================
+Khalil:
+
+1- Done:
+	*Continue working on the design draft.
+	*Update Trello
+
+2- Todo:
+	*Working on dialogs design
+	*Update Trello
+
+3- Need assistant
+    	N/A
+
+Ying:
+1. Done:
+* Finished the team/user management xaml and features - almost done
+* User could login with team and user name
+* User could add and update information of team and user
+
+2. Todo:
+* Need add dialog callback to pass updated user/team information
+* Keep working on project/sprint/etc. features
+
+
+3. Need assistant:
+*None till now
