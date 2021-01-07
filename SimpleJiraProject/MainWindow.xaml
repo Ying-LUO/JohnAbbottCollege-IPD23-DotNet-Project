@@ -114,11 +114,11 @@
             <Grid Width="280" Height="320" VerticalAlignment="Bottom" Margin="0, 100">
                 <TextBox Text="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
                 <StackPanel>
-                    <ComboBox x:Name="cmbLoginTeam" Foreground="Gray" materialDesign:HintAssist.Hint="TEAM" Style="{StaticResource MaterialDesignComboBox}" Margin="0, 60" HorizontalAlignment="Left" Width="280"/>
-                    <TextBox x:Name="tbLoginUserName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0, 0" />
-                    </StackPanel>
+                    <ComboBox x:Name="cmbLoginTeam" Foreground="Gray" materialDesign:HintAssist.Hint="TEAM" Style="{StaticResource MaterialDesignComboBox}" Margin="26,60,0,60" HorizontalAlignment="Left" Width="227"/>
+                    <TextBox x:Name="tbLoginUserName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                </StackPanel>
             </Grid>
-            <Button VerticalAlignment="Bottom" Margin="0, 85" Width="150" Content="LOGIN" FontSize="18" x:Name="btLogin" Click="btLogin_Click"/>
+            <Button VerticalAlignment="Bottom" Margin="0, 85" Width="150" Content="LOGIN" FontSize="18" x:Name="btLogin" Click="btLogin_Click" />
             <TextBlock Text="Login with your team and user name(not case sensitive)" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" Cursor="Help" FontSize="15"/>
         </Grid>
         <Grid x:Name="ProjectView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
