@@ -159,7 +159,12 @@ namespace SimpleJiraProject
             int index = 1;
             TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(index);
             userManagementDialog.Owner = this;
-            userManagementDialog.ShowDialog();
+            bool? result = userManagementDialog.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
+
+            if (result == true)
+            {
+                cmbLoginTeam.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+            }
             //TODO: AFTER UPDATING TEAM NAME, THE TEAM COMBO BOX LIST IS NOT UPDATED ACCORDINGLY
         }
 

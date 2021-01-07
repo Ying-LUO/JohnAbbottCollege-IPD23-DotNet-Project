@@ -97,7 +97,7 @@
             </StackPanel>
         </Grid>
         <Grid x:Name="LoginView" Visibility="Visible" Height="540" Width="880" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Rectangle Height="520" VerticalAlignment="Top">
+            <Rectangle Height="540" VerticalAlignment="Top">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
                         <GradientStop Color="AliceBlue" />

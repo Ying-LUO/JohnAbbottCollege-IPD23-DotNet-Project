@@ -58,16 +58,15 @@ go
 CREATE TABLE Users
 (
 	UserId int IDENTITY(1,1) NOT NULL, -- auto-generated number
-	Name nvarchar(50) NOT NULL,
+	LoginName NVARCHAR(40) NOT NULL,
+    Password BINARY(32) NOT NULL,
+    FirstName NVARCHAR(50) NULL,
+    LastName NVARCHAR(50) NULL,
 	Role nvarchar(50) NOT NULL,
 	TeamId int NOT NULL,
 	CONSTRAINT PK_Users PRIMARY KEY CLUSTERED (UserId ASC)
 )
 ;
-go
-
-ALTER TABLE Users
-ADD UNIQUE (Name);
 go
 
 ALTER TABLE Users
