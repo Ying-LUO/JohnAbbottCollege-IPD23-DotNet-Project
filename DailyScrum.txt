@@ -159,11 +159,12 @@ Day 05: 2020-Dec-28 Monday
 Khalil:
 
 1- Done:
-	*Continue working on the design draft.
+	*Working on dialogs design
 	*Update Trello
 
 2- Todo:
-	*Working on dialogs design
+	*working on project dialog design draft.
+	*working on Sprint dialog design draft.
 	*Update Trello
 
 3- Need assistant
@@ -190,11 +191,13 @@ Day 06: 2020-Dec-29 Tuesday
 Khalil:
 
 1- Done:
-	*Continue working on the design draft.
-	*Update Trello
+	*working on project dialog design draft.
+	*working on Sprint dialog design draft.
+	
 
 2- Todo:
-	*Working on dialogs design
+	*working on User Story dialog design draft.
+	*working on Issue dialog design draft.
 	*Update Trello
 
 3- Need assistant

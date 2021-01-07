@@ -1,0 +1,53 @@
+﻿<Window x:Class="SimpleJiraProject.AddEditProjectDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:local="clr-namespace:SimpleJiraProject"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"  Foreground="White"
+        Title="Project" Height="397.674" Width="575.145" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid Height="60" VerticalAlignment="Top" Background="SteelBlue">
+            <TextBlock Text="Add Project" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="97,15,0,18" Width="154" TextAlignment="Center"/>
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="Update User Information" Content="My Account" x:Name="btMyAccount"  VerticalAlignment="Center" FontSize="18" Visibility="Hidden"/>
+                <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
+                    <StackPanel Width="150">
+                        <Button Content="Save" Name="btSave" />
+                        <Separator />
+                        <Button Content="Exit" Name="btExit" Click="btExit_Click"/>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="GridMenu"  Width="75" HorizontalAlignment="Left" Background="LightSteelBlue" >
+        </Grid>
+        <Grid x:Name="ProjectDialog" Height="312" Width="470" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <StackPanel Margin="31,51,0,38">
+                <TextBox x:Name="tbProjectName" Foreground="Gray" materialDesign:HintAssist.Hint="Project Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,36,0" Height="45" />
+                <ComboBox x:Name="cmbLoginTeam" Foreground="Gray" materialDesign:HintAssist.Hint="TEAM" Style="{StaticResource MaterialDesignComboBox}" Margin="0, 60" HorizontalAlignment="Left" Width="403" Height="45"/>
+            </StackPanel>
+            <Button Content="Cancel" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="74,256,296,24" />
+            <Button Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="255,256,104,24" RenderTransformOrigin="0.408,0.622"  />
+            <materialDesign:Snackbar
+  MessageQueue="{materialDesign:MessageQueue}"
+  x:Name="SnackbarThree" />
+        </Grid>
+    </Grid>
+</Window>

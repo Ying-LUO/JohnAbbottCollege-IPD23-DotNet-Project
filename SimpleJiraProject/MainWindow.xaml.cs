@@ -21,7 +21,7 @@ namespace SimpleJiraProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        SimpleJiraDBEntities simpleJiraDB;
+        //SimpleJiraDBEntities simpleJiraDB;
         User currentUser;
         List<Project> currentTeamProjectList;
         List<Sprint> currentSprintList;
@@ -31,8 +31,8 @@ namespace SimpleJiraProject
             InitializeComponent();
             try
             {
-                simpleJiraDB = new SimpleJiraDBEntities();
-                cmbLoginTeam.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+                Globals.simpleJiraDB = new SimpleJiraDBEntities();
+                cmbLoginTeam.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
             }
             catch (SystemException ex)
             {
@@ -43,16 +43,16 @@ namespace SimpleJiraProject
 
         private void LoadDataFromDb()
         {
-                currentTeamProjectList = simpleJiraDB.Projects.Where(p=>p.TeamId == currentUser.TeamId).ToList<Project>();
+                currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p=>p.TeamId == currentUser.TeamId).ToList<Project>();
                 ProjectListView.ItemsSource = currentTeamProjectList;
                 IEnumerable<int> projectIds = currentTeamProjectList.Select(p => p.ProjectId).Distinct();
 
-                currentSprintList = simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
+                currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
                 SprintListView.ItemsSource = currentSprintList;
 
-                UserStoryListView.ItemsSource = simpleJiraDB.UserStories.Where(u=>u.OwnerId == currentUser.UserId).ToList<UserStory>();
-                TaskListView.ItemsSource = simpleJiraDB.Issues.Where(i => i.Category == "Task").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
-                DefectListView.ItemsSource = simpleJiraDB.Issues.Where(i => i.Category == "Defect").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
+                UserStoryListView.ItemsSource = Globals.simpleJiraDB.UserStories.Where(u=>u.OwnerId == currentUser.UserId).ToList<UserStory>();
+                TaskListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Task").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
+                DefectListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Defect").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
         }
 
         private void btExit_Click(object sender, RoutedEventArgs e)
@@ -103,6 +103,23 @@ namespace SimpleJiraProject
 
         private void btNew_Click(object sender, RoutedEventArgs e)
         {
+            if(ProjectView.IsVisible)
+            {
+                AddEditProjectDialog addEditProject = new AddEditProjectDialog();
+                addEditProject.ShowDialog();
+            }
+
+            if (SprintView.IsVisible)
+            {
+                AddEditSprintDialog addEditSprint = new AddEditSprintDialog();
+                addEditSprint.ShowDialog();
+            }
+
+            if (UserStoryView.IsVisible)
+            {
+                AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog();
+                addEditUserStory.ShowDialog();
+            }
 
         }
 
@@ -125,8 +142,8 @@ namespace SimpleJiraProject
                     MessageBox.Show("Please choose a Team and input your User Name", "Login Information");
                     return;
                 }
-                int currentTeamId = simpleJiraDB.Teams.SingleOrDefault(t => t.Name.Equals(cmbLoginTeam.SelectedItem.ToString())).TeamId;
-                currentUser = simpleJiraDB.Users.Where(u => u.Name.Equals(tbLoginUserName.Text)).Where(ut => ut.TeamId.Equals(currentTeamId)).FirstOrDefault();
+                int currentTeamId = Globals.simpleJiraDB.Teams.SingleOrDefault(t => t.Name.Equals(cmbLoginTeam.SelectedItem.ToString())).TeamId;
+                currentUser = Globals.simpleJiraDB.Users.Where(u => u.Name.Equals(tbLoginUserName.Text)).Where(ut => ut.TeamId.Equals(currentTeamId)).FirstOrDefault();
                 if (currentUser != null)
                 {
                     MessageBox.Show($"Welcome! {currentUser.Name} from {cmbLoginTeam.SelectedItem.ToString()}", "Login Information");

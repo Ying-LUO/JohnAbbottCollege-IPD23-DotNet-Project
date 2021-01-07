@@ -73,6 +73,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddEditIssueDialog.xaml.cs">
+      <DependentUpon>AddEditIssueDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditProjectDialog.xaml.cs">
+      <DependentUpon>AddEditProjectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditSprintDialog.xaml.cs">
+      <DependentUpon>AddEditSprintDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditUserStoryDialog.xaml.cs">
+      <DependentUpon>AddEditUserStoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Globals.cs" />
     <Compile Include="Issue.cs">
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
     </Compile>
@@ -109,6 +122,22 @@
     <Compile Include="UserStory.cs">
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
     </Compile>
+    <Page Include="AddEditIssueDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddEditProjectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddEditSprintDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddEditUserStoryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
