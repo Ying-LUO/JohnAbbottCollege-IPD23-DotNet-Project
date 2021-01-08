@@ -191,13 +191,14 @@ Day 06: 2020-Dec-29 Tuesday
 Khalil:
 
 1- Done:
-	*working on User Story dialog design draft.
-	*working on Issue dialog design draft.
+	*working on project dialog design draft.
+	*working on Sprint dialog design draft.
+	*Update Trello
 	
 
 2- Todo:
-	*Change projects View by using cards instead of list
-	*Working on project update.
+	*working on User Story dialog design draft.
+	*working on Issue dialog design draft.
 	*Update Trello
 
 3- Need assistant
@@ -225,6 +226,7 @@ Khalil:
 1- Done:
 	*working on User Story dialog design draft.
 	*working on Issue dialog design draft.
+	*Update Trello
 	
 
 2- Todo:
@@ -254,13 +256,15 @@ Day 08: 2021-Jan-08 Friday
 Khalil:
 
 1- Done:
-	*working on User Story dialog design draft.
-	*working on Issue dialog design draft.
-	
-
-2- Todo:
 	*Change projects View by using cards instead of list
-	*Working on project update.
+	*Update Trello
+	
+2- Todo:
+	
+	*Working on Project Dialog to add  projects
+	*Continue Working on project update.
+	*Working on Sprint Dialog to add and Update sprints
+	* find the way to access child Item Control 
 	*Update Trello
 
 3- Need assistant
