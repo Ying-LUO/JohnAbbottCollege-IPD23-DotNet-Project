@@ -32,17 +32,17 @@ namespace SimpleJiraProject
             try
             {
                 Globals.simpleJiraDB = new SimpleJiraDBEntities();
-<<<<<<< HEAD
+
 
                 allTeamsList = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
-                cmbLoginTeam.ItemsSource = allTeamsList;
+                
 
                 
 
-=======
+
                 currentUser = loginUser;
                 LoadDataFromDb(currentUser);
->>>>>>> 6325c3de0700c8c4ef54f71c333b99238ba8fef5
+
             }
             catch (SystemException ex)
             {
