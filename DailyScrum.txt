@@ -216,3 +216,62 @@ Ying:
 
 3. Need assistant:
 *None till now
+
+============================================================================================
+Day 07: 2021-Jan-07 Thursday
+============================================================================================
+Khalil:
+
+1- Done:
+	*working on User Story dialog design draft.
+	*working on Issue dialog design draft.
+	
+
+2- Todo:
+	*Change projects View by using cards instead of list
+	*Working on project update.
+	*Update Trello
+
+3- Need assistant
+    	N/A
+
+Ying:
+1. Done:
+* Change user table fields to add passwords
+* Study the way of passwords encryption and how to store the value in database
+
+2. Todo:
+* Add extra dialog for user login
+* Refactor current login with new password
+
+
+3. Need assistant:
+*None till now
+
+============================================================================================
+Day 08: 2021-Jan-08 Friday
+============================================================================================
+Khalil:
+
+1- Done:
+	*working on User Story dialog design draft.
+	*working on Issue dialog design draft.
+	
+
+2- Todo:
+	*Change projects View by using cards instead of list
+	*Working on project update.
+	*Update Trello
+
+3- Need assistant
+    	N/A
+
+Ying:
+1. Done:
+
+
+2. Todo:
+
+
+3. Need assistant:
+*None till now
