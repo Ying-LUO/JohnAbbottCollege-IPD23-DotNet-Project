@@ -180,7 +180,7 @@ namespace SimpleJiraProject
 
             if (result == true)
             {
-                cmbLoginTeam.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+                cmbLoginTeam.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
             }
             //TODO: AFTER UPDATING TEAM NAME, THE TEAM COMBO BOX LIST IS NOT UPDATED ACCORDINGLY
         }
@@ -207,6 +207,7 @@ namespace SimpleJiraProject
             tblRole.Text = string.Empty;
             btLogOut.Content = "LogIn";
             btMyAccount.Visibility = Visibility.Hidden;
+            //TODO: AFTER LOGOUT, ALL DATA IN ALL VIEWS HAVE TO BE REMOVED/CLEARED
         }
 
         private void btMyAccount_Click(object sender, RoutedEventArgs e)
