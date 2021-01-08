@@ -21,24 +21,28 @@ namespace SimpleJiraProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        //SimpleJiraDBEntities simpleJiraDB;
         User currentUser;
         List<Project> currentTeamProjectList;
         List<Sprint> currentSprintList;
         List<string> allTeamsList;
        
-        public MainWindow()
+        public MainWindow(User loginUser)
         {
             InitializeComponent();
             try
             {
                 Globals.simpleJiraDB = new SimpleJiraDBEntities();
+<<<<<<< HEAD
 
                 allTeamsList = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
                 cmbLoginTeam.ItemsSource = allTeamsList;
 
                 
 
+=======
+                currentUser = loginUser;
+                LoadDataFromDb(currentUser);
+>>>>>>> 6325c3de0700c8c4ef54f71c333b99238ba8fef5
             }
             catch (SystemException ex)
             {
@@ -47,7 +51,7 @@ namespace SimpleJiraProject
             }
         }
 
-        private void LoadDataFromDb()
+        private void LoadDataFromDb(User currentUser)
         {
                 currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p=>p.TeamId == currentUser.TeamId).ToList<Project>();
                 foreach(Project p in currentTeamProjectList)
@@ -70,15 +74,8 @@ namespace SimpleJiraProject
        
         }
 
-        private void btExit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-            //Application.Current.Shutdown();
-        }
-
         private void HiddenView()
         {
-            LoginView.Visibility = Visibility.Hidden;
             ProjectView.Visibility = Visibility.Hidden;
             SprintView.Visibility = Visibility.Hidden;
             UserStoryView.Visibility = Visibility.Hidden;
@@ -149,44 +146,6 @@ namespace SimpleJiraProject
 
         }
 
-        private void btLogin_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(tbLoginUserName.Text)||string.IsNullOrEmpty(cmbLoginTeam.SelectedItem.ToString()))
-                {
-                    MessageBox.Show("Please choose a Team and input your User Name", "Login Information");
-                    return;
-                }
-                int currentTeamId = Globals.simpleJiraDB.Teams.SingleOrDefault(t => t.Name.Equals(cmbLoginTeam.SelectedItem.ToString())).TeamId;
-                currentUser = Globals.simpleJiraDB.Users.Where(u => u.Name.Equals(tbLoginUserName.Text)).Where(ut => ut.TeamId.Equals(currentTeamId)).FirstOrDefault();
-                if (currentUser != null)
-                {
-                    MessageBox.Show($"Welcome! {currentUser.Name} from {cmbLoginTeam.SelectedItem.ToString()}", "Login Information");
-                    tblTeam.Text = currentUser.Team.Name;
-                    tblUser.Text = currentUser.Name;
-                    tblRole.Text = currentUser.Role;
-                    btLogOut.Content = "Log out";
-                    btMyAccount.Visibility = Visibility.Visible;
-                    MenuList.SelectedIndex = 0;
-                    LoadDataFromDb();
-                    tbLoginUserName.Text = string.Empty;
-                    cmbLoginTeam.SelectedIndex = -1;
-                    btManageTeam.Visibility = Visibility.Hidden;
-                    btManageUser.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    MessageBox.Show($"Cannot find {tbLoginUserName.Text} in {cmbLoginTeam.SelectedItem.ToString()}", "Login Information");
-                    return;
-                }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error Login into system:\n" + ex.Message, "Error Information");
-            }
-        }
-
         private void btManageUser_Click(object sender, RoutedEventArgs e)
         {
             int index = 1;
@@ -196,7 +155,7 @@ namespace SimpleJiraProject
 
             if (result == true)
             {
-                cmbLoginTeam.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+                //cmbLoginTeam.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
             }
             //TODO: AFTER UPDATING TEAM NAME, THE TEAM COMBO BOX LIST IS NOT UPDATED ACCORDINGLY
         }
@@ -212,27 +171,11 @@ namespace SimpleJiraProject
 
         private void btLogOut_Click(object sender, RoutedEventArgs e)
         {
-            currentUser = null;
-            MenuList.SelectedIndex = -1;
-            HiddenView();
-            LoginView.Visibility = Visibility.Visible;
-            btManageTeam.Visibility = Visibility.Visible;
-            btManageUser.Visibility = Visibility.Visible;
-            tblTeam.Text = string.Empty;
-            tblUser.Text = string.Empty;
-            tblRole.Text = string.Empty;
-            btLogOut.Content = "LogIn";
-            btMyAccount.Visibility = Visibility.Hidden;
-            //TODO: AFTER LOGOUT, ALL DATA IN ALL VIEWS HAVE TO BE REMOVED/CLEARED
+            new LoginDialog().ShowDialog();
         }
 
         private void btMyAccount_Click(object sender, RoutedEventArgs e)
         {
-            if (currentUser == null)
-            {
-                MessageBox.Show("Please login first", "Login Information");
-                return;
-            }
             TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(currentUser);
             //TODO: IF CURRENT USER CHANGED INFORMATION, NEED CALL BACK FROM DIALOG
             userManagementDialog.Owner = this;

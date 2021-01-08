@@ -59,9 +59,9 @@ CREATE TABLE Users
 (
 	UserId int IDENTITY(1,1) NOT NULL, -- auto-generated number
 	LoginName NVARCHAR(40) NOT NULL,
-    Password BINARY(32) NOT NULL,
-    FirstName NVARCHAR(50) NULL,
-    LastName NVARCHAR(50) NULL,
+    PasswordHash BINARY(64) NOT NULL,
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
 	Role nvarchar(50) NOT NULL,
 	TeamId int NOT NULL,
 	CONSTRAINT PK_Users PRIMARY KEY CLUSTERED (UserId ASC)
