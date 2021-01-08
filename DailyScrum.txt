@@ -191,13 +191,13 @@ Day 06: 2020-Dec-29 Tuesday
 Khalil:
 
 1- Done:
-	*working on project dialog design draft.
-	*working on Sprint dialog design draft.
+	*working on User Story dialog design draft.
+	*working on Issue dialog design draft.
 	
 
 2- Todo:
-	*working on User Story dialog design draft.
-	*working on Issue dialog design draft.
+	*Change projects View by using cards instead of list
+	*Working on project update.
 	*Update Trello
 
 3- Need assistant
