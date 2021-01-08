@@ -25,6 +25,7 @@ namespace SimpleJiraProject
         User currentUser;
         List<Project> currentTeamProjectList;
         List<Sprint> currentSprintList;
+        List<string> allTeamsList;
        
         public MainWindow()
         {
@@ -32,7 +33,10 @@ namespace SimpleJiraProject
             try
             {
                 Globals.simpleJiraDB = new SimpleJiraDBEntities();
-                cmbLoginTeam.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+
+                allTeamsList = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+                cmbLoginTeam.ItemsSource = allTeamsList;
+
                 
 
             }
@@ -46,6 +50,10 @@ namespace SimpleJiraProject
         private void LoadDataFromDb()
         {
                 currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p=>p.TeamId == currentUser.TeamId).ToList<Project>();
+                foreach(Project p in currentTeamProjectList)
+            {
+                p.AllTeamNamesList = allTeamsList;
+            }
                 ProjectListView.ItemsSource = currentTeamProjectList;
             
             
@@ -59,6 +67,7 @@ namespace SimpleJiraProject
                 UserStoryListView.ItemsSource = Globals.simpleJiraDB.UserStories.Where(u=>u.OwnerId == currentUser.UserId).ToList<UserStory>();
                 TaskListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Task").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
                 DefectListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Defect").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
+       
         }
 
         private void btExit_Click(object sender, RoutedEventArgs e)
