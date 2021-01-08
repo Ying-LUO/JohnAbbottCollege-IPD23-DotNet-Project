@@ -12,8 +12,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:SimpleJiraProject"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="White"
-        Title="Simple Jira Application" Height="600" Width="1080" ResizeMode="NoResize">
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Foreground="White"
+        Title="Simple Jira Application" MinHeight="600" MinWidth="1080" >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -32,8 +32,6 @@
                         <Button Content="Login" Name="btLogOut" Click="btLogOut_Click"/>
                         <Button Content="Team Management" Name="btManageTeam" Click="btManageTeam_Click"/>
                         <Button Content="User Management" Name="btManageUser" Click="btManageUser_Click"/>
-                        <Separator />
-                        <Button Content="Exit" Name="btExit" Click="btExit_Click"/>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
@@ -96,32 +94,6 @@
                 </ListView>
             </StackPanel>
         </Grid>
-        <Grid x:Name="LoginView" Visibility="Visible" Height="540" Width="880" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Rectangle Height="540" VerticalAlignment="Top">
-                <Rectangle.Fill>
-                    <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
-                        <GradientStop Color="AliceBlue" />
-                        <GradientStop Color="SteelBlue" Offset="1"/>
-                        <GradientStop Color="CadetBlue" Offset="0.5"/>
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle Width="280" Height="380" Fill="White" VerticalAlignment="Bottom" Margin="290,0,290,100" RadiusY="8" RadiusX="8">
-                <Rectangle.Effect>
-                    <DropShadowEffect Color="Gray" Direction="50" BlurRadius="15" ShadowDepth="5"/>
-                </Rectangle.Effect>
-            </Rectangle>
-            <Grid Width="280" Height="320" VerticalAlignment="Bottom" Margin="0, 100">
-                <TextBox Text="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
-                <StackPanel>
-                    <ComboBox x:Name="cmbLoginTeam" Foreground="Gray" materialDesign:HintAssist.Hint="TEAM" Style="{StaticResource MaterialDesignComboBox}" Margin="26,60,0,60" HorizontalAlignment="Left" Width="227"/>
-                    <TextBox x:Name="tbLoginUserName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
-                </StackPanel>
-            </Grid>
-            <Button VerticalAlignment="Bottom" Margin="0, 85" Width="150" Content="LOGIN" FontSize="18" x:Name="btLogin" Click="btLogin_Click" />
-            <TextBlock Text="Login with your team and user name(not case sensitive)" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" Cursor="Help" FontSize="15"/>
-        </Grid>
-
         <Grid x:Name="ProjectView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <ScrollViewer Foreground="{x:Null}" Grid.Row="1" Grid.Column="1" >
                 <StackPanel>
@@ -138,7 +110,7 @@
                                                         <RowDefinition Height="150" />
                                                         <RowDefinition Height="*" />
                                                     </Grid.RowDefinitions>
-                                                    <Image Source="C:\Users\Khalil\Documents\software Developement\dotnet-2\Team9SimpleJira\Icons\p1.png" Height="155" Width="216"     Stretch="UniformToFill" />
+                                                    <Image Source="/Icons/p1.png" Height="155" Width="216" Stretch="UniformToFill" />
                                                     <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                         <TextBlock Foreground="#FF7C7575" Text="{Binding Name}"/>
                                                         <Button x:Name="cmbTeams" Content="Edit" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 4 0 0">

@@ -1,0 +1,41 @@
+﻿<Window x:Class="SimpleJiraProject.LoginDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:local="clr-namespace:SimpleJiraProject"
+        mc:Ignorable="d"
+        Title="LoginDialog" Height="570" Width="880" WindowStartupLocation="CenterOwner">
+    <Grid x:Name="LoginView" Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+        <Rectangle Height="540" VerticalAlignment="Top">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
+                    <GradientStop Color="AliceBlue" />
+                    <GradientStop Color="SteelBlue" Offset="1"/>
+                    <GradientStop Color="CadetBlue" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle Width="280" Height="380" Fill="White" VerticalAlignment="Bottom" Margin="290,0,290,100" RadiusY="8" RadiusX="8">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="Gray" Direction="50" BlurRadius="15" ShadowDepth="5"/>
+            </Rectangle.Effect>
+        </Rectangle>
+        <Grid Width="280" Height="320" VerticalAlignment="Bottom" Margin="0 100">
+            <TextBox Text="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
+            <StackPanel Margin="0 75">
+                <TextBox x:Name="tbLoginName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                <TextBox x:Name="tbPassword" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+            </StackPanel>
+        </Grid>
+        <Button VerticalAlignment="Bottom" Margin="0, 85" Width="150" Content="LOGIN" FontSize="18" x:Name="btLogin" Click="btLogin_Click" />
+        </Grid>
+</Window>
