@@ -25,7 +25,7 @@ namespace SimpleJiraProject
         User currentUser;
         List<Project> currentTeamProjectList;
         List<Sprint> currentSprintList;
-
+       
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +33,8 @@ namespace SimpleJiraProject
             {
                 Globals.simpleJiraDB = new SimpleJiraDBEntities();
                 cmbLoginTeam.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+                
+
             }
             catch (SystemException ex)
             {
@@ -45,9 +47,13 @@ namespace SimpleJiraProject
         {
                 currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p=>p.TeamId == currentUser.TeamId).ToList<Project>();
                 ProjectListView.ItemsSource = currentTeamProjectList;
-                IEnumerable<int> projectIds = currentTeamProjectList.Select(p => p.ProjectId).Distinct();
+            
+            
 
-                currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
+            IEnumerable<int> projectIds = currentTeamProjectList.Select(p => p.ProjectId).Distinct();
+            
+
+            currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
                 SprintListView.ItemsSource = currentSprintList;
 
                 UserStoryListView.ItemsSource = Globals.simpleJiraDB.UserStories.Where(u=>u.OwnerId == currentUser.UserId).ToList<UserStory>();
@@ -78,6 +84,7 @@ namespace SimpleJiraProject
                 case 0:
                     HiddenView();
                     ProjectView.Visibility = Visibility.Visible;
+
                     break;
                 case 1:
                     HiddenView();

@@ -121,16 +121,74 @@
             <Button VerticalAlignment="Bottom" Margin="0, 85" Width="150" Content="LOGIN" FontSize="18" x:Name="btLogin" Click="btLogin_Click" />
             <TextBlock Text="Login with your team and user name(not case sensitive)" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" Cursor="Help" FontSize="15"/>
         </Grid>
+
         <Grid x:Name="ProjectView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <ListView x:Name="ProjectListView">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding ProjectId}" Header="Project Id" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                        <GridViewColumn DisplayMemberBinding="{Binding TeamId}" Header="Team Id" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <ScrollViewer Foreground="{x:Null}" Grid.Row="1" Grid.Column="1" >
+                <StackPanel>
+                    <TextBlock Text="Projects Dashboard" Margin="20" FontSize="14" FontWeight="Medium" Foreground="#FF254068"/>
+                    <StackPanel Margin="20 0" >
+                        <ItemsControl Name="ProjectListView">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <materialDesign:Card Margin="12">
+                                        <materialDesign:Flipper>
+                                            <materialDesign:Flipper.FrontContent>
+                                                <Grid Height="256" Width="220">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="150" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Image Source="C:\Users\Khalil\Documents\software Developement\dotnet-2\Team9SimpleJira\Icons\p1.png" Height="155" Width="216"     Stretch="UniformToFill" />
+                                                    <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <TextBlock Foreground="#FF7C7575" Text="{Binding Name}"/>
+                                                        <Button x:Name="cmbTeams" Content="Edit" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 4 0 0">
+                                                        </Button>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </materialDesign:Flipper.FrontContent>
+                                            <materialDesign:Flipper.BackContent>
+                                                <Grid Height="256" Width="220">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <materialDesign:ColorZone Mode="PrimaryDark" Padding="6">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Button Style="{StaticResource MaterialDesignToolForegroundButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}"         HorizontalAlignment="Left">
+                                                                <materialDesign:PackIcon Kind="ArrowLeft" HorizontalAlignment="Right" />
+                                                            </Button>
+                                                            <TextBlock Foreground="#FFFBF7F7" Margin="8 0 0 0" VerticalAlignment="Center" Text="Edit Project" />
+                                                        </StackPanel>
+                                                    </materialDesign:ColorZone>
+                                                    <Grid Grid.Row="1" Margin="0 6 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="172">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition />
+                                                            <RowDefinition />
+                                                            <RowDefinition />
+                                                            <RowDefinition />
+                                                        </Grid.RowDefinitions>
+                                                        <TextBox Name="tbProjectName" Foreground="#FF7C7575" materialDesign:HintAssist.Hint="Project Name"         materialDesign:HintAssist.IsFloating="True" Margin="0 10 0 0" />
+                                                        <ComboBox Name="comboTeam" Foreground="#FF7C7575" Grid.Row="1" materialDesign:HintAssist.Hint="Team" materialDesign:HintAssist.IsFloating="True" Margin="0 14 0 0" />
+                                                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
+                                                            <Button Content="Update" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 16 0 0">
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </Grid>
+                                            </materialDesign:Flipper.BackContent>
+                                        </materialDesign:Flipper>
+                                    </materialDesign:Card>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
         <Grid x:Name="SprintView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <ListView x:Name="SprintListView">

@@ -25,7 +25,7 @@ namespace SimpleJiraProject
             try
             {
                 //simpleJiraDB = new SimpleJiraDBEntities();
-                cmbLoginTeam.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+                comboTeam.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
             }
             catch (SystemException ex)
             {
