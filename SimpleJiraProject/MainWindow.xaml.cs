@@ -214,7 +214,11 @@ namespace SimpleJiraProject
             tblRole.Text = string.Empty;
             btLogOut.Content = "LogIn";
             btMyAccount.Visibility = Visibility.Hidden;
-            //TODO: AFTER LOGOUT, ALL DATA IN ALL VIEWS HAVE TO BE REMOVED/CLEARED
+            ProjectListView.ItemsSource = null;
+            SprintListView.ItemsSource = null;
+            UserStoryListView.ItemsSource = null;
+            DefectListView.ItemsSource = null;
+            TaskListView.ItemsSource = null;
         }
 
         private void btMyAccount_Click(object sender, RoutedEventArgs e)
