@@ -30,9 +30,20 @@ namespace SimpleJiraProject
             InitializeComponent();
             try
             {
-                Globals.simpleJiraDB = new SimpleJiraDBEntities();
-                currentUser = loginUser;
-                LoadDataFromDb(currentUser);
+                if (loginUser!=null)
+                {
+                    currentUser = loginUser;
+                    LoadDataFromDb(currentUser);
+                    tblTeam.Text = currentUser.Team.Name;
+                    tblUser.Text = currentUser.Name;
+                    tblRole.Text = currentUser.Role;
+                }
+                else
+                {
+                    currentUser = null;
+                    MessageBox.Show("Please Login first", "Login Information");
+                    new LoginDialog().ShowDialog();
+                }
             }
             catch (SystemException ex)
             {
@@ -43,20 +54,22 @@ namespace SimpleJiraProject
 
         private void LoadDataFromDb(User currentUser)
         {
-                currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p=>p.TeamId == currentUser.TeamId).ToList<Project>();
+            if (currentUser!= null)
+            {
+                currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p => p.TeamId == currentUser.TeamId).ToList<Project>();
                 ProjectListView.ItemsSource = currentTeamProjectList;
-            
-            
-
-            IEnumerable<int> projectIds = currentTeamProjectList.Select(p => p.ProjectId).Distinct();
-            
-
-            currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
+                IEnumerable<int> projectIds = currentTeamProjectList.Select(p => p.ProjectId).Distinct();
+                currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
                 SprintListView.ItemsSource = currentSprintList;
-
-                UserStoryListView.ItemsSource = Globals.simpleJiraDB.UserStories.Where(u=>u.OwnerId == currentUser.UserId).ToList<UserStory>();
+                UserStoryListView.ItemsSource = Globals.simpleJiraDB.UserStories.Where(u => u.OwnerId == currentUser.UserId).ToList<UserStory>();
                 TaskListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Task").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
                 DefectListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Defect").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
+            }
+            else
+            {
+                MessageBox.Show("Please Login first", "Login Information");
+                new LoginDialog().ShowDialog();
+            }
         }
 
         private void HiddenView()
@@ -156,7 +169,21 @@ namespace SimpleJiraProject
 
         private void btLogOut_Click(object sender, RoutedEventArgs e)
         {
-            new LoginDialog().ShowDialog();
+            currentUser = null;
+            this.Close();
+            LoginDialog login = new LoginDialog();
+            login.LoginCallback += (u) => { currentUser = u; };
+            bool? result = login.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
+
+            if (result == true)
+            {
+                MessageBox.Show("Login Successfully");
+                new MainWindow(currentUser).ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Login Failed");
+            }
         }
 
         private void btMyAccount_Click(object sender, RoutedEventArgs e)

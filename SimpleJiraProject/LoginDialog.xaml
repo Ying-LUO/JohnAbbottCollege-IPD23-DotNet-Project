@@ -13,9 +13,9 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d"
-        Title="LoginDialog" Height="570" Width="880" WindowStartupLocation="CenterOwner">
+        Title="LoginDialog" Height="570" Width="880" WindowStartupLocation="CenterScreen">
     <Grid x:Name="LoginView" Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-        <Rectangle Height="540" VerticalAlignment="Top">
+        <Rectangle Height="540" VerticalAlignment="Top" Margin="-5,0,0,0">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
                     <GradientStop Color="AliceBlue" />

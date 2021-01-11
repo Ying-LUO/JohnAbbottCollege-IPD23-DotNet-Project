@@ -26,13 +26,22 @@ namespace SimpleJiraProject
         public LoginDialog()
         {
             InitializeComponent();
+            try
+            {
+                Globals.simpleJiraDB = new SimpleJiraDBEntities();
+            }
+            catch (SystemException ex)
+            {
+                MessageBox.Show("Fatal error connecting to database:\n" + ex.Message, "Error Information");
+                Environment.Exit(1);
+            }
         }
 
         private void btLogin_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                loginUser = Globals.simpleJiraDB.Users.FirstOrDefault();
+                loginUser = Globals.simpleJiraDB.Users.Where(u=>u.Name == tbLoginName.Text).FirstOrDefault();
 
                 //TODO: ADD VALIDATION CLASS FOR USER NAME & PASSWORD INPUT
                 if (loginUser != null)

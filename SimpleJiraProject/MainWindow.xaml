@@ -29,9 +29,9 @@
                 <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="Update User Information" Content="My Account" x:Name="btMyAccount" Click="btMyAccount_Click"  VerticalAlignment="Center" FontSize="18" Visibility="Hidden"/>
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
                     <StackPanel Width="150">
-                        <Button Content="Login" Name="btLogOut" Click="btLogOut_Click"/>
-                        <Button Content="Team Management" Name="btManageTeam" Click="btManageTeam_Click"/>
-                        <Button Content="User Management" Name="btManageUser" Click="btManageUser_Click"/>
+                        <Button Content="Log out" Name="btLogOut" Click="btLogOut_Click"/>
+                        <Button Content="Team Management" Name="btManageTeam" Click="btManageTeam_Click" />
+                        <Button Content="User Management" Name="btManageUser" Click="btManageUser_Click" />
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
@@ -94,169 +94,171 @@
                 </ListView>
             </StackPanel>
         </Grid>
-        <Grid x:Name="ProjectView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <ScrollViewer Foreground="{x:Null}" Grid.Row="1" Grid.Column="1" >
-                <StackPanel>
-                    <TextBlock Text="Projects Dashboard" Margin="20" FontSize="14" FontWeight="Medium" Foreground="#FF254068"/>
-                    <StackPanel Margin="20 0" >
-                        <ItemsControl Name="ProjectListView">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <materialDesign:Card Margin="12">
-                                        <materialDesign:Flipper>
-                                            <materialDesign:Flipper.FrontContent>
-                                                <Grid Height="256" Width="220">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="150" />
-                                                        <RowDefinition Height="*" />
-                                                    </Grid.RowDefinitions>
-                                                    <Image Source="/Icons/p1.png" Height="155" Width="216" Stretch="UniformToFill" />
-                                                    <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                        <TextBlock Foreground="#FF7C7575" Text="{Binding Name}"/>
-                                                        <Button x:Name="cmbTeams" Content="Edit" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 4 0 0">
-                                                        </Button>
-                                                    </StackPanel>
-                                                </Grid>
-                                            </materialDesign:Flipper.FrontContent>
-                                            <materialDesign:Flipper.BackContent>
-                                                <Grid Height="256" Width="220">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="*" />
-                                                    </Grid.RowDefinitions>
-                                                    <materialDesign:ColorZone Mode="PrimaryDark" Padding="6">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Button Style="{StaticResource MaterialDesignToolForegroundButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}"         HorizontalAlignment="Left">
-                                                                <materialDesign:PackIcon Kind="ArrowLeft" HorizontalAlignment="Right" />
-                                                            </Button>
-                                                            <TextBlock Foreground="#FFFBF7F7" Margin="8 0 0 0" VerticalAlignment="Center" Text="Edit Project" />
-                                                        </StackPanel>
-                                                    </materialDesign:ColorZone>
-                                                    <Grid Grid.Row="1" Margin="0 6 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="172">
+        <Grid HorizontalAlignment="Right" MinHeight="520" MinWidth="860" VerticalAlignment="Stretch" Margin="200 60 0 0">
+            <Grid x:Name="ProjectView" Visibility="Hidden" >
+                <ScrollViewer Foreground="{x:Null}" Grid.Row="1" Grid.Column="1" >
+                    <StackPanel>
+                        <TextBlock Text="Projects Dashboard" Margin="20" FontSize="14" FontWeight="Medium" Foreground="#FF254068"/>
+                        <StackPanel Margin="20 0" >
+                            <ItemsControl Name="ProjectListView">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:Card Margin="12">
+                                            <materialDesign:Flipper>
+                                                <materialDesign:Flipper.FrontContent>
+                                                    <Grid Height="256" Width="220">
                                                         <Grid.RowDefinitions>
-                                                            <RowDefinition />
-                                                            <RowDefinition />
-                                                            <RowDefinition />
-                                                            <RowDefinition />
+                                                            <RowDefinition Height="150" />
+                                                            <RowDefinition Height="*" />
                                                         </Grid.RowDefinitions>
-                                                        <TextBox Name="tbProjectName" Foreground="#FF7C7575" materialDesign:HintAssist.Hint="Project Name"         materialDesign:HintAssist.IsFloating="True" Margin="0 10 0 0" />
-                                                        <ComboBox Name="comboTeam" Foreground="#FF7C7575" Grid.Row="1" materialDesign:HintAssist.Hint="Team" materialDesign:HintAssist.IsFloating="True" Margin="0 14 0 0" />
-                                                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
-                                                            <Button Content="Update" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 16 0 0">
+                                                        <Image Source="/Icons/p1.png" Height="155" Width="216" Stretch="UniformToFill" />
+                                                        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <TextBlock Foreground="#FF7C7575" Text="{Binding Name}"/>
+                                                            <Button x:Name="cmbTeams" Content="Edit" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 4 0 0">
                                                             </Button>
                                                         </StackPanel>
                                                     </Grid>
-                                                </Grid>
-                                            </materialDesign:Flipper.BackContent>
-                                        </materialDesign:Flipper>
-                                    </materialDesign:Card>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+                                                </materialDesign:Flipper.FrontContent>
+                                                <materialDesign:Flipper.BackContent>
+                                                    <Grid Height="256" Width="220">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="*" />
+                                                        </Grid.RowDefinitions>
+                                                        <materialDesign:ColorZone Mode="PrimaryDark" Padding="6">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Button Style="{StaticResource MaterialDesignToolForegroundButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}"         HorizontalAlignment="Left">
+                                                                    <materialDesign:PackIcon Kind="ArrowLeft" HorizontalAlignment="Right" />
+                                                                </Button>
+                                                                <TextBlock Foreground="#FFFBF7F7" Margin="8 0 0 0" VerticalAlignment="Center" Text="Edit Project" />
+                                                            </StackPanel>
+                                                        </materialDesign:ColorZone>
+                                                        <Grid Grid.Row="1" Margin="0 6 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="172">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <TextBox Name="tbProjectName" Foreground="#FF7C7575" materialDesign:HintAssist.Hint="Project Name"         materialDesign:HintAssist.IsFloating="True" Margin="0 10 0 0" />
+                                                            <ComboBox Name="comboTeam" Foreground="#FF7C7575" Grid.Row="1" materialDesign:HintAssist.Hint="Team" materialDesign:HintAssist.IsFloating="True" Margin="0 14 0 0" />
+                                                            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
+                                                                <Button Content="Update" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 16 0 0">
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Grid>
+                                                </materialDesign:Flipper.BackContent>
+                                            </materialDesign:Flipper>
+                                        </materialDesign:Card>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
-        <Grid x:Name="SprintView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <ListView x:Name="SprintListView">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="Sprint Id" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
-                        <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
-                        <GridViewColumn DisplayMemberBinding="{Binding ProjectId}" Header="ProjectId" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
-        <Grid x:Name="UserStoryView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <ListView x:Name="UserStoryListView">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding UserStoryId}" Header="UserStory Id" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
-                        <GridViewColumn DisplayMemberBinding="{Binding CreateDate}" Header="CreateDate" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Point}" Header="Point" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
-                        <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="SprintId" />
-                        <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
-        <Grid x:Name="DefectView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <ListView x:Name="DefectListView">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding IssueId}" Header="Defect Id" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
-                        <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priority" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
-                        <GridViewColumn DisplayMemberBinding="{Binding UserStoryId}" Header="UserStoryId" />
-                        <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
-        <Grid x:Name="TaskView" Visibility="Hidden" Height="520" Width="860" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <ListView x:Name="TaskListView">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding IssueId}" Header="Task Id" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
-                        <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priority" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
-                        <GridViewColumn DisplayMemberBinding="{Binding UserStoryId}" Header="UserStoryId" />
-                        <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
-        <materialDesign:PopupBox
+                </ScrollViewer>
+            </Grid>
+            <Grid x:Name="SprintView" Visibility="Hidden" >
+                <ListView x:Name="SprintListView" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="Sprint Id" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
+                            <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
+                            <GridViewColumn DisplayMemberBinding="{Binding ProjectId}" Header="ProjectId" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <Grid x:Name="UserStoryView" Visibility="Hidden" >
+                <ListView x:Name="UserStoryListView" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding UserStoryId}" Header="UserStory Id" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
+                            <GridViewColumn DisplayMemberBinding="{Binding CreateDate}" Header="CreateDate" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Point}" Header="Point" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
+                            <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="SprintId" />
+                            <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <Grid x:Name="DefectView" Visibility="Hidden" >
+                <ListView x:Name="DefectListView" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding IssueId}" Header="Defect Id" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
+                            <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priority" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
+                            <GridViewColumn DisplayMemberBinding="{Binding UserStoryId}" Header="UserStoryId" />
+                            <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <Grid x:Name="TaskView" Visibility="Hidden" >
+                <ListView x:Name="TaskListView" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding IssueId}" Header="Task Id" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
+                            <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priority" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
+                            <GridViewColumn DisplayMemberBinding="{Binding UserStoryId}" Header="UserStoryId" />
+                            <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <materialDesign:PopupBox
             Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Margin="32"
             Grid.Row="1">
-            <StackPanel>
-                <Button
+                <StackPanel>
+                    <Button
                     ToolTip="New"
                     Click="btNew_Click"
                     Content="{materialDesign:PackIcon Kind=OpenInNew, Size=20}"/>
 
-                <Button
+                    <Button
                     ToolTip="Update"
                     Click="btUpdate_Click"
                     Background="{DynamicResource PrimaryHueLightBrush}"
                     Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                     Content="{materialDesign:PackIcon Kind=Update, Size=20}"/>
 
-                <Button
+                    <Button
                     ToolTip="Delete"
                     Click="btDelete_Click"
                     Content="{materialDesign:PackIcon Kind=Delete, Size=20}">
-                    <!-- mix up the colours by bringing in a named palette (see merged dictionaries at top) -->
-                    <Button.Background>
-                        <SolidColorBrush Color="{StaticResource Primary300}"/>
-                    </Button.Background>
+                        <!-- mix up the colours by bringing in a named palette (see merged dictionaries at top) -->
+                        <Button.Background>
+                            <SolidColorBrush Color="{StaticResource Primary300}"/>
+                        </Button.Background>
 
-                    <Button.Foreground>
-                        <SolidColorBrush Color="{StaticResource Primary300Foreground}"/>
-                    </Button.Foreground>
-                </Button>
-            </StackPanel>
-        </materialDesign:PopupBox>
+                        <Button.Foreground>
+                            <SolidColorBrush Color="{StaticResource Primary300Foreground}"/>
+                        </Button.Foreground>
+                    </Button>
+                </StackPanel>
+            </materialDesign:PopupBox>
+        </Grid>
     </Grid>
 </Window>
