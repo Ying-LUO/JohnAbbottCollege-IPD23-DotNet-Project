@@ -272,10 +272,25 @@ Khalil:
 
 Ying:
 1. Done:
-
+*Create new login window
+*Refactor the login feature
 
 2. Todo:
-
+*Refactor the password validation
 
 3. Need assistant:
 *None till now
+
+============================================================================================
+Day 09: 2021-Jan-11 Monday
+============================================================================================
+Khalil:
+
+1- Done:
+2- Todo:
+3- Need assistant:
+
+Ying:
+1. Done:
+2. Todo:
+3. Need assistant:

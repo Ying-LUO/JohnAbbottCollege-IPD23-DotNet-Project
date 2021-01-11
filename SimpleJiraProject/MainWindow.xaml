@@ -140,8 +140,10 @@
                                                                 <RowDefinition />
                                                                 <RowDefinition />
                                                             </Grid.RowDefinitions>
+
                                                             <TextBox Name="tbProjectName" Foreground="#FF7C7575" materialDesign:HintAssist.Hint="Project Name"         materialDesign:HintAssist.IsFloating="True" Margin="0 10 0 0" />
                                                             <ComboBox ItemsSource="{Binding Path=AllTeamNamesList}" Name="comboTeam" Foreground="#FF7C7575" Grid.Row="1" materialDesign:HintAssist.Hint="Team" materialDesign:HintAssist.IsFloating="True" Margin="0 14 0 0"  />
+
                                                             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
                                                                 <Button Content="Update" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 16 0 0">
                                                                 </Button>
@@ -164,13 +166,13 @@
                 </ScrollViewer>
             </Grid>
             <Grid x:Name="SprintView" Visibility="Hidden" >
-                <ListView x:Name="SprintListView" >
+                <ListView x:Name="SprintListView">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="Sprint Id" />
                             <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
-                            <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate"/>
                             <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
                             <GridViewColumn DisplayMemberBinding="{Binding ProjectId}" Header="ProjectId" />
                         </GridView>
