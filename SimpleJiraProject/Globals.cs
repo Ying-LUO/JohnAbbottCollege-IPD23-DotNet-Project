@@ -9,5 +9,8 @@ namespace SimpleJiraProject
     class Globals
     {
         public static SimpleJiraDBEntities simpleJiraDB;
+        public static List<Project> currentTeamProjectList;
+       
+        
     }
 }

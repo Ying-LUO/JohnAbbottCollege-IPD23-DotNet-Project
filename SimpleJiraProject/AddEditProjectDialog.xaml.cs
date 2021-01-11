@@ -38,5 +38,31 @@ namespace SimpleJiraProject
         {
             Close();
         }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string currentTeamName = (string)comboTeam.SelectedItem;
+                int currentTeamId = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(currentTeamName)).Select(t => t.TeamId).FirstOrDefault();
+                
+                Project p = new Project
+                {
+                    Name = tbProjectName.Text,
+                    TeamId = currentTeamId,
+                };
+                Globals.simpleJiraDB.Projects.Add(p);
+                Globals.simpleJiraDB.SaveChanges();
+                Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Include("Team").ToList();
+
+
+                DialogResult = true;
+
+            }
+            catch (SystemException ex)
+            {
+                MessageBox.Show(ex.Message, "Database operation failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }
