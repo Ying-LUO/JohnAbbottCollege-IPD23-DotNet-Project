@@ -129,7 +129,7 @@ namespace SimpleJiraProject
                 AddEditProjectDialog addEditProject = new AddEditProjectDialog();
                 addEditProject.ShowDialog();
                 LoadDataFromDb(currentUser);
-                this.DialogResult = true;
+                //this.DialogResult = true;
                
             }
 
