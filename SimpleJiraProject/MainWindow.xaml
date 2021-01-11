@@ -168,13 +168,13 @@
                 </ScrollViewer>
             </Grid>
             <Grid x:Name="SprintView" Visibility="Hidden" >
-                <ListView x:Name="SprintListView" >
+                <ListView x:Name="SprintListView" Width="auto">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="Sprint Id" />
                             <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" Width="600"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" Width="200"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate"/>
                             <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
                             <GridViewColumn DisplayMemberBinding="{Binding ProjectId}" Header="ProjectId" />
                         </GridView>
