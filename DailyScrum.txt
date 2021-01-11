@@ -272,10 +272,11 @@ Khalil:
 
 Ying:
 1. Done:
-
+*Create new login window
+*Refactor the login feature
 
 2. Todo:
-
+*Refactor the password validation
 
 3. Need assistant:
 *None till now
