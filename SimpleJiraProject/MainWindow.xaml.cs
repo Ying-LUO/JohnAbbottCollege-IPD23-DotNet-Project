@@ -24,6 +24,7 @@ namespace SimpleJiraProject
         User currentUser;
         List<Project> currentTeamProjectList;
         List<Sprint> currentSprintList;
+        List<string> allTeamsList;
        
         public MainWindow(User loginUser)
         {
@@ -44,6 +45,12 @@ namespace SimpleJiraProject
                     MessageBox.Show("Please Login first", "Login Information");
                     new LoginDialog().ShowDialog();
                 }
+                //Globals.simpleJiraDB = new SimpleJiraDBEntities();
+
+                allTeamsList = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
+                
+                currentUser = loginUser;
+                LoadDataFromDb(currentUser);
             }
             catch (SystemException ex)
             {
@@ -57,6 +64,10 @@ namespace SimpleJiraProject
             if (currentUser!= null)
             {
                 currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p => p.TeamId == currentUser.TeamId).ToList<Project>();
+                foreach(Project p in currentTeamProjectList)
+				{
+                p.AllTeamNamesList = allTeamsList;
+				}
                 ProjectListView.ItemsSource = currentTeamProjectList;
                 IEnumerable<int> projectIds = currentTeamProjectList.Select(p => p.ProjectId).Distinct();
                 currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
@@ -68,7 +79,6 @@ namespace SimpleJiraProject
             else
             {
                 MessageBox.Show("Please Login first", "Login Information");
-                new LoginDialog().ShowDialog();
             }
         }
 

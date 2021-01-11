@@ -111,10 +111,10 @@
                                                             <RowDefinition Height="150" />
                                                             <RowDefinition Height="*" />
                                                         </Grid.RowDefinitions>
-                                                        <Image Source="/Icons/p1.png" Height="155" Width="216" Stretch="UniformToFill" />
-                                                        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                            <TextBlock Foreground="#FF7C7575" Text="{Binding Name}"/>
-                                                            <Button x:Name="cmbTeams" Content="Edit" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 4 0 0">
+                                                        <TextBox Name="tbProjectName" Foreground="#FF7C7575" materialDesign:HintAssist.Hint="Project Name"         materialDesign:HintAssist.IsFloating="True" Margin="0 10 0 0" />
+                                                        <ComboBox ItemsSource="{Binding Path=AllTeamNamesList}" Name="comboTeam" Foreground="#FF7C7575" Grid.Row="1" materialDesign:HintAssist.Hint="Team" materialDesign:HintAssist.IsFloating="True" Margin="0 14 0 0"  />
+                                                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
+                                                            <Button Content="Update" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 16 0 0">
                                                             </Button>
                                                         </StackPanel>
                                                     </Grid>

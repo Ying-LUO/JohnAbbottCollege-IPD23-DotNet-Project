@@ -85,6 +85,7 @@
     <Compile Include="AddEditUserStoryDialog.xaml.cs">
       <DependentUpon>AddEditUserStoryDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Entities_Partials.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Issue.cs">
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
