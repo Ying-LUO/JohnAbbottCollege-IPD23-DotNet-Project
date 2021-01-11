@@ -41,7 +41,7 @@ namespace SimpleJiraProject
         {
             try
             {
-                loginUser = Globals.simpleJiraDB.Users.Where(u=>u.LoginName == tbLoginName.Text).FirstOrDefault();
+                loginUser = Globals.simpleJiraDB.Users.Where(u => u.LoginName == tbLoginName.Text).FirstOrDefault();
 
                 //TODO: ADD VALIDATION CLASS FOR USER NAME & PASSWORD INPUT
                 if (loginUser != null)

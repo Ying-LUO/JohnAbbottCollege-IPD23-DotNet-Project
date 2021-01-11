@@ -44,7 +44,7 @@
                 <ComboBox x:Name="comboTeam" Foreground="Gray" materialDesign:HintAssist.Hint="TEAM" Style="{StaticResource MaterialDesignComboBox}" Margin="0, 60" HorizontalAlignment="Left" Width="403" Height="45"/>
             </StackPanel>
             <Button Content="Cancel" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="74,256,296,24" />
-            <Button Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="255,256,104,24" RenderTransformOrigin="0.408,0.622"  />
+            <Button Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="255,256,104,24" RenderTransformOrigin="0.408,0.622"  Click="Save_Click"/>
             <materialDesign:Snackbar
   MessageQueue="{materialDesign:MessageQueue}"
   x:Name="SnackbarThree" />

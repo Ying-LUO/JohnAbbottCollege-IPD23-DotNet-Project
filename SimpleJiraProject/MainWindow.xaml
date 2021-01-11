@@ -13,7 +13,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Foreground="White"
-        Title="Simple Jira Application" MinHeight="600" MinWidth="1080" >
+        Title="Simple Jira Application" MinHeight="600" MinWidth="1080" Height="637.5" Width="1026" >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -111,10 +111,10 @@
                                                             <RowDefinition Height="150" />
                                                             <RowDefinition Height="*" />
                                                         </Grid.RowDefinitions>
-                                                        <TextBox Name="tbProjectName" Foreground="#FF7C7575" materialDesign:HintAssist.Hint="Project Name"         materialDesign:HintAssist.IsFloating="True" Margin="0 10 0 0" />
-                                                        <ComboBox ItemsSource="{Binding Path=AllTeamNamesList}" Name="comboTeam" Foreground="#FF7C7575" Grid.Row="1" materialDesign:HintAssist.Hint="Team" materialDesign:HintAssist.IsFloating="True" Margin="0 14 0 0"  />
-                                                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
-                                                            <Button Content="Update" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 16 0 0">
+                                                        <Image Source="C:\Users\Khalil\Documents\software Developement\dotnet-2\Team9SimpleJira\Icons\p1.png" Height="155" Width="216"     Stretch="UniformToFill" />
+                                                        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <TextBlock Foreground="#FF7C7575" Text="{Binding Name}"/>
+                                                            <Button Content="Edit" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 4 0 0">
                                                             </Button>
                                                         </StackPanel>
                                                     </Grid>
@@ -140,12 +140,10 @@
                                                                 <RowDefinition />
                                                                 <RowDefinition />
                                                             </Grid.RowDefinitions>
-                                                            <Image Source="/Icons/p1.png" Height="155" Width="216" Stretch="UniformToFill" />
-                                                            <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                                <TextBlock Foreground="#FF7C7575" Text="{Binding Name}"/>
-                                                                <Button x:Name="cmbTeams" Content="Edit" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 4 0 0">
-                                                                </Button>
-                                                            </StackPanel>
+
+                                                            <TextBox Name="tbProjectName" Foreground="#FF7C7575" materialDesign:HintAssist.Hint="Project Name"         materialDesign:HintAssist.IsFloating="True" Margin="0 10 0 0" />
+                                                            <ComboBox ItemsSource="{Binding Path=AllTeamNamesList}" Name="comboTeam" Foreground="#FF7C7575" Grid.Row="1" materialDesign:HintAssist.Hint="Team" materialDesign:HintAssist.IsFloating="True" Margin="0 14 0 0"  />
+
                                                             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">
                                                                 <Button Content="Update" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 16 0 0">
                                                                 </Button>
@@ -168,7 +166,7 @@
                 </ScrollViewer>
             </Grid>
             <Grid x:Name="SprintView" Visibility="Hidden" >
-                <ListView x:Name="SprintListView" Width="auto">
+                <ListView x:Name="SprintListView">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="Sprint Id" />

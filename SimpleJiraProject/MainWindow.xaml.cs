@@ -22,7 +22,7 @@ namespace SimpleJiraProject
     public partial class MainWindow : Window
     {
         User currentUser;
-        List<Project> currentTeamProjectList;
+        
         List<Sprint> currentSprintList;
         List<string> allTeamsList;
        
@@ -63,13 +63,13 @@ namespace SimpleJiraProject
         {
             if (currentUser!= null)
             {
-                currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p => p.TeamId == currentUser.TeamId).ToList<Project>();
-                foreach(Project p in currentTeamProjectList)
+                Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p => p.TeamId == currentUser.TeamId).ToList<Project>();
+                foreach(Project p in Globals.currentTeamProjectList)
 				{
                 p.AllTeamNamesList = allTeamsList;
 				}
-                ProjectListView.ItemsSource = currentTeamProjectList;
-                IEnumerable<int> projectIds = currentTeamProjectList.Select(p => p.ProjectId).Distinct();
+                ProjectListView.ItemsSource = Globals.currentTeamProjectList;
+                IEnumerable<int> projectIds = Globals.currentTeamProjectList.Select(p => p.ProjectId).Distinct();
                 currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
                 SprintListView.ItemsSource = currentSprintList;
                 UserStoryListView.ItemsSource = Globals.simpleJiraDB.UserStories.Where(u => u.OwnerId == currentUser.UserId).ToList<UserStory>();
@@ -128,6 +128,9 @@ namespace SimpleJiraProject
             {
                 AddEditProjectDialog addEditProject = new AddEditProjectDialog();
                 addEditProject.ShowDialog();
+                LoadDataFromDb(currentUser);
+                this.DialogResult = true;
+               
             }
 
             if (SprintView.IsVisible)
