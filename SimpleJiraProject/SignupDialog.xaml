@@ -1,0 +1,58 @@
+﻿<Window x:Class="SimpleJiraProject.SignupDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:local="clr-namespace:SimpleJiraProject"
+        mc:Ignorable="d"
+        Title="SignupDialog" Height="550" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="LoginView">
+        <Grid VerticalAlignment="Top">
+            <TextBox Text="SIGN UP NEW USER" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
+            <StackPanel Margin="0 75">
+                <TextBox x:Name="tbLoginName" Foreground="Gray" materialDesign:HintAssist.Hint="LOGIN NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                <TextBox x:Name="tbFirstName" Foreground="Gray" materialDesign:HintAssist.Hint="FIRST NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                <TextBox x:Name="tbLastName" Foreground="Gray" materialDesign:HintAssist.Hint="LAST NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                <ComboBox Name="cmbTeamList"
+                              materialDesign:HintAssist.Hint="YOUR TEAM"
+                          Foreground="Gray" 
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                          Margin="26,0,27,0" >
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+                <ComboBox Name="cmbRoleList"
+                              materialDesign:HintAssist.Hint="YOUR ROLE"
+                          Foreground="Gray" 
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                          Margin="26,0,27,0" >
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+                <PasswordBox x:Name="tbPassword" materialDesign:TextFieldAssist.HasClearButton="True"
+                            materialDesign:HintAssist.HelperText="At least 8 characters" MaxLength="8" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="26,0,27,0" />
+                <PasswordBox x:Name="tbConfirmPassword" materialDesign:TextFieldAssist.HasClearButton="True"
+                             materialDesign:HintAssist.HelperText="At least 8 characters" MaxLength="8" Foreground="Gray" materialDesign:HintAssist.Hint="CONFIRM PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="26,0,27,0" />
+                <TextBlock Text="* All fields are required" Margin="26,30,27,0" FontStyle="Oblique" Foreground="Red"/>
+            </StackPanel>
+        </Grid>
+        <Grid VerticalAlignment="Bottom" Margin="100 50">
+            <Button HorizontalAlignment="Left" Width="150" Content="CANCEL" FontSize="18" IsCancel="True" />
+            <Button HorizontalAlignment="Right" Width="150" Content="SIGN UP" FontSize="18" IsDefault="True" x:Name="btSignup" Click="btSignup_Click" />
+        </Grid>
+    </Grid>
+</Window>

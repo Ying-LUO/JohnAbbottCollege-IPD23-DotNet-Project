@@ -89,7 +89,7 @@
                         </Button>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="My Account" Visibility="Hidden" x:Name="tiMyAccount">
+                <TabItem Header="My Account" x:Name="tiMyAccount">
                     <StackPanel Margin="0 20">
                         <ComboBox Name="cmbTeamListMyAccount"  FontSize="24"
                               materialDesign:HintAssist.Hint="Choose Your Team"
@@ -100,13 +100,25 @@
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <TextBox x:Name="tbUserNameMyAccount"
-                          materialDesign:HintAssist.Hint="User Name"
+                        <TextBox x:Name="tbLoginName"
+                          materialDesign:HintAssist.Hint="Login Name"
                           materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                           materialDesign:HintAssist.FloatingScale="0.50"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                           FontSize="24" />
-                        <TextBox x:Name="tbRoleMyAccount"
+                        <TextBox x:Name="tbFirstName"
+                          materialDesign:HintAssist.Hint="First Name"
+                          materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                          materialDesign:HintAssist.FloatingScale="0.50"
+                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                          FontSize="24" />
+                        <TextBox x:Name="tbLastName"
+                          materialDesign:HintAssist.Hint="Last Name"
+                          materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                          materialDesign:HintAssist.FloatingScale="0.50"
+                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                          FontSize="24" />
+                        <TextBox x:Name="tbRole"
                           materialDesign:HintAssist.Hint="User Role"
                           materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                           materialDesign:HintAssist.FloatingScale="0.50"

@@ -96,6 +96,9 @@
     <Compile Include="Project.cs">
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SignupDialog.xaml.cs">
+      <DependentUpon>SignupDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SimpleJiraModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -158,6 +161,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SignupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TeamUserManagementDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -201,6 +208,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Icons\" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="SimpleJiraModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SimpleJiraModel.edmx</DependentUpon>
@@ -211,9 +221,6 @@
       <DependentUpon>SimpleJiraModel.edmx</DependentUpon>
       <LastGenOutput>SimpleJiraModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Icons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

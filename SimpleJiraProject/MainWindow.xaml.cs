@@ -36,7 +36,7 @@ namespace SimpleJiraProject
                     currentUser = loginUser;
                     LoadDataFromDb(currentUser);
                     tblTeam.Text = currentUser.Team.Name;
-                    tblUser.Text = currentUser.Name;
+                    tblUser.Text = currentUser.LoginName;
                     tblRole.Text = currentUser.Role;
                 }
                 else

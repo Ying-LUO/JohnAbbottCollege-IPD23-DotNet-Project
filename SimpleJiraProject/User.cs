@@ -22,9 +22,12 @@ namespace SimpleJiraProject
         }
     
         public int UserId { get; set; }
-        public string Name { get; set; }
+        public string LoginName { get; set; }
         public string Role { get; set; }
         public int TeamId { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Issue> Issues { get; set; }

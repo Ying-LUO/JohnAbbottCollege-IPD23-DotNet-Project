@@ -46,15 +46,15 @@ namespace SimpleJiraProject
 
             cmbTeamListMyAccount.SelectedItem = currentUser.Team.Name;
             cmbTeamListMyAccount.IsEnabled = false;
-            tbUserNameMyAccount.Text = currentUser.Name;
-            tbRoleMyAccount.Text = currentUser.Role;
+            //TODO: tbUserNameMyAccount.Text = currentUser.LoginName;
+            //TODO: tbRoleMyAccount.Text = currentUser.Role;
             currentUserInDialog = currentUser;
             
             tiMyAccount.Visibility = Visibility.Visible;
             tiTeam.Visibility = Visibility.Hidden;
             tiUser.Visibility = Visibility.Hidden;
 
-            tblStatus.Text = $"Current User: {currentUser.Name}, {currentUser.Role} From {currentUser.Team.Name}";
+            tblStatus.Text = $"Current User: {currentUser.LoginName}, {currentUser.Role} From {currentUser.Team.Name}";
         }
 
         private void ResetAndLoadDataFromDB()
@@ -74,10 +74,10 @@ namespace SimpleJiraProject
                 cmbNewRoleList.ItemsSource = simpleJiraDB.Users.AsEnumerable().Select(u => u.Role).Distinct().ToList<string>();
                 cmbNewRoleList.Items.Refresh();
 
-                tbRoleMyAccount.Text = string.Empty;
+                //TODO: tbRoleMyAccount.Text = string.Empty;
                 tbTeamUpdate.Text = string.Empty;
                 tbUserUpdate.Text = string.Empty;
-                tbUserNameMyAccount.Text = string.Empty;
+                //TODO: tbUserNameMyAccount.Text = string.Empty;
 
                 cmbNewRoleList.SelectedIndex = -1;
                 cmbNewTeamList.SelectedIndex = -1;
@@ -117,7 +117,7 @@ namespace SimpleJiraProject
             {
                 if (cmbTeamList.SelectedItem != null)
                 {
-                    List<string> userList = simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).AsEnumerable().Select(u => u.Name).ToList<string>();
+                    List<string> userList = simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).AsEnumerable().Select(u => u.LoginName).ToList<string>();
                         
                     if (userList != null)
                     {
@@ -163,7 +163,7 @@ namespace SimpleJiraProject
                 }
                 if (cmbNewUserList.SelectedItem != null)
                 {
-                    User userUpdate = simpleJiraDB.Users.Where(u => u.Name.Equals(cmbNewUserList.SelectedItem.ToString())).FirstOrDefault<User>();
+                    User userUpdate = simpleJiraDB.Users.Where(u => u.LoginName.Equals(cmbNewUserList.SelectedItem.ToString())).FirstOrDefault<User>();
 
                     if (userUpdate != null)
                     {
@@ -172,7 +172,7 @@ namespace SimpleJiraProject
                             MessageBox.Show("Please enter new user name","User Information");
                             return;
                         }
-                        userUpdate.Name = tbUserUpdate.Text;
+                        userUpdate.LoginName = tbUserUpdate.Text;
                         userUpdate.Role = cmbNewRoleList.Text;
                         simpleJiraDB.SaveChanges();
                         MessageBox.Show("User Updated", "User Information");
@@ -186,7 +186,7 @@ namespace SimpleJiraProject
                 else
                 {
                     Team teamForUser = simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
-                    User newUser = new User { Team = teamForUser, Name = cmbNewUserList.Text, Role = cmbNewRoleList.Text };
+                    User newUser = new User { Team = teamForUser, LoginName = cmbNewUserList.Text, Role = cmbNewRoleList.Text };
                     simpleJiraDB.Users.Add(newUser);
                     simpleJiraDB.SaveChanges();
                     MessageBox.Show("Added new User", "User Information");
@@ -253,8 +253,9 @@ namespace SimpleJiraProject
             }
         }
 
+       
         private void btUpdateMyAccount_Click(object sender, RoutedEventArgs e)
-        {
+        { /*
             try
             {
                 if ((string.IsNullOrEmpty(tbUserNameMyAccount.Text)) || (string.IsNullOrEmpty(tbRoleMyAccount.Text)))
@@ -265,7 +266,7 @@ namespace SimpleJiraProject
                 User myAccount = simpleJiraDB.Users.Include("Team").Where(u => u.UserId == currentUserInDialog.UserId).FirstOrDefault<User>();
                 if (myAccount != null)
                 {
-                    myAccount.Name = tbUserNameMyAccount.Text;
+                    myAccount.LoginName = tbUserNameMyAccount.Text;
                     myAccount.Role = tbRoleMyAccount.Text;
                     simpleJiraDB.SaveChanges();
                     MessageBox.Show("My Account updated", "User Information");
@@ -284,9 +285,9 @@ namespace SimpleJiraProject
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error Updating User into database:\n" + ex.Message, "Error Information");
-            }
+                MessageBox.Show("Error Updating User into database:\n" btUpdateMyAccount_Click ex.Message, "Error Information");
+            }*/
         }
-
-    }
+        
+        }
 }

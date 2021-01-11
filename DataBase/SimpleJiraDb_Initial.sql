@@ -70,6 +70,10 @@ CREATE TABLE Users
 go
 
 ALTER TABLE Users
+ADD UNIQUE (LoginName);
+go
+
+ALTER TABLE Users
 ADD
 	CONSTRAINT FK_Users_Teams FOREIGN KEY (TeamId) REFERENCES Teams(TeamId)
 ;

@@ -33,9 +33,10 @@
             <TextBox Text="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
             <StackPanel Margin="0 75">
                 <TextBox x:Name="tbLoginName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
-                <TextBox x:Name="tbPassword" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                <PasswordBox x:Name="tbPassword" MaxLength="8" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="26,0,27,0" />
             </StackPanel>
         </Grid>
-        <Button VerticalAlignment="Bottom" Margin="0, 85" Width="150" Content="LOGIN" FontSize="18" x:Name="btLogin" Click="btLogin_Click" />
-        </Grid>
+        <Button VerticalAlignment="Bottom" Margin="0, 165" Width="150" Content="LOG IN" FontSize="18" x:Name="btLogin" Click="btLogin_Click" />
+        <Button VerticalAlignment="Bottom" Margin="0, 85" Width="150" Content="SIGN UP" FontSize="18" x:Name="btSignupFromLogin" Click="btSignupFromLogin_Click" />
+    </Grid>
 </Window>
