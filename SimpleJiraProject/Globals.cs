@@ -10,7 +10,5 @@ namespace SimpleJiraProject
     {
         public static SimpleJiraDBEntities simpleJiraDB;
         public static List<Project> currentTeamProjectList;
-       
-        
     }
 }

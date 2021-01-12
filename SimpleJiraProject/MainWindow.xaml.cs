@@ -22,16 +22,16 @@ namespace SimpleJiraProject
     public partial class MainWindow : Window
     {
         User currentUser;
-        
+
         List<Sprint> currentSprintList;
         List<string> allTeamsList;
-       
+
         public MainWindow(User loginUser)
         {
             InitializeComponent();
             try
             {
-                if (loginUser!=null)
+                if (loginUser != null)
                 {
                     currentUser = loginUser;
                     LoadDataFromDb(currentUser);
@@ -48,7 +48,7 @@ namespace SimpleJiraProject
                 //Globals.simpleJiraDB = new SimpleJiraDBEntities();
 
                 allTeamsList = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
-                
+
                 currentUser = loginUser;
                 LoadDataFromDb(currentUser);
             }
@@ -59,15 +59,15 @@ namespace SimpleJiraProject
             }
         }
 
-        private void LoadDataFromDb(User currentUser)
+        public void LoadDataFromDb(User currentUser)
         {
-            if (currentUser!= null)
+            if (currentUser != null)
             {
                 Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p => p.TeamId == currentUser.TeamId).ToList<Project>();
-                foreach(Project p in Globals.currentTeamProjectList)
-				{
-                p.AllTeamNamesList = allTeamsList;
-				}
+                foreach (Project p in Globals.currentTeamProjectList)
+                {
+                    p.AllTeamNamesList = allTeamsList;
+                }
                 ProjectListView.ItemsSource = Globals.currentTeamProjectList;
                 IEnumerable<int> projectIds = Globals.currentTeamProjectList.Select(p => p.ProjectId).Distinct();
                 currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
@@ -82,6 +82,7 @@ namespace SimpleJiraProject
             }
         }
 
+       
         private void HiddenView()
         {
             ProjectView.Visibility = Visibility.Hidden;
@@ -124,13 +125,13 @@ namespace SimpleJiraProject
 
         private void btNew_Click(object sender, RoutedEventArgs e)
         {
-            if(ProjectView.IsVisible)
+            if (ProjectView.IsVisible)
             {
                 AddEditProjectDialog addEditProject = new AddEditProjectDialog();
                 addEditProject.ShowDialog();
                 LoadDataFromDb(currentUser);
-                //this.DialogResult = true;
-               
+                
+
             }
 
             if (SprintView.IsVisible)
@@ -207,5 +208,9 @@ namespace SimpleJiraProject
             userManagementDialog.ShowDialog();
         }
 
+        private void ProjectEdit_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
     }
 }

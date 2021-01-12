@@ -287,9 +287,15 @@ Day 09: 2021-Jan-11 Monday
 Khalil:
 
 1- Done:
+	*Working on Project Dialog to add  projects
+	* find the way to access child Item Control 
+	*Update Trello
 2- Todo:
-3- Need assistant:
+	*Continue Working on project update.
+	*Working on Sprint Dialog to add and Update sprints
 
+3- Need assistant:
+	*N/A
 Ying:
 1. Done:
 2. Todo:
