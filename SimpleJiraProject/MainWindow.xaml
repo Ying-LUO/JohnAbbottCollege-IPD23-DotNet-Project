@@ -99,7 +99,7 @@
                     <StackPanel>
                         <TextBlock Text="Projects Dashboard" Margin="20" FontSize="14" FontWeight="Medium" Foreground="#FF254068"/>
                         <StackPanel Margin="20 0" >
-                            <ItemsControl Name="ProjectListView"  >
+                            <ItemsControl Name="ProjectListView" x:FieldModifier="public" >
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <!--<local:ProjectView />-->
@@ -116,7 +116,7 @@
                 </ScrollViewer>
             </Grid>
             <Grid x:Name="SprintView" Visibility="Hidden" >
-                <ListView x:Name="SprintListView">
+                <ListView x:Name="SprintListView" MouseDoubleClick="SprintListView_MouseDoubleClick">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="Sprint Id" />

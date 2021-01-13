@@ -22,6 +22,7 @@ namespace SimpleJiraProject
     {
         Project project;
         string updatedTeamName;
+        
         public ProjectView()
         {
             InitializeComponent();
@@ -34,6 +35,7 @@ namespace SimpleJiraProject
             project.TeamId = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(updatedTeamName)).Select(t => t.TeamId).FirstOrDefault();
             Globals.simpleJiraDB.SaveChanges();
             Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Include("Team").ToList();
+            Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
         }
 
         private void btEdit_Click(object sender, RoutedEventArgs e)

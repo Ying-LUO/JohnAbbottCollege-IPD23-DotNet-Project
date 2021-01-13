@@ -10,5 +10,9 @@ namespace SimpleJiraProject
     {
         public static SimpleJiraDBEntities simpleJiraDB;
         public static List<Project> currentTeamProjectList;
+        public static List<Sprint> currentSprintList;
+        public static List<UserStory> currentUserStoryList;
+        public static MainWindow AppWindow;
+        public static User currentUser;
     }
 }
