@@ -26,7 +26,6 @@
         <Grid Height="60" VerticalAlignment="Top" Background="SteelBlue">
             <TextBlock Text="Simple Jira Application" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="Update User Information" Content="My Account" x:Name="btMyAccount" Click="btMyAccount_Click"  VerticalAlignment="Center" FontSize="18" Visibility="Hidden"/>
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
                     <StackPanel Width="250">
                         <Button Content="Log out" Name="btLogOut" Click="btLogOut_Click"/>

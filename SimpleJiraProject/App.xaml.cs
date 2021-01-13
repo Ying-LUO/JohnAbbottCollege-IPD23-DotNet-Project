@@ -20,16 +20,11 @@ namespace SimpleJiraProject
                 User currentUser = new User();
                 LoginDialog login = new LoginDialog();
                 login.LoginCallback += (u) => { currentUser = u; };
-                bool? result = login.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
+                bool? result = login.ShowDialog(); 
 
                 if (result == true)
                 {
-                    MessageBox.Show("Login Successfully");
                     new MainWindow(currentUser).ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show("Login Failed");
                 }
             }
             finally

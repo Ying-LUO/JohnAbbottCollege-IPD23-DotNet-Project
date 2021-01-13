@@ -97,6 +97,19 @@ namespace SimpleJiraProject
             }
         }
 
+        
+        private void cmbUpdateTeamList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbUpdateTeamList.SelectedItem != null)
+            {
+                btDeleteUser.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                btDeleteUser.Visibility = Visibility.Visible;
+            }
+        }
+
         private void cmbTeamList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -116,14 +129,6 @@ namespace SimpleJiraProject
                     {
                         cmbUserList.Text = string.Empty;
                     }
-                }
-                if (cmbUpdateTeamList.SelectedItem != null)
-                {
-                    btDeleteUser.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    btDeleteUser.Visibility = Visibility.Visible;
                 }
             }
             catch (SqlException ex)

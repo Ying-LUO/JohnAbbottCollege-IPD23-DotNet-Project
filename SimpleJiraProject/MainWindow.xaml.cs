@@ -21,9 +21,6 @@ namespace SimpleJiraProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        //User currentUser;
-
-        
         List<string> allTeamsList;
 
         public MainWindow(User loginUser)
@@ -37,9 +34,6 @@ namespace SimpleJiraProject
                 {
                     Globals.currentUser = loginUser;
                     LoadDataFromDb(Globals.currentUser);
-                    tblTeam.Text = Globals.currentUser.Team.Name;
-                    tblUser.Text = Globals.currentUser.LoginName;
-                    tblRole.Text = Globals.currentUser.Role;
                 }
                 else
                 {
@@ -65,6 +59,10 @@ namespace SimpleJiraProject
         {
             if (currentUser != null)
             {
+                tblTeam.Text = Globals.currentUser.Team.Name;
+                tblUser.Text = Globals.currentUser.LoginName;
+                tblRole.Text = Globals.currentUser.Role;
+
                 Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p => p.TeamId == currentUser.TeamId).ToList<Project>();
                 foreach (Project p in Globals.currentTeamProjectList)
                 {
@@ -218,14 +216,14 @@ namespace SimpleJiraProject
 
         private void btManageTeam_Click(object sender, RoutedEventArgs e)
         {
-            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(currentUser);
+            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(Globals.currentUser);
             userManagementDialog.Owner = this;
 
-            userManagementDialog.TeamUserUpdateCallback += (u) => { currentUser = u; };
+            userManagementDialog.TeamUserUpdateCallback += (u) => { Globals.currentUser = u; };
             bool? result = userManagementDialog.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
             if (result != null)
             {
-                LoadDataFromDb(currentUser);
+                LoadDataFromDb(Globals.currentUser);
             }
         }
 
@@ -242,16 +240,6 @@ namespace SimpleJiraProject
                 new MainWindow(Globals.currentUser).ShowDialog();
             }
         }
-
-        private void btMyAccount_Click(object sender, RoutedEventArgs e)
-        {
-            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(Globals.currentUser);
-            //TODO: IF CURRENT USER CHANGED INFORMATION, NEED CALL BACK FROM DIALOG
-            userManagementDialog.Owner = this;
-            userManagementDialog.ShowDialog();
-        }
-
-        
 
         private void SprintListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
