@@ -233,7 +233,7 @@ namespace SimpleJiraProject
             this.Close();
             LoginDialog login = new LoginDialog();
             login.LoginCallback += (u) => { Globals.currentUser = u; };
-            bool? result = login.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
+            bool? result = login.ShowDialog();  
 
             if (result == true)
             {
