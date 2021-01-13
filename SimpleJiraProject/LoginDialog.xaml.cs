@@ -59,7 +59,14 @@ namespace SimpleJiraProject
 
         private void btSignupFromLogin_Click(object sender, RoutedEventArgs e)
         {
-
+            SignupDialog signup = new SignupDialog();
+            signup.Owner = this;
+            signup.SignupCallback += (u) => { loginUser = u; };
+            bool? result = signup.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
+            if (result!=null)
+            {
+                tbLoginName.Text = loginUser.LoginName;
+            }
         }
     }
 }

@@ -22,7 +22,6 @@ namespace SimpleJiraProject
     /// </summary>
     public partial class TeamUserManagementDialog : Window
     {
-        SimpleJiraDBEntities simpleJiraDB;
         User currentUserInDialog;
 
         public TeamUserManagementDialog(int index)
@@ -61,17 +60,17 @@ namespace SimpleJiraProject
         {
             try
             {
-                simpleJiraDB = new SimpleJiraDBEntities();
-                cmbNewTeamList.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
+                Globals.simpleJiraDB = new SimpleJiraDBEntities();
+                cmbNewTeamList.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
                 cmbNewTeamList.Items.Refresh();
 
-                cmbTeamList.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
+                cmbTeamList.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
                 cmbTeamList.Items.Refresh();
 
-                cmbTeamListMyAccount.ItemsSource = simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
+                cmbTeamListMyAccount.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
                 cmbTeamListMyAccount.Items.Refresh();
 
-                cmbNewRoleList.ItemsSource = simpleJiraDB.Users.AsEnumerable().Select(u => u.Role).Distinct().ToList<string>();
+                cmbNewRoleList.ItemsSource = Globals.simpleJiraDB.Users.AsEnumerable().Select(u => u.Role).Distinct().ToList<string>();
                 cmbNewRoleList.Items.Refresh();
 
                 //TODO: tbRoleMyAccount.Text = string.Empty;
@@ -117,7 +116,7 @@ namespace SimpleJiraProject
             {
                 if (cmbTeamList.SelectedItem != null)
                 {
-                    List<string> userList = simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).AsEnumerable().Select(u => u.LoginName).ToList<string>();
+                    List<string> userList = Globals.simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).AsEnumerable().Select(u => u.LoginName).ToList<string>();
                         
                     if (userList != null)
                     {
@@ -163,7 +162,7 @@ namespace SimpleJiraProject
                 }
                 if (cmbNewUserList.SelectedItem != null)
                 {
-                    User userUpdate = simpleJiraDB.Users.Where(u => u.LoginName.Equals(cmbNewUserList.SelectedItem.ToString())).FirstOrDefault<User>();
+                    User userUpdate = Globals.simpleJiraDB.Users.Where(u => u.LoginName.Equals(cmbNewUserList.SelectedItem.ToString())).FirstOrDefault<User>();
 
                     if (userUpdate != null)
                     {
@@ -174,7 +173,7 @@ namespace SimpleJiraProject
                         }
                         userUpdate.LoginName = tbUserUpdate.Text;
                         userUpdate.Role = cmbNewRoleList.Text;
-                        simpleJiraDB.SaveChanges();
+                        Globals.simpleJiraDB.SaveChanges();
                         MessageBox.Show("User Updated", "User Information");
                         ResetAndLoadDataFromDB();
                     }
@@ -185,10 +184,10 @@ namespace SimpleJiraProject
                 }
                 else
                 {
-                    Team teamForUser = simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
+                    Team teamForUser = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
                     User newUser = new User { Team = teamForUser, LoginName = cmbNewUserList.Text, Role = cmbNewRoleList.Text };
-                    simpleJiraDB.Users.Add(newUser);
-                    simpleJiraDB.SaveChanges();
+                    Globals.simpleJiraDB.Users.Add(newUser);
+                    Globals.simpleJiraDB.SaveChanges();
                     MessageBox.Show("Added new User", "User Information");
                     ResetAndLoadDataFromDB();
                 }
@@ -215,7 +214,7 @@ namespace SimpleJiraProject
                 }
                 if (cmbNewTeamList.SelectedItem != null)
                 {
-                    Team teamUpdate = simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbNewTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
+                    Team teamUpdate = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbNewTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
                     if (teamUpdate != null)
                     {
                         if (string.IsNullOrEmpty(tbTeamUpdate.Text))
@@ -224,7 +223,7 @@ namespace SimpleJiraProject
                             return;
                         }
                         teamUpdate.Name = tbTeamUpdate.Text;
-                        simpleJiraDB.SaveChanges();
+                        Globals.simpleJiraDB.SaveChanges();
                         MessageBox.Show("Team Updated", "Team Information");
                         ResetAndLoadDataFromDB();
                     }
@@ -236,8 +235,8 @@ namespace SimpleJiraProject
                 else
                 {
                     Team newTeam = new Team { Name = cmbNewTeamList.Text };
-                    simpleJiraDB.Teams.Add(newTeam);
-                    simpleJiraDB.SaveChanges();
+                    Globals.simpleJiraDB.Teams.Add(newTeam);
+                    Globals.simpleJiraDB.SaveChanges();
                     MessageBox.Show("Added new Team", "Team Information");
                     ResetAndLoadDataFromDB();
                 }

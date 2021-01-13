@@ -11,6 +11,9 @@ namespace SimpleJiraProject
     /// </summary>
     public partial class SignupDialog : Window
     {
+        User signupUser;
+        public event Action<User> SignupCallback;
+
         public SignupDialog()
         {
             InitializeComponent();
@@ -47,8 +50,7 @@ namespace SimpleJiraProject
                 return;
             }else
             {
-
-                User newUser = new User
+                signupUser = new User
                 {
                     LoginName = tbLoginName.Text,
                     FirstName = tbFirstName.Text,
@@ -58,8 +60,15 @@ namespace SimpleJiraProject
                     PasswordHash = SecurePassword.Encrypt(Encoding.UTF8.GetBytes(tbConfirmPassword.Password)),
                     Role = cmbRoleList.Text
                 };
+                Globals.simpleJiraDB.Users.Add(signupUser);
                 Globals.simpleJiraDB.SaveChanges();
                 MessageBox.Show("New User Registered", "SignUp Information");
+            }
+            if (signupUser != null)
+            {
+                this.DialogResult = true;
+                SignupCallback?.Invoke(signupUser);
+                this.Close();
             }
         }
 
@@ -109,8 +118,7 @@ namespace SimpleJiraProject
             else
             {
                 return chooseTeam.TeamId;
-            }
-            
+            } 
         }
 
     }

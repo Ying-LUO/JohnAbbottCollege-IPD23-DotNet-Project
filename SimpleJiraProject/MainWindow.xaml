@@ -103,7 +103,7 @@
                             <ItemsControl Name="ProjectListView"  >
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <local:ProjectView />
+                                        <!--<local:ProjectView />-->
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                                 <ItemsControl.ItemsPanel>
