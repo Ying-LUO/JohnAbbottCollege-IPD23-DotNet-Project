@@ -287,12 +287,12 @@ Day 09: 2021-Jan-11 Monday
 Khalil:
 
 1- Done:
-	*Working on Project Dialog to add  projects
-	* find the way to access child Item Control 
+	*Project Dialog to add  projects 
+	*using User control for project view
 	*Update Trello
 2- Todo:
 	*Continue Working on project update.
-	*Working on Sprint Dialog to add and Update sprints
+	*Working on Sprint Dialog to add sprints
 
 3- Need assistant:
 	*N/A
@@ -309,12 +309,40 @@ Day 10: 2021-Jan-12 Tuesday
 Khalil:
 
 1- Done:
-	*Working on Project Dialog to add  projects
-	* find the way to access child Item Control 
+	*Sprint Dialog to add, update and delete sprint
+	* Project dialog update feature
 	*Update Trello
 2- Todo:
-	*Continue Working on project update.
-	*Working on Sprint Dialog to add and Update sprints
+	
+	*Continue working on Sprint Dialog to Update and delete sprints
+	*Fix few issues
+	*Update Trello
+
+3- Need assistant:
+	*N/A
+Ying:
+1. Done:
+* Finish the sign up and login dialogs
+* Finish the user/team management
+2. Todo:
+* Working on other list view features
+3. Need assistant:
+
+
+============================================================================================
+Day 10: 2021-Jan-13 Tuesday
+============================================================================================
+Khalil:
+
+1- Done:
+	*Sprint Dialog to Update and delete sprints
+	*Fix few issues
+	*Update Trello
+2- Todo:
+	
+	*working on UserStory Dialog to add, Update and delete UserStories
+	*Fix combo box issue
+	*Update Trello
 
 3- Need assistant:
 	*N/A
