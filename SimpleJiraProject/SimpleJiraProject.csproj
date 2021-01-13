@@ -96,6 +96,9 @@
     <Compile Include="Project.cs">
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProjectView.xaml.cs">
+      <DependentUpon>ProjectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SecurePassword.cs" />
     <Compile Include="SignupDialog.xaml.cs">
       <DependentUpon>SignupDialog.xaml</DependentUpon>
@@ -162,6 +165,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ProjectView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="SignupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
