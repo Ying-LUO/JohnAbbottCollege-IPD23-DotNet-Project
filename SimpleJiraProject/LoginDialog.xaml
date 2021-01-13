@@ -14,8 +14,15 @@
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d"
         Title="LoginDialog" Height="570" Width="880" WindowStartupLocation="CenterScreen">
-    <Grid x:Name="LoginView" Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-        <Rectangle Height="540" VerticalAlignment="Top" Margin="-5,0,0,0">
+    <Grid x:Name="LoginView" Visibility="Visible">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
+                <GradientStop Color="AliceBlue" />
+                <GradientStop Color="SteelBlue" Offset="1"/>
+                <GradientStop Color="CadetBlue" Offset="0.5"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <!--<Rectangle Height="538" Width="auto" VerticalAlignment="Top" Margin="-5,-18,0,0">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
                     <GradientStop Color="AliceBlue" />
@@ -23,20 +30,22 @@
                     <GradientStop Color="CadetBlue" Offset="0.5"/>
                 </LinearGradientBrush>
             </Rectangle.Fill>
-        </Rectangle>
-        <Rectangle Width="350" Height="380" Fill="White" VerticalAlignment="Bottom" Margin="240,0,230,100" RadiusY="8" RadiusX="8">
-            <Rectangle.Effect>
+        </Rectangle>-->
+        <Grid Width="350" Height="480" Background="White" >
+            <Grid.Effect>
                 <DropShadowEffect Color="Gray" Direction="50" BlurRadius="15" ShadowDepth="5"/>
-            </Rectangle.Effect>
-        </Rectangle>
-        <Grid Width="280" Height="320" VerticalAlignment="Bottom" Margin="0 100">
-            <TextBox Text="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
-            <StackPanel Margin="0 75">
-                <TextBox x:Name="tbLoginName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
-                <PasswordBox x:Name="tbPassword" MaxLength="8" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="26,0,27,0" />
-            </StackPanel>
+            </Grid.Effect>
+            <Grid  Margin="10,40,10,208">
+                <TextBox Text="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
+                <StackPanel Margin="0,56,0,0" >
+                    <TextBox x:Name="tbLoginName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                    <PasswordBox x:Name="tbPassword" MaxLength="8" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="26,35,27,0" />
+                </StackPanel>
+            </Grid>
+            <Button  Margin="38,277,32,171" Content="LOG IN" FontSize="18" IsDefault="True" x:Name="btLogin" Click="btLogin_Click" />
+            <Button  Margin="38,404,32,44" Content="SIGN UP" FontSize="18" x:Name="btSignupFromLogin" Click="btSignupFromLogin_Click" />
+            <Label Content="Create an account." HorizontalAlignment="Left" Margin="38,360,0,0" VerticalAlignment="Top" Width="171" Foreground="#FFBBB7B7"/>
         </Grid>
-        <Button VerticalAlignment="Bottom" Margin="465,0,255,139" Width="150" Content="LOG IN" FontSize="18" IsDefault="True" x:Name="btLogin" Click="btLogin_Click" />
-        <Button VerticalAlignment="Bottom" Margin="265,0,455,139" Width="150" Content="SIGN UP" FontSize="18" x:Name="btSignupFromLogin" Click="btSignupFromLogin_Click" />
+
     </Grid>
 </Window>
