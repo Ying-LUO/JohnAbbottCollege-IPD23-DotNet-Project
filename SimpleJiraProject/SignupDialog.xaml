@@ -1,9 +1,11 @@
-﻿<Window x:Class="SimpleJiraProject.SignupDialog"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:SimpleJiraProject"
+        xmlns:Properties="clr-namespace:SimpleJiraProject.Properties" x:Class="SimpleJiraProject.SignupDialog"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="14"
@@ -11,17 +13,16 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d"
-        Title="SignupDialog" Height="550" Width="800" WindowStartupLocation="CenterScreen">
+        Title="SignupDialog" Height="650" Width="800" WindowStartupLocation="CenterScreen">
     <Grid x:Name="LoginView">
         <Grid VerticalAlignment="Top">
             <TextBox Text="SIGN UP NEW USER" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
-            <StackPanel Margin="0 75">
-                <TextBox x:Name="tbLoginName" Foreground="Gray" materialDesign:HintAssist.Hint="LOGIN NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
-                <TextBox x:Name="tbFirstName" Foreground="Gray" materialDesign:HintAssist.Hint="FIRST NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
-                <TextBox x:Name="tbLastName" Foreground="Gray" materialDesign:HintAssist.Hint="LAST NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
-                <ComboBox Name="cmbTeamList"
+            <StackPanel Margin="0 75" >
+                <TextBox x:Name="tbLoginName" MaxLength="50" Foreground="Gray" materialDesign:HintAssist.Hint="LOGIN NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                <TextBox x:Name="tbFirstName" MaxLength="50" Foreground="Gray" materialDesign:HintAssist.Hint="FIRST NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                <TextBox x:Name="tbLastName" MaxLength="50" Foreground="Gray" materialDesign:HintAssist.Hint="LAST NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                <ComboBox x:Name="cmbTeamList"
                               materialDesign:HintAssist.Hint="YOUR TEAM"
                           Foreground="Gray" 
                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -32,7 +33,7 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
-                <ComboBox Name="cmbRoleList"
+                <ComboBox x:Name="cmbRoleList"
                               materialDesign:HintAssist.Hint="YOUR ROLE"
                           Foreground="Gray" 
                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -43,6 +44,7 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
+                <TextBox x:Name="tbEmail" Foreground="Gray" materialDesign:HintAssist.Hint="EMAIL ADDRESS" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
                 <PasswordBox x:Name="tbPassword" materialDesign:TextFieldAssist.HasClearButton="True"
                             materialDesign:HintAssist.HelperText="At least 8 characters" MaxLength="8" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="26,0,27,0" />
                 <PasswordBox x:Name="tbConfirmPassword" materialDesign:TextFieldAssist.HasClearButton="True"

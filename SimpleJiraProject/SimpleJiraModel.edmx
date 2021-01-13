@@ -59,6 +59,7 @@
           <Property Name="PasswordHash" Type="binary" MaxLength="64" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="UserStories">
           <Key>
@@ -262,6 +263,7 @@
           <Property Name="PasswordHash" Type="Binary" MaxLength="64" FixedLength="true" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Issues" Relationship="Self.FK_Issues_Users" FromRole="Users" ToRole="Issues" />
           <NavigationProperty Name="Team" Relationship="Self.FK_Users_Teams" FromRole="Users" ToRole="Teams" />
           <NavigationProperty Name="UserStories" Relationship="Self.FK_UserStories_Users" FromRole="Users" ToRole="UserStories" />
@@ -467,6 +469,7 @@
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

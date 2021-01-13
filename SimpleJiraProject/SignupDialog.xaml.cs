@@ -2,15 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SimpleJiraProject
 {
@@ -39,40 +31,87 @@ namespace SimpleJiraProject
         {
             if (Blank_Check())
             {
+                MessageBox.Show("Please input all fields", "SignUp Information");
+                return;
+            }else if (LoginName_Check(tbLoginName.Text))
+            {
+                MessageBox.Show("Login Name exists already, please choose another one", "SignUp Information");
+                return;
+            }else if (!IsValidEmail(tbEmail.Text))
+            {
+                MessageBox.Show("Please input correct email address", "SignUp Information");
+                return;
+            }else if (!Password_Check(tbPassword.Password, tbConfirmPassword.Password))
+            {
+                MessageBox.Show("Please confirm the same password", "SignUp Information");
+                return;
+            }else
+            {
 
+                User newUser = new User
+                {
+                    LoginName = tbLoginName.Text,
+                    FirstName = tbFirstName.Text,
+                    LastName = tbLastName.Text,
+                    TeamId = Team_Check(cmbTeamList.Text),
+                    EMAIL = tbEmail.Text,
+                    PasswordHash = SecurePassword.Encrypt(Encoding.UTF8.GetBytes(tbConfirmPassword.Password)),
+                    Role = cmbRoleList.Text
+                };
+                Globals.simpleJiraDB.SaveChanges();
+                MessageBox.Show("New User Registered", "SignUp Information");
             }
-
         }
 
         private bool Blank_Check()
         {
-            if (string.IsNullOrEmpty(tbLoginName.Text) || string.IsNullOrEmpty(tbFirstName.Text)
-                || string.IsNullOrEmpty(tbLastName.Text) || string.IsNullOrEmpty(cmbTeamList.Text)
-                || string.IsNullOrEmpty(cmbRoleList.Text) || string.IsNullOrEmpty(tbPassword.Password)
-                || string.IsNullOrEmpty(tbConfirmPassword.Password))
+            return string.IsNullOrEmpty(tbLoginName.Text) || string.IsNullOrEmpty(tbFirstName.Text)
+                    || string.IsNullOrEmpty(tbLastName.Text) || string.IsNullOrEmpty(cmbTeamList.Text)
+                    || string.IsNullOrEmpty(cmbRoleList.Text) || string.IsNullOrEmpty(tbPassword.Password)
+                    || string.IsNullOrEmpty(tbEmail.Text) || string.IsNullOrEmpty(tbConfirmPassword.Password);
+        }
+
+        private bool LoginName_Check(string loginName)
+        {
+            List<string> NameList = Globals.simpleJiraDB.Users.AsEnumerable().Select(u => u.LoginName).ToList<string>();
+            return NameList.Contains(loginName);
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
             {
-                MessageBox.Show("Please input value");
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
                 return false;
+            }
+        }
+
+        private bool Password_Check(string pwd, string confirmPwd)
+        {
+            return pwd == confirmPwd;
+        }
+
+        private int Team_Check(string team)
+        {
+            Team chooseTeam = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(team)).FirstOrDefault();
+            int teamId = chooseTeam != null ? chooseTeam.TeamId : 0;
+            if(teamId == 0)
+            {
+                Team newTeam = new Team { Name = team };
+                Globals.simpleJiraDB.Teams.Add(newTeam);
+                Globals.simpleJiraDB.SaveChanges();
+                return newTeam.TeamId;
             }
             else
             {
-                return true;
+                return chooseTeam.TeamId;
             }
+            
         }
 
-        private void LoginName_Check()
-        {
-            List<string> NameList = Globals.simpleJiraDB.Users.AsEnumerable().Select(u => u.LoginName).ToList<string>();
-            if (NameList.Contains(tbLoginName.Text))
-            {
-                MessageBox.Show("Login Name exists, please choose another one");
-                return;
-            }
-        }
-
-        private void Password_Check()
-        {
-
-        }
     }
 }

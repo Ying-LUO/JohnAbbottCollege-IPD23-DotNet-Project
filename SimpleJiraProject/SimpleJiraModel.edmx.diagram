@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3585f7e7be8541b0ad91f891dbf5309c" Name="Diagram1">
-        <EntityTypeShape EntityType="SimpleJiraDBModel.Issue" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+      <Diagram DiagramId="b9d8ab063d894433a4e50440c67d1eeb" Name="Diagram1">
+        <EntityTypeShape EntityType="SimpleJiraDBModel.Issue" Width="1.5" PointX="9.75" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SimpleJiraDBModel.Project" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="SimpleJiraDBModel.Sprint" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SimpleJiraDBModel.Team" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleJiraDBModel.Team" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="SimpleJiraDBModel.User" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SimpleJiraDBModel.UserStory" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleJiraDBModel.UserStory" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
         <AssociationConnector Association="SimpleJiraDBModel.FK_Issues_Users" ManuallyRouted="false" />
         <AssociationConnector Association="SimpleJiraDBModel.FK_Issues_UserStories" ManuallyRouted="false" />
         <AssociationConnector Association="SimpleJiraDBModel.FK_Projects_Teams" ManuallyRouted="false" />
