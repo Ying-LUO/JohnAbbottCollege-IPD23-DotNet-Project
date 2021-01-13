@@ -24,7 +24,7 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Width="280" Height="380" Fill="White" VerticalAlignment="Bottom" Margin="290,0,290,100" RadiusY="8" RadiusX="8">
+        <Rectangle Width="350" Height="380" Fill="White" VerticalAlignment="Bottom" Margin="240,0,230,100" RadiusY="8" RadiusX="8">
             <Rectangle.Effect>
                 <DropShadowEffect Color="Gray" Direction="50" BlurRadius="15" ShadowDepth="5"/>
             </Rectangle.Effect>
@@ -36,7 +36,7 @@
                 <PasswordBox x:Name="tbPassword" MaxLength="8" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="26,0,27,0" />
             </StackPanel>
         </Grid>
-        <Button VerticalAlignment="Bottom" Margin="0, 165" Width="150" Content="LOG IN" FontSize="18" x:Name="btLogin" Click="btLogin_Click" />
-        <Button VerticalAlignment="Bottom" Margin="0, 85" Width="150" Content="SIGN UP" FontSize="18" x:Name="btSignupFromLogin" Click="btSignupFromLogin_Click" />
+        <Button VerticalAlignment="Bottom" Margin="465,0,255,139" Width="150" Content="LOG IN" FontSize="18" x:Name="btLogin" Click="btLogin_Click" />
+        <Button VerticalAlignment="Bottom" Margin="265,0,455,139" Width="150" Content="SIGN UP" FontSize="18" x:Name="btSignupFromLogin" Click="btSignupFromLogin_Click" />
     </Grid>
 </Window>
