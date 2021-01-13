@@ -298,5 +298,30 @@ Khalil:
 	*N/A
 Ying:
 1. Done:
+* Finished the secure password class for string encryption
 2. Todo:
+* Keep refactoring the login part
+3. Need assistant:
+
+============================================================================================
+Day 10: 2021-Jan-12 Tuesday
+============================================================================================
+Khalil:
+
+1- Done:
+	*Working on Project Dialog to add  projects
+	* find the way to access child Item Control 
+	*Update Trello
+2- Todo:
+	*Continue Working on project update.
+	*Working on Sprint Dialog to add and Update sprints
+
+3- Need assistant:
+	*N/A
+Ying:
+1. Done:
+* Finish the sign up and login dialogs
+* Finish the user/team management
+2. Todo:
+* Working on other list view features
 3. Need assistant:
