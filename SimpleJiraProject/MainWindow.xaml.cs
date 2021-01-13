@@ -158,27 +158,17 @@ namespace SimpleJiraProject
 
         }
 
-        private void btManageUser_Click(object sender, RoutedEventArgs e)
-        {
-            int index = 1;
-            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(index);
-            userManagementDialog.Owner = this;
-            bool? result = userManagementDialog.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
-
-            if (result == true)
-            {
-                //cmbLoginTeam.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
-            }
-            //TODO: AFTER UPDATING TEAM NAME, THE TEAM COMBO BOX LIST IS NOT UPDATED ACCORDINGLY
-        }
-
         private void btManageTeam_Click(object sender, RoutedEventArgs e)
         {
-            int index = 0;
-            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(index);
+            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(currentUser);
             userManagementDialog.Owner = this;
-            userManagementDialog.ShowDialog();
-            //TODO: AFTER UPDATING TEAM NAME, THE TEAM COMBO BOX LIST IS NOT UPDATED ACCORDINGLY
+
+            userManagementDialog.TeamUserUpdateCallback += (u) => { currentUser = u; };
+            bool? result = userManagementDialog.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
+            if (result != null)
+            {
+                LoadDataFromDb(currentUser);
+            }
         }
 
         private void btLogOut_Click(object sender, RoutedEventArgs e)
@@ -191,12 +181,8 @@ namespace SimpleJiraProject
 
             if (result == true)
             {
-                MessageBox.Show("Login Successfully");
+                
                 new MainWindow(currentUser).ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Login Failed");
             }
         }
 

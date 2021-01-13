@@ -11,9 +11,7 @@ namespace SimpleJiraProject
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-
+    
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,14 +20,12 @@ namespace SimpleJiraProject
             this.Issues = new HashSet<Issue>();
             this.UserStories = new HashSet<UserStory>();
         }
-
-        private string _loginName;
     
         public int UserId { get; set; }
         public string LoginName { get; set; }
         public string Role { get; set; }
         public int TeamId { get; set; }
-        public byte[] PasswordHash { get; set; }
+        public string PWDEncrypted { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EMAIL { get; set; }

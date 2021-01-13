@@ -56,7 +56,7 @@
           <Property Name="LoginName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TeamId" Type="int" Nullable="false" />
-          <Property Name="PasswordHash" Type="binary" MaxLength="64" />
+          <Property Name="PWDEncrypted" Type="nvarchar" MaxLength="200" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="EMAIL" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -260,7 +260,7 @@
           <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TeamId" Type="Int32" Nullable="false" />
-          <Property Name="PasswordHash" Type="Binary" MaxLength="64" FixedLength="true" />
+          <Property Name="PWDEncrypted" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -466,7 +466,7 @@
                 <ScalarProperty Name="LoginName" ColumnName="LoginName" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PWDEncrypted" ColumnName="PWDEncrypted" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />

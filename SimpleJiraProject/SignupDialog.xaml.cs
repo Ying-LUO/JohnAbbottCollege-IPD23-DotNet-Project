@@ -57,7 +57,7 @@ namespace SimpleJiraProject
                     LastName = tbLastName.Text,
                     TeamId = Team_Check(cmbTeamList.Text),
                     EMAIL = tbEmail.Text,
-                    PasswordHash = SecurePassword.Encrypt(Encoding.UTF8.GetBytes(tbConfirmPassword.Password)),
+                    PWDEncrypted = SecurePassword.Encrypt(tbConfirmPassword.Password),
                     Role = cmbRoleList.Text
                 };
                 Globals.simpleJiraDB.Users.Add(signupUser);

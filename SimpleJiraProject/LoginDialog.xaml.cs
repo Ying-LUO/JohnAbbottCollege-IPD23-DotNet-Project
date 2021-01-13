@@ -43,12 +43,23 @@ namespace SimpleJiraProject
             {
                 loginUser = Globals.simpleJiraDB.Users.Where(u => u.LoginName == tbLoginName.Text).FirstOrDefault();
 
-                //TODO: ADD VALIDATION CLASS FOR USER NAME & PASSWORD INPUT
                 if (loginUser != null)
                 {
-                    this.DialogResult = true;
-                    LoginCallback?.Invoke(loginUser);
-                    this.Close();
+                    string pwd = SecurePassword.Decrypt(loginUser.PWDEncrypted);
+                    if (tbPassword.Password.Equals(pwd))
+                    {
+                        this.DialogResult = true;
+                        LoginCallback?.Invoke(loginUser);
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Password Incorrect", "Login Information");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("User not exist", "Login Information");
                 }
             }
             catch (SqlException ex)
@@ -63,7 +74,7 @@ namespace SimpleJiraProject
             signup.Owner = this;
             signup.SignupCallback += (u) => { loginUser = u; };
             bool? result = signup.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
-            if (result!=null)
+            if (loginUser!= null)
             {
                 tbLoginName.Text = loginUser.LoginName;
             }

@@ -23,71 +23,55 @@ namespace SimpleJiraProject
     public partial class TeamUserManagementDialog : Window
     {
         User currentUserInDialog;
-
-        public TeamUserManagementDialog(int index)
-        {
-            InitializeComponent();
-            ResetAndLoadDataFromDB();
-
-            tcTeamUser.SelectedIndex = index;
-            
-            tiMyAccount.Visibility = Visibility.Hidden;
-            tiTeam.Visibility = Visibility.Visible;
-            tiUser.Visibility = Visibility.Visible;
-        }
+        public event Action<User> TeamUserUpdateCallback;
 
         public TeamUserManagementDialog(User currentUser)
         {
             InitializeComponent();
+            currentUserInDialog = currentUser;
             ResetAndLoadDataFromDB();
 
-            tcTeamUser.SelectedIndex = 2;
-
-            cmbTeamListMyAccount.SelectedItem = currentUser.Team.Name;
-            cmbTeamListMyAccount.IsEnabled = false;
-            //TODO: tbUserNameMyAccount.Text = currentUser.LoginName;
-            //TODO: tbRoleMyAccount.Text = currentUser.Role;
-            currentUserInDialog = currentUser;
-            
-            tiMyAccount.Visibility = Visibility.Visible;
-            tiTeam.Visibility = Visibility.Hidden;
-            tiUser.Visibility = Visibility.Hidden;
-
-            tblStatus.Text = $"Current User: {currentUser.LoginName}, {currentUser.Role} From {currentUser.Team.Name}";
+            if (currentUser.LoginName.Equals("Admin"))
+            {
+                tiTeam.Visibility = Visibility.Visible;
+                tiUser.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                tiTeam.Visibility = Visibility.Hidden;
+                tiUser.Visibility = Visibility.Hidden;
+            }
         }
 
         private void ResetAndLoadDataFromDB()
         {
             try
             {
-                Globals.simpleJiraDB = new SimpleJiraDBEntities();
+                tbLoginName.Text = currentUserInDialog.LoginName;
+                tbFirstName.Text = currentUserInDialog.FirstName;
+                tbLastName.Text = currentUserInDialog.LastName;
+                tbTeam.Text = currentUserInDialog.Team.Name;
+                tbEmail.Text = currentUserInDialog.EMAIL;
+                tbRole.Text = currentUserInDialog.Role;
+
                 cmbNewTeamList.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
                 cmbNewTeamList.Items.Refresh();
 
                 cmbTeamList.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
                 cmbTeamList.Items.Refresh();
 
-                cmbTeamListMyAccount.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
-                cmbTeamListMyAccount.Items.Refresh();
+                cmbUpdateTeamList.ItemsSource = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).Distinct().ToList<string>();
+                cmbUpdateTeamList.Items.Refresh();
 
-                cmbNewRoleList.ItemsSource = Globals.simpleJiraDB.Users.AsEnumerable().Select(u => u.Role).Distinct().ToList<string>();
-                cmbNewRoleList.Items.Refresh();
-
-                //TODO: tbRoleMyAccount.Text = string.Empty;
                 tbTeamUpdate.Text = string.Empty;
-                tbUserUpdate.Text = string.Empty;
-                //TODO: tbUserNameMyAccount.Text = string.Empty;
 
-                cmbNewRoleList.SelectedIndex = -1;
                 cmbNewTeamList.SelectedIndex = -1;
-                cmbNewUserList.SelectedIndex = -1;
-
-                cmbNewTeamList.Text = string.Empty;
-                cmbNewUserList.Text = string.Empty;
-                cmbNewRoleList.Text = string.Empty;
+                cmbUserList.SelectedIndex = -1;
+                cmbUpdateTeamList.SelectedIndex = -1;
                 cmbTeamList.SelectedIndex = -1;
-                cmbTeamListMyAccount.SelectedIndex = -1;
 
+                tblStatus.Text = $"Current User: {currentUserInDialog.LoginName} : {currentUserInDialog.FirstName} {currentUserInDialog.LastName}, {currentUserInDialog.Role} From {currentUserInDialog.Team.Name}";
+                
             }
             catch (SystemException ex)
             {
@@ -101,12 +85,15 @@ namespace SimpleJiraProject
             if (cmbNewTeamList.SelectedItem != null)
             {
                 tbTeamUpdate.Visibility = Visibility.Visible;
-                btTeam.Content = "Update Team Name";
+                btDeleteTeam.Visibility = Visibility.Visible;
+                btAddTeam.Content = "Update Team Name";
+
             }
             else
             {
                 tbTeamUpdate.Visibility = Visibility.Hidden;
-                btTeam.Content = "Add New Team";
+                btDeleteTeam.Visibility = Visibility.Hidden;
+                btAddTeam.Content = "Add New Team";
             }
         }
 
@@ -117,19 +104,27 @@ namespace SimpleJiraProject
                 if (cmbTeamList.SelectedItem != null)
                 {
                     List<string> userList = Globals.simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).AsEnumerable().Select(u => u.LoginName).ToList<string>();
-                        
+
                     if (userList != null)
                     {
-                        cmbNewUserList.ItemsSource = userList;
-                        cmbNewUserList.Items.Refresh();
-                        cmbNewUserList.Text = string.Empty;
-                        cmbNewUserList.SelectedIndex = -1;
+                        cmbUserList.ItemsSource = userList;
+                        cmbUserList.Items.Refresh();
+                        cmbUserList.Text = string.Empty;
+                        cmbUserList.SelectedIndex = -1;
                     }
                     else
                     {
-                        cmbNewUserList.Text = string.Empty;
+                        cmbUserList.Text = string.Empty;
                     }
-                }    
+                }
+                if (cmbUpdateTeamList.SelectedItem != null)
+                {
+                    btDeleteUser.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    btDeleteUser.Visibility = Visibility.Visible;
+                }
             }
             catch (SqlException ex)
             {
@@ -137,62 +132,40 @@ namespace SimpleJiraProject
             }
         }
 
-        private void cmbNewUserList_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            if (cmbNewUserList.SelectedItem != null)
-            {
-                tbUserUpdate.Visibility = Visibility.Visible;
-                btUser.Content = "Update User";
-            }
-            else
-            {
-                tbUserUpdate.Visibility = Visibility.Hidden;
-                btUser.Content = "Add New User";
-            }
-        }
-
-        private void btUser_Click(object sender, RoutedEventArgs e)
-        {
+        private void btUpdateMyAccount_Click(object sender, RoutedEventArgs e)
+        { 
             try
             {
-                if ((string.IsNullOrEmpty(cmbNewUserList.Text)) || (string.IsNullOrEmpty(cmbNewRoleList.Text)) || (string.IsNullOrEmpty(cmbTeamList.Text)))
+                if (string.IsNullOrEmpty(tbLoginName.Text) || string.IsNullOrEmpty(tbFirstName.Text) || string.IsNullOrEmpty(tbLastName.Text)
+                    || string.IsNullOrEmpty(tbRole.Text) || string.IsNullOrEmpty(tbEmail.Text) || string.IsNullOrEmpty(tbPassword.Password))
                 {
                     MessageBox.Show("Please input value", "User Information");
                     return;
                 }
-                if (cmbNewUserList.SelectedItem != null)
+                User myAccount = Globals.simpleJiraDB.Users.Include("Team").Where(u => u.UserId == currentUserInDialog.UserId).FirstOrDefault<User>();
+                if (myAccount != null)
                 {
-                    User userUpdate = Globals.simpleJiraDB.Users.Where(u => u.LoginName.Equals(cmbNewUserList.SelectedItem.ToString())).FirstOrDefault<User>();
-
-                    if (userUpdate != null)
+                    myAccount.LoginName = tbLoginName.Text;
+                    myAccount.FirstName = tbFirstName.Text;
+                    myAccount.LastName = tbLastName.Text;
+                    myAccount.EMAIL = tbEmail.Text;
+                    myAccount.Role = tbRole.Text;
+                    myAccount.PWDEncrypted = SecurePassword.Encrypt(tbPassword.Password);
+                    Globals.simpleJiraDB.SaveChanges();
+                    MessageBox.Show("My Account updated", "User Information");
+                    ResetAndLoadDataFromDB();
+                    if (currentUserInDialog != null)
                     {
-                        if (string.IsNullOrEmpty(tbUserUpdate.Text))
-                        {
-                            MessageBox.Show("Please enter new user name","User Information");
-                            return;
-                        }
-                        userUpdate.LoginName = tbUserUpdate.Text;
-                        userUpdate.Role = cmbNewRoleList.Text;
-                        Globals.simpleJiraDB.SaveChanges();
-                        MessageBox.Show("User Updated", "User Information");
-                        ResetAndLoadDataFromDB();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Cannot find user to update", "User Information");
+                        this.DialogResult = true;
+                        TeamUserUpdateCallback?.Invoke(currentUserInDialog);
                     }
                 }
                 else
                 {
-                    Team teamForUser = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
-                    User newUser = new User { Team = teamForUser, LoginName = cmbNewUserList.Text, Role = cmbNewRoleList.Text };
-                    Globals.simpleJiraDB.Users.Add(newUser);
-                    Globals.simpleJiraDB.SaveChanges();
-                    MessageBox.Show("Added new User", "User Information");
-                    ResetAndLoadDataFromDB();
+                    MessageBox.Show("Cannot find this user to update", "User Information");
                 }
             }
-            catch (DbUpdateException ex) 
+            catch (DbUpdateException ex)
             {
                 MessageBox.Show("User Name Must be Unique", "Error Information");
                 Debug.WriteLine(ex.ToString());
@@ -203,7 +176,7 @@ namespace SimpleJiraProject
             }
         }
 
-        private void btTeam_Click(object sender, RoutedEventArgs e)
+        private void btAddTeam_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -226,10 +199,15 @@ namespace SimpleJiraProject
                         Globals.simpleJiraDB.SaveChanges();
                         MessageBox.Show("Team Updated", "Team Information");
                         ResetAndLoadDataFromDB();
+                        if (currentUserInDialog != null)
+                        {
+                            this.DialogResult = true;
+                            TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Cannot find team to update", "User Information");
+                        MessageBox.Show("Cannot find team to update", "Team Information");
                     }
                 }
                 else
@@ -241,7 +219,7 @@ namespace SimpleJiraProject
                     ResetAndLoadDataFromDB();
                 }
             }
-            catch (DbUpdateException ex) 
+            catch (DbUpdateException ex)
             {
                 MessageBox.Show("Team Name Must be Unique", "Error Information");
                 Debug.WriteLine(ex.ToString());
@@ -252,41 +230,124 @@ namespace SimpleJiraProject
             }
         }
 
-       
-        private void btUpdateMyAccount_Click(object sender, RoutedEventArgs e)
-        { /*
+        private void btDeleteTeam_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
-                if ((string.IsNullOrEmpty(tbUserNameMyAccount.Text)) || (string.IsNullOrEmpty(tbRoleMyAccount.Text)))
+                Team teamDelete = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbNewTeamList.Text)).FirstOrDefault<Team>();
+                if (teamDelete != null)
                 {
-                    MessageBox.Show("Please input value", "User Information");
-                    return;
-                }
-                User myAccount = simpleJiraDB.Users.Include("Team").Where(u => u.UserId == currentUserInDialog.UserId).FirstOrDefault<User>();
-                if (myAccount != null)
-                {
-                    myAccount.LoginName = tbUserNameMyAccount.Text;
-                    myAccount.Role = tbRoleMyAccount.Text;
-                    simpleJiraDB.SaveChanges();
-                    MessageBox.Show("My Account updated", "User Information");
-                    tblStatus.Text = $"Update Current User To : {tbUserNameMyAccount.Text}, {tbRoleMyAccount.Text} From {cmbTeamListMyAccount.SelectedItem.ToString()}";
-                    ResetAndLoadDataFromDB();
+                    int userCount = Globals.simpleJiraDB.Users.Include("Team").Where(u => u.TeamId == teamDelete.TeamId).ToList<User>().Count;
+                    if (userCount == 0)
+                    {
+                        Globals.simpleJiraDB.Teams.Remove(teamDelete);
+                        //TODO: CHECK PROJECT FOREIGN KEY BEFORE REMOVE TEAM
+                        Globals.simpleJiraDB.SaveChanges();
+                        MessageBox.Show("Team Deleted", "Team Information");
+                        ResetAndLoadDataFromDB();
+                        if (currentUserInDialog != null)
+                        {
+                            this.DialogResult = true;
+                            TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                        }
                     }
+                    else
+                    {
+                        MessageBox.Show("Please remove the users under this team before deleting team", "Delete Team");
+                        return;
+                    }
+                }
                 else
                 {
-                    MessageBox.Show("Cannot find this user to update", "User Information");
+                    MessageBox.Show("Cannot find team to Delete", "Team Information");
                 }
-            }
-            catch (DbUpdateException ex)
-            {
-                MessageBox.Show("User Name Must be Unique", "Error Information");
-                Debug.WriteLine(ex.ToString());
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error Updating User into database:\n" btUpdateMyAccount_Click ex.Message, "Error Information");
-            }*/
+                MessageBox.Show("Error Deleting User from database:\n" + ex.Message, "Error Information");
+            }
         }
-        
+
+        private void btUpdateUser_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if ((string.IsNullOrEmpty(cmbUserList.Text)) || (string.IsNullOrEmpty(cmbUpdateTeamList.Text)) || (string.IsNullOrEmpty(cmbTeamList.Text)))
+                {
+                    MessageBox.Show("Please choose user and team to update", "User Information");
+                    return;
+                }
+                Team fromTeam = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
+
+                if (fromTeam != null)
+                {
+                    User userUpdate = Globals.simpleJiraDB.Users.Where(u => u.LoginName.Equals(cmbUserList.SelectedItem.ToString())).Where(ut => ut.TeamId == fromTeam.TeamId).FirstOrDefault<User>();
+                    Team toTeam = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbUpdateTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
+
+                    if ((userUpdate != null) && (toTeam != null))
+                    {
+                        userUpdate.TeamId = toTeam.TeamId;
+                        Globals.simpleJiraDB.SaveChanges();
+                        MessageBox.Show("User Updated", "User Information");
+                        ResetAndLoadDataFromDB();
+                        if (currentUserInDialog != null)
+                        {
+                            this.DialogResult = true;
+                            TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cannot find user to update", "User Information");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Cannot find user's team to update", "User Information");
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error Updating User into database:\n" + ex.Message, "Error Information");
+            }
         }
+
+        private void btDeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if ((string.IsNullOrEmpty(cmbUserList.Text)) || (string.IsNullOrEmpty(cmbTeamList.Text)))
+                {
+                    MessageBox.Show("Please choose user to delete", "User Information");
+                    return;
+                }
+                Team team = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
+
+                if (team != null)
+                {
+                    User userDelete = Globals.simpleJiraDB.Users.Where(u => u.LoginName.Equals(cmbUserList.SelectedItem.ToString())).Where(ut => ut.TeamId == team.TeamId).FirstOrDefault<User>();
+                    if (userDelete != null)
+                    {
+                        Globals.simpleJiraDB.Users.Remove(userDelete);
+                        Globals.simpleJiraDB.SaveChanges();
+                        MessageBox.Show("User Deleted", "User Information");
+                        ResetAndLoadDataFromDB();
+                        if (currentUserInDialog != null)
+                        {
+                            this.DialogResult = true;
+                            TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cannot find User to Delete", "User Information");
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error Deleting User from database:\n" + ex.Message, "Error Information");
+            }
+        }
+    }
 }

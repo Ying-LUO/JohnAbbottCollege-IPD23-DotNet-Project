@@ -10,11 +10,11 @@ namespace SimpleJiraProject
 {
     public class SecurePassword
     {
-        public const String strPermutation = "ouiveyxaqtd";
-        public const Int32 bytePermutation1 = 0x19;
-        public const Int32 bytePermutation2 = 0x59;
-        public const Int32 bytePermutation3 = 0x17;
-        public const Int32 bytePermutation4 = 0x41;
+        public const String strPermutation = "johnabbottproject";
+        public const Int32 bytePermutation1 = 0x17;
+        public const Int32 bytePermutation2 = 0x55;
+        public const Int32 bytePermutation3 = 0x29;
+        public const Int32 bytePermutation4 = 0x36;
 
         // encoding
         public static string Encrypt(string strData)
@@ -56,16 +56,21 @@ namespace SimpleJiraProject
                                                                                                 bytePermutation3,
                                                                                                 bytePermutation4});
 
-            MemoryStream memstream = new MemoryStream();
-            Aes aes = new AesManaged();
-            aes.Key = passbytes.GetBytes(aes.KeySize / 8);
-            aes.IV = passbytes.GetBytes(aes.BlockSize / 8);
+            using (AesCryptoServiceProvider aesAlg = new AesCryptoServiceProvider { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 })
+            {
+                Aes aes = new AesManaged();
+                aes.Key = passbytes.GetBytes(aes.KeySize / 8);
+                aes.IV = passbytes.GetBytes(aes.BlockSize / 8);
 
-            CryptoStream cryptostream = new CryptoStream(memstream,
-            aes.CreateDecryptor(), CryptoStreamMode.Write);
-            cryptostream.Write(strData, 0, strData.Length);
-            cryptostream.Close();
-            return memstream.ToArray();
+                using (MemoryStream memstream = new MemoryStream())
+                {
+                    using (CryptoStream cryptostream = new CryptoStream(memstream, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cryptostream.Write(strData, 0, strData.Length);
+                    }
+                    return memstream.ToArray();
+                }
+            }    
         }
     }
 }

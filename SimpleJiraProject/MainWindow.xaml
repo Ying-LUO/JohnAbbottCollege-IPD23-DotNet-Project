@@ -28,10 +28,9 @@
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="Update User Information" Content="My Account" x:Name="btMyAccount" Click="btMyAccount_Click"  VerticalAlignment="Center" FontSize="18" Visibility="Hidden"/>
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
-                    <StackPanel Width="150">
+                    <StackPanel Width="250">
                         <Button Content="Log out" Name="btLogOut" Click="btLogOut_Click"/>
-                        <Button Content="Team Management" Name="btManageTeam" Click="btManageTeam_Click" />
-                        <Button Content="User Management" Name="btManageUser" Click="btManageUser_Click" />
+                        <Button Content="Team &amp; User Management" Name="btManageTeam" Click="btManageTeam_Click" />
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
