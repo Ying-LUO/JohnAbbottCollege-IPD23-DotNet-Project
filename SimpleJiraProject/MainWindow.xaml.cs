@@ -21,27 +21,29 @@ namespace SimpleJiraProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        User currentUser;
+        //User currentUser;
 
-        List<Sprint> currentSprintList;
+        
         List<string> allTeamsList;
 
         public MainWindow(User loginUser)
         {
             InitializeComponent();
+            Globals.AppWindow = this;
+            ProjectView.Visibility = Visibility.Visible;
             try
             {
                 if (loginUser != null)
                 {
-                    currentUser = loginUser;
-                    LoadDataFromDb(currentUser);
-                    tblTeam.Text = currentUser.Team.Name;
-                    tblUser.Text = currentUser.LoginName;
-                    tblRole.Text = currentUser.Role;
+                    Globals.currentUser = loginUser;
+                    LoadDataFromDb(Globals.currentUser);
+                    tblTeam.Text = Globals.currentUser.Team.Name;
+                    tblUser.Text = Globals.currentUser.LoginName;
+                    tblRole.Text = Globals.currentUser.Role;
                 }
                 else
                 {
-                    currentUser = null;
+                    Globals.currentUser = null;
                     MessageBox.Show("Please Login first", "Login Information");
                     new LoginDialog().ShowDialog();
                 }
@@ -49,8 +51,8 @@ namespace SimpleJiraProject
 
                 allTeamsList = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
 
-                currentUser = loginUser;
-                LoadDataFromDb(currentUser);
+                Globals.currentUser = loginUser;
+                LoadDataFromDb(Globals.currentUser);
             }
             catch (SystemException ex)
             {
@@ -70,9 +72,10 @@ namespace SimpleJiraProject
                 }
                 ProjectListView.ItemsSource = Globals.currentTeamProjectList;
                 IEnumerable<int> projectIds = Globals.currentTeamProjectList.Select(p => p.ProjectId).Distinct();
-                currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
-                SprintListView.ItemsSource = currentSprintList;
-                UserStoryListView.ItemsSource = Globals.simpleJiraDB.UserStories.Where(u => u.OwnerId == currentUser.UserId).ToList<UserStory>();
+                Globals.currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
+                SprintListView.ItemsSource = Globals.currentSprintList;
+                Globals.currentUserStoryList = Globals.simpleJiraDB.UserStories.Where(u => u.OwnerId == currentUser.UserId).ToList<UserStory>();
+                UserStoryListView.ItemsSource = Globals.currentUserStoryList;
                 TaskListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Task").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
                 DefectListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Defect").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
             }
@@ -129,33 +132,88 @@ namespace SimpleJiraProject
             {
                 AddEditProjectDialog addEditProject = new AddEditProjectDialog();
                 addEditProject.ShowDialog();
-                LoadDataFromDb(currentUser);
+                LoadDataFromDb(Globals.currentUser);
                 
 
             }
 
             if (SprintView.IsVisible)
             {
-                AddEditSprintDialog addEditSprint = new AddEditSprintDialog();
+                AddEditSprintDialog addEditSprint = new AddEditSprintDialog(null);
                 addEditSprint.ShowDialog();
+                LoadDataFromDb(Globals.currentUser);
             }
 
             if (UserStoryView.IsVisible)
             {
-                AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog();
+                AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog(null);
                 addEditUserStory.ShowDialog();
+                LoadDataFromDb(Globals.currentUser);
             }
 
         }
 
         private void btUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (ProjectView.IsVisible)
+            {
+                AddEditProjectDialog addEditProject = new AddEditProjectDialog();
+                addEditProject.ShowDialog();
+                LoadDataFromDb(Globals.currentUser);
+
+
+            }
+
+            if (SprintView.IsVisible)
+            {
+                EditSelectedSprint();
+            }
+
+            if (UserStoryView.IsVisible)
+            {
+                AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog(null);
+                addEditUserStory.ShowDialog();
+                LoadDataFromDb(Globals.currentUser);
+            }
 
         }
 
         private void btDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (ProjectView.IsVisible)
+            {
+                
+                LoadDataFromDb(Globals.currentUser);
 
+
+            }
+
+            if (SprintView.IsVisible)
+            {
+                if (SprintListView.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Select Sprint to delete", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                Sprint sprint = (Sprint)SprintListView.SelectedItem;
+                Globals.simpleJiraDB.Sprints.Remove(sprint);
+                Globals.simpleJiraDB.SaveChanges();
+                LoadDataFromDb(Globals.currentUser);
+            }
+
+            if (UserStoryView.IsVisible)
+            {
+                if (UserStoryListView.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Select User Story to delete", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                UserStory userStory = (UserStory)UserStoryListView.SelectedItem;
+                AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog(null);
+                addEditUserStory.ShowDialog();
+                Globals.simpleJiraDB.UserStories.Remove(userStory);
+                LoadDataFromDb(Globals.currentUser);
+            }
         }
 
         private void btManageUser_Click(object sender, RoutedEventArgs e)
@@ -183,16 +241,16 @@ namespace SimpleJiraProject
 
         private void btLogOut_Click(object sender, RoutedEventArgs e)
         {
-            currentUser = null;
+            Globals.currentUser = null;
             this.Close();
             LoginDialog login = new LoginDialog();
-            login.LoginCallback += (u) => { currentUser = u; };
+            login.LoginCallback += (u) => { Globals.currentUser = u; };
             bool? result = login.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
 
             if (result == true)
             {
                 MessageBox.Show("Login Successfully");
-                new MainWindow(currentUser).ShowDialog();
+                new MainWindow(Globals.currentUser).ShowDialog();
             }
             else
             {
@@ -202,15 +260,26 @@ namespace SimpleJiraProject
 
         private void btMyAccount_Click(object sender, RoutedEventArgs e)
         {
-            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(currentUser);
+            TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(Globals.currentUser);
             //TODO: IF CURRENT USER CHANGED INFORMATION, NEED CALL BACK FROM DIALOG
             userManagementDialog.Owner = this;
             userManagementDialog.ShowDialog();
         }
 
-        private void ProjectEdit_Click(object sender, RoutedEventArgs e)
+        
+
+        private void SprintListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-           
+            EditSelectedSprint();
+        }
+
+        public void EditSelectedSprint()
+        {
+            Sprint sprint = (Sprint)SprintListView.SelectedItem;
+            if (sprint == null) { return; }
+            AddEditSprintDialog addEditSprint = new AddEditSprintDialog(sprint);
+            addEditSprint.ShowDialog();
+            LoadDataFromDb(Globals.currentUser);
         }
     }
 }

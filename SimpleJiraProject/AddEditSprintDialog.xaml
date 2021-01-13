@@ -24,7 +24,7 @@
     </Window.Resources>
     <Grid>
         <Grid Height="60" VerticalAlignment="Top" Background="SteelBlue">
-            <TextBlock Text="Add Sprint" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="97,15,0,18" Width="154" TextAlignment="Center"/>
+            <TextBlock Name="tbAddEditSprintTitle" Text="Add New Sprint" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="96,18,0,20" Width="224" TextAlignment="Center"/>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="Update User Information" Content="My Account" x:Name="btMyAccount"  VerticalAlignment="Center" FontSize="18" Visibility="Hidden"/>
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
@@ -41,16 +41,16 @@
         <Grid x:Name="SprintDialog" Height="372" Width="470" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <StackPanel Margin="-93,-254,30,79">
                 <TextBox x:Name="tbSprinttName" Foreground="Gray" materialDesign:HintAssist.Hint="Sprint Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,93,0" Height="45" />
-                <DatePicker  materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,40,93,0" Height="45" />
-                <DatePicker  materialDesign:HintAssist.Hint="Release Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,40,93,0" Height="45" />
+                <DatePicker Name="dpStartDate" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,40,93,0" Height="45" />
+                <DatePicker Name="dpReleaseDate" materialDesign:HintAssist.Hint="Release Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,40,93,0" Height="45" />
                 <ComboBox x:Name="cmbStatus" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignComboBox}" Margin="0,40,93,0" HorizontalAlignment="Left"  Height="45" Width="440" />
-                <TextBox VerticalAlignment="Top" Height="85" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Description" Margin="0,40,93,0"  />
+                <TextBox Name="tbDescription" VerticalAlignment="Top" Height="85" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Description" Margin="0,40,93,0"  />
 
                 <ComboBox x:Name="cmbProjectName" Foreground="Gray" materialDesign:HintAssist.Hint="Project Name" Style="{StaticResource MaterialDesignComboBox}" Margin="0,40" HorizontalAlignment="Left"  Height="45" Width="440" />
 
             </StackPanel>
             <Button Content="Cancel" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="-52,314,422,26" />
-            <Button Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="202,314,157,26" RenderTransformOrigin="0.408,0.622"  />
+            <Button Name="btAddUpdate" Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="202,314,157,26" RenderTransformOrigin="0.408,0.622" Click="btAddUpdate_Click" />
         </Grid>
     </Grid>
 </Window>
