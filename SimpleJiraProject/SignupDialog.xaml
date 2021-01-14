@@ -14,11 +14,11 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="SignupDialog" Height="650" Width="800" WindowStartupLocation="CenterOwner">
+        Title="SignupDialog" Height="650" Width="664.377" WindowStartupLocation="CenterOwner">
     <Grid x:Name="LoginView">
         <Grid VerticalAlignment="Top">
             <TextBox Text="SIGN UP NEW USER" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
-            <StackPanel Margin="0 75" >
+            <StackPanel Margin="35,75,33,75" >
                 <TextBox x:Name="tbLoginName" MaxLength="50" Foreground="Gray" materialDesign:HintAssist.Hint="LOGIN NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="30 0 30 0" />
                 <TextBox x:Name="tbFirstName" MaxLength="50" Foreground="Gray" materialDesign:HintAssist.Hint="FIRST NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="30 0 30 0" />
                 <TextBox x:Name="tbLastName" MaxLength="50" Foreground="Gray" materialDesign:HintAssist.Hint="LAST NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="30 0 30 0" />

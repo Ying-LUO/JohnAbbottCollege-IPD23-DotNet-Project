@@ -13,7 +13,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d" WindowStartupLocation="CenterOwner"  WindowStyle="None" Foreground="White"
-        Title="Team And User Management" Height="600" Width="800">
+        Title="Team And User Management" Height="809.695" Width="654.466">
     <Grid>
         <Grid Height="60" VerticalAlignment="Top" Background="SteelBlue">
             <TextBlock Text="Simple Jira Application" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
@@ -21,64 +21,64 @@
                 <materialDesign:PackIcon Kind="Power" />
             </Button>
         </Grid>
-        <Grid VerticalAlignment="Center" Height="550" Margin="0 60 0 0">
-            <TabControl x:Name="tcTeamUser" Margin="0,10,0,-10">
-                <TabItem Header="My Account" x:Name="tiMyAccount">
-                    <StackPanel Margin="0 20">
+        <Grid VerticalAlignment="Center" Height="732" Margin="0,46,0,24">
+            <TabControl x:Name="tcTeamUser" Margin="0,10,0,-26" >
+                <TabItem Header="My Account" x:Name="tiMyAccount" Margin="-2,-2,-18,-14">
+                    <StackPanel Margin="47,20,70,75">
                         <TextBox x:Name="tbLoginName"
                           materialDesign:HintAssist.Hint="Login Name"
                           materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                           materialDesign:HintAssist.FloatingScale="0.50"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                          FontSize="24" />
+                          FontSize="18" Margin="0,10"/>
                         <TextBox x:Name="tbFirstName"
                           materialDesign:HintAssist.Hint="First Name"
                           materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                           materialDesign:HintAssist.FloatingScale="0.50"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                          FontSize="24" />
+                          FontSize="18" Margin="0,10" />
                         <TextBox x:Name="tbLastName"
                           materialDesign:HintAssist.Hint="Last Name"
                           materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                           materialDesign:HintAssist.FloatingScale="0.50"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                          FontSize="24" />
+                          FontSize="18"  Margin="0,10"/>
                         <TextBox x:Name="tbTeam"
                           materialDesign:HintAssist.Hint="Team"
                           materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                           materialDesign:HintAssist.FloatingScale="0.50"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                          FontSize="24" IsEnabled="False" />
+                          FontSize="18" IsEnabled="False" Margin="0,10"/>
                         <TextBox x:Name="tbRole"
                           materialDesign:HintAssist.Hint="Role"
                           materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                           materialDesign:HintAssist.FloatingScale="0.50"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                          FontSize="24" />
+                          FontSize="18" Margin="0,10"/>
                         <TextBox x:Name="tbEmail"
                           materialDesign:HintAssist.Hint="Email"
                           materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                           materialDesign:HintAssist.FloatingScale="0.50"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                          FontSize="24" />
+                          FontSize="18" Margin="0,10"/>
                         <PasswordBox x:Name="tbPassword"
                           materialDesign:HintAssist.Hint="Password"
                           materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                           materialDesign:HintAssist.FloatingScale="0.50"
                           Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
-                          FontSize="24" />
-                        <Button Height="50" FontSize="24" x:Name="btUpdateMyAccount" Click="btUpdateMyAccount_Click" IsDefault="True"
+                          FontSize="18" Margin="0,10"/>
+                        <Button Height="50" FontSize="20" x:Name="btUpdateMyAccount" Click="btUpdateMyAccount_Click" IsDefault="True" Margin="0,60"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             ToolTip="Update User Information">
                             Update My Account
                         </Button>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Team Management" x:Name="tiTeam">
-                    <StackPanel Margin="0 20">
-                        <ComboBox Name="cmbNewTeamList" SelectionChanged="cmbNewTeamList_SelectionChanged" FontSize="24"
+                <TabItem Header="Team Management" x:Name="tiTeam" Margin="15,-2,-36,-14">
+                    <StackPanel Margin="52,20,49,54">
+                        <ComboBox Name="cmbNewTeamList" SelectionChanged="cmbNewTeamList_SelectionChanged" FontSize="20" Margin="0,30"
                               materialDesign:HintAssist.Hint="Team List"
-                              IsEditable="True">
+                              IsEditable="True" Height="53">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
@@ -90,12 +90,12 @@
                           materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
                           materialDesign:HintAssist.FloatingScale="0.50"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                          FontSize="24" />
-                        <Button Height="50" x:Name="btAddTeam" FontSize="24" Click="btAddTeam_Click"  IsDefault="True"
+                          FontSize="20" />
+                        <Button Height="65" x:Name="btAddTeam" FontSize="24" Click="btAddTeam_Click"  IsDefault="True"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
-                            ToolTip="Add New Team">
+                            ToolTip="Add New Team" Margin="119,50,123,0">
                             Add New Team
-                         </Button>
+                        </Button>
                         <Button Height="50" x:Name="btDeleteTeam" FontSize="24" Click="btDeleteTeam_Click"  IsDefault="True"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             ToolTip="Delete the chosen team" Visibility="Hidden">
@@ -103,33 +103,33 @@
                         </Button>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="User Management" x:Name="tiUser">
-                    <StackPanel Margin="0 20">
-                        <ComboBox Name="cmbTeamList"  FontSize="24" SelectionChanged="cmbTeamList_SelectionChanged"
-                              materialDesign:HintAssist.Hint="Selete Team">
+                <TabItem Header="User Management" x:Name="tiUser" Margin="34,-2,-51,-15">
+                    <StackPanel Margin="49,51,70,54">
+                        <ComboBox Name="cmbTeamList"  FontSize="18" SelectionChanged="cmbTeamList_SelectionChanged" Margin="0,20"
+                              materialDesign:HintAssist.Hint="Selete Team" Height="55">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <ComboBox Name="cmbUserList" FontSize="24" SelectionChanged="cmbUserList_SelectionChanged"
-                              materialDesign:HintAssist.Hint="Selete User">
+                        <ComboBox Name="cmbUserList" FontSize="18" SelectionChanged="cmbUserList_SelectionChanged" Margin="0,20"
+                              materialDesign:HintAssist.Hint="Selete User" Height="61">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <ComboBox Name="cmbUpdateTeamList" FontSize="24" 
-                              materialDesign:HintAssist.Hint="Choose New Team">
+                        <ComboBox Name="cmbUpdateTeamList" FontSize="18" Margin="0,20"
+                              materialDesign:HintAssist.Hint="Choose New Team" Height="53">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <Button Height="50" FontSize="24" x:Name="btUpdateUser" Click="btUpdateUser_Click"  IsDefault="True"
+                        <Button Height="58" FontSize="20" x:Name="btUpdateUser" Click="btUpdateUser_Click"  IsDefault="True" Margin="85,40,114,20"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             ToolTip="Update User">
                             Assign User to new Team
@@ -142,10 +142,10 @@
                         </Button>
                     </StackPanel>
                 </TabItem>
-                
+
             </TabControl>
         </Grid>
-        <StatusBar VerticalAlignment="Bottom">
+        <StatusBar VerticalAlignment="Bottom" Height="33">
             <TextBlock x:Name="tblStatus" />
         </StatusBar>
     </Grid>
