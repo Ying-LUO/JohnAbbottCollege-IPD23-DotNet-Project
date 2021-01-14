@@ -101,7 +101,8 @@ namespace SimpleJiraProject
             }
             catch (SystemException ex)
             {
-                MessageBox.Show(ex.Message, "Database operation failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                new MessageBoxCustom("Database operation failed:\n" + ex.Message, MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+
             }
         }
 

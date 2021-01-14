@@ -29,7 +29,7 @@ namespace SimpleJiraProject
             }
             catch (SystemException ex)
             {
-                MessageBox.Show("Fatal error connecting to database:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Fatal error connecting to database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 Environment.Exit(1);
             }
         }
@@ -61,7 +61,7 @@ namespace SimpleJiraProject
             }
             catch (SystemException ex)
             {
-                MessageBox.Show(ex.Message, "Database operation failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                new MessageBoxCustom("Database operation failed:\n" + ex.Message, MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
         }
     }

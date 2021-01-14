@@ -32,7 +32,7 @@ namespace SimpleJiraProject
             }
             catch (SystemException ex)
             {
-                MessageBox.Show("Fatal error connecting to database:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Fatal error connecting to database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 Environment.Exit(1);
             }
         }
@@ -54,17 +54,17 @@ namespace SimpleJiraProject
                     }
                     else
                     {
-                        MessageBox.Show("Password Incorrect", "Login Information");
+                        new MessageBoxCustom("Password Incorrect", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     }
                 }
                 else
                 {
-                    MessageBox.Show("User not exist", "Login Information");
+                    new MessageBoxCustom("User not exist", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 }
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error Login into system:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Error Login into system:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
         }
 
