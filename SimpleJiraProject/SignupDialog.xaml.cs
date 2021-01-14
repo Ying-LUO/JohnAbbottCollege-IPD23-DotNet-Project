@@ -34,21 +34,25 @@ namespace SimpleJiraProject
         {
             if (Blank_Check())
             {
-                MessageBox.Show("Please input all fields", "SignUp Information");
+                new MessageBoxCustom("Please input all fields", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            }else if (LoginName_Check(tbLoginName.Text))
+            } else if (LoginName_Check(tbLoginName.Text))
             {
-                MessageBox.Show("Login Name exists already, please choose another one", "SignUp Information");
+                new MessageBoxCustom("Login Name exists already, please choose another one", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            }else if (!IsValidEmail(tbEmail.Text))
+            } else if (!IsValidEmail(tbEmail.Text))
             {
-                MessageBox.Show("Please input correct email address", "SignUp Information");
+                new MessageBoxCustom("Please input correct email address", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            }else if (!Password_Check(tbPassword.Password, tbConfirmPassword.Password))
+            } else if (!IsValidPassword(tbPassword.Password) || !IsValidPassword(tbConfirmPassword.Password)) 
             {
-                MessageBox.Show("Please confirm the same password", "SignUp Information");
+                new MessageBoxCustom("Password length Must be 8-12 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            }else
+            } else if (!Password_Check(tbPassword.Password, tbConfirmPassword.Password))
+            {
+                new MessageBoxCustom("Please confirm the same password", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                return;
+            } else
             {
                 signupUser = new User
                 {
@@ -62,7 +66,7 @@ namespace SimpleJiraProject
                 };
                 Globals.simpleJiraDB.Users.Add(signupUser);
                 Globals.simpleJiraDB.SaveChanges();
-                MessageBox.Show("New User Registered", "SignUp Information");
+                new MessageBoxCustom("New User Registered", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
             if (signupUser != null)
             {
@@ -97,6 +101,11 @@ namespace SimpleJiraProject
             {
                 return false;
             }
+        }
+
+        private bool IsValidPassword(string pwd)
+        {
+            return pwd.Length < 13 && pwd.Length > 7;
         }
 
         private bool Password_Check(string pwd, string confirmPwd)

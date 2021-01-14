@@ -38,10 +38,9 @@ namespace SimpleJiraProject
                 else
                 {
                     Globals.currentUser = null;
-                    MessageBox.Show("Please Login first", "Login Information");
+                    new MessageBoxCustom("Please login", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     new LoginDialog().ShowDialog();
                 }
-                //Globals.simpleJiraDB = new SimpleJiraDBEntities();
 
                 allTeamsList = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
 
@@ -50,7 +49,7 @@ namespace SimpleJiraProject
             }
             catch (SystemException ex)
             {
-                MessageBox.Show("Fatal error connecting to database:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Fatal error connecting to database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 Environment.Exit(1);
             }
         }
@@ -59,6 +58,10 @@ namespace SimpleJiraProject
         {
             if (currentUser != null)
             {
+                if (!currentUser.LoginName.Equals("Admin"))
+                {
+                    btManageTeam.Content = "Update My Account";
+                }
                 tblTeam.Text = Globals.currentUser.Team.Name;
                 tblUser.Text = Globals.currentUser.LoginName;
                 tblRole.Text = Globals.currentUser.Role;
@@ -79,7 +82,7 @@ namespace SimpleJiraProject
             }
             else
             {
-                MessageBox.Show("Please Login first", "Login Information");
+                new MessageBoxCustom("Please Login first", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
         }
 
@@ -190,7 +193,7 @@ namespace SimpleJiraProject
             {
                 if (SprintListView.SelectedIndex == -1)
                 {
-                    MessageBox.Show("Select Sprint to delete", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    new MessageBoxCustom("Select Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
                 Sprint sprint = (Sprint)SprintListView.SelectedItem;
@@ -203,7 +206,7 @@ namespace SimpleJiraProject
             {
                 if (UserStoryListView.SelectedIndex == -1)
                 {
-                    MessageBox.Show("Select User Story to delete", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    new MessageBoxCustom("Select User Story to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
                 UserStory userStory = (UserStory)UserStoryListView.SelectedItem;
@@ -220,7 +223,7 @@ namespace SimpleJiraProject
             userManagementDialog.Owner = this;
 
             userManagementDialog.TeamUserUpdateCallback += (u) => { Globals.currentUser = u; };
-            bool? result = userManagementDialog.ShowDialog();  // this line must be stay after the assignment, otherwise value is not assigned
+            bool? result = userManagementDialog.ShowDialog(); 
             if (result != null)
             {
                 LoadDataFromDb(Globals.currentUser);

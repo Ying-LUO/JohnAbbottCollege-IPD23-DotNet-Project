@@ -48,9 +48,9 @@
                 </ComboBox>
                 <TextBox x:Name="tbEmail" MaxLength="50" Foreground="Gray" materialDesign:HintAssist.Hint="EMAIL ADDRESS" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="30 0 30 0" />
                 <PasswordBox x:Name="tbPassword" materialDesign:TextFieldAssist.HasClearButton="True"
-                            materialDesign:HintAssist.HelperText="At least 8 characters" MaxLength="10" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="30 15 30 0" />
+                            materialDesign:HintAssist.HelperText="At least 8-12 characters" MaxLength="12" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="30 15 30 0" />
                 <PasswordBox x:Name="tbConfirmPassword" materialDesign:TextFieldAssist.HasClearButton="True"
-                             materialDesign:HintAssist.HelperText="At least 8 characters" MaxLength="10" Foreground="Gray" materialDesign:HintAssist.Hint="CONFIRM PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="30 15 30 0" />
+                             materialDesign:HintAssist.HelperText="At least 8-12 characters" MaxLength="12" Foreground="Gray" materialDesign:HintAssist.Hint="CONFIRM PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="30 15 30 0" />
                 <TextBlock Text="* All fields are required" Margin="26,30,27,0" FontStyle="Oblique" Foreground="Red"/>
             </StackPanel>
         </Grid>

@@ -330,7 +330,7 @@ Ying:
 
 
 ============================================================================================
-Day 10: 2021-Jan-13 Tuesday
+Day 10: 2021-Jan-13 Wednesday
 ============================================================================================
 Khalil:
 
@@ -348,8 +348,8 @@ Khalil:
 	*N/A
 Ying:
 1. Done:
-* Finish the sign up and login dialogs
-* Finish the user/team management
+* Finish the custom messagebox dialog
+* Apply all references of messagebox
 2. Todo:
-* Working on other list view features
+* Working on defect/task features
 3. Need assistant:

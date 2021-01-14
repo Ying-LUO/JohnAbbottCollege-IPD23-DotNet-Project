@@ -75,7 +75,7 @@ namespace SimpleJiraProject
             }
             catch (SystemException ex)
             {
-                MessageBox.Show("Fatal error connecting to database:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Fatal error connecting to database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 Environment.Exit(1);
             }
         }
@@ -98,15 +98,15 @@ namespace SimpleJiraProject
         }
 
         
-        private void cmbUpdateTeamList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbUserList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cmbUpdateTeamList.SelectedItem != null)
+            if (string.IsNullOrEmpty(cmbUpdateTeamList.Text))
             {
-                btDeleteUser.Visibility = Visibility.Hidden;
+                btDeleteUser.Visibility = Visibility.Visible;
             }
             else
             {
-                btDeleteUser.Visibility = Visibility.Visible;
+                btDeleteUser.Visibility = Visibility.Hidden;
             }
         }
 
@@ -116,7 +116,7 @@ namespace SimpleJiraProject
             {
                 if (cmbTeamList.SelectedItem != null)
                 {
-                    List<string> userList = Globals.simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).AsEnumerable().Select(u => u.LoginName).ToList<string>();
+                    List<string> userList = Globals.simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).Where(u=>!u.LoginName.Equals("Admin")).AsEnumerable().Select(u => u.LoginName).ToList<string>();
 
                     if (userList != null)
                     {
@@ -133,7 +133,7 @@ namespace SimpleJiraProject
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error Updating User into database:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Error Updating User into database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
         }
 
@@ -144,7 +144,7 @@ namespace SimpleJiraProject
                 if (string.IsNullOrEmpty(tbLoginName.Text) || string.IsNullOrEmpty(tbFirstName.Text) || string.IsNullOrEmpty(tbLastName.Text)
                     || string.IsNullOrEmpty(tbRole.Text) || string.IsNullOrEmpty(tbEmail.Text) || string.IsNullOrEmpty(tbPassword.Password))
                 {
-                    MessageBox.Show("Please input value", "User Information");
+                    new MessageBoxCustom("Please input value", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
                 User myAccount = Globals.simpleJiraDB.Users.Include("Team").Where(u => u.UserId == currentUserInDialog.UserId).FirstOrDefault<User>();
@@ -157,7 +157,7 @@ namespace SimpleJiraProject
                     myAccount.Role = tbRole.Text;
                     myAccount.PWDEncrypted = SecurePassword.Encrypt(tbPassword.Password);
                     Globals.simpleJiraDB.SaveChanges();
-                    MessageBox.Show("My Account updated", "User Information");
+                    new MessageBoxCustom("My Account Updated", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     ResetAndLoadDataFromDB();
                     if (currentUserInDialog != null)
                     {
@@ -167,17 +167,17 @@ namespace SimpleJiraProject
                 }
                 else
                 {
-                    MessageBox.Show("Cannot find this user to update", "User Information");
+                    new MessageBoxCustom("Cannot find this user to update", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 }
             }
             catch (DbUpdateException ex)
             {
-                MessageBox.Show("User Name Must be Unique", "Error Information");
+                new MessageBoxCustom("User Login Name must be unique", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 Debug.WriteLine(ex.ToString());
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error Updating User into database:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Error Updating User into database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
         }
 
@@ -187,7 +187,7 @@ namespace SimpleJiraProject
             {
                 if (string.IsNullOrEmpty(cmbNewTeamList.Text))
                 {
-                    MessageBox.Show("Please input value", "Team Information");
+                    new MessageBoxCustom("Please input value", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
                 if (cmbNewTeamList.SelectedItem != null)
@@ -197,12 +197,12 @@ namespace SimpleJiraProject
                     {
                         if (string.IsNullOrEmpty(tbTeamUpdate.Text))
                         {
-                            MessageBox.Show("Please enter new team name", "User Information");
+                            new MessageBoxCustom("Please enter new team name", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                             return;
                         }
                         teamUpdate.Name = tbTeamUpdate.Text;
                         Globals.simpleJiraDB.SaveChanges();
-                        MessageBox.Show("Team Updated", "Team Information");
+                        new MessageBoxCustom("Team Updated", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         ResetAndLoadDataFromDB();
                         if (currentUserInDialog != null)
                         {
@@ -212,7 +212,7 @@ namespace SimpleJiraProject
                     }
                     else
                     {
-                        MessageBox.Show("Cannot find team to update", "Team Information");
+                        new MessageBoxCustom("Cannot find team to update", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     }
                 }
                 else
@@ -220,18 +220,18 @@ namespace SimpleJiraProject
                     Team newTeam = new Team { Name = cmbNewTeamList.Text };
                     Globals.simpleJiraDB.Teams.Add(newTeam);
                     Globals.simpleJiraDB.SaveChanges();
-                    MessageBox.Show("Added new Team", "Team Information");
+                    new MessageBoxCustom("New Team Added", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     ResetAndLoadDataFromDB();
                 }
             }
             catch (DbUpdateException ex)
             {
-                MessageBox.Show("Team Name Must be Unique", "Error Information");
+                new MessageBoxCustom("Team Name must be unique", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 Debug.WriteLine(ex.ToString());
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error Updating User into database:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Error Updating User into database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
         }
 
@@ -243,33 +243,41 @@ namespace SimpleJiraProject
                 if (teamDelete != null)
                 {
                     int userCount = Globals.simpleJiraDB.Users.Include("Team").Where(u => u.TeamId == teamDelete.TeamId).ToList<User>().Count;
-                    if (userCount == 0)
+
+                    int projectCount = Globals.simpleJiraDB.Projects.Include("Team").Where(p => p.TeamId == teamDelete.TeamId).ToList<Project>().Count;
+                    
+                    if (userCount == 0 && projectCount == 0)
                     {
-                        Globals.simpleJiraDB.Teams.Remove(teamDelete);
-                        //TODO: CHECK PROJECT FOREIGN KEY BEFORE REMOVE TEAM
-                        Globals.simpleJiraDB.SaveChanges();
-                        MessageBox.Show("Team Deleted", "Team Information");
-                        ResetAndLoadDataFromDB();
-                        if (currentUserInDialog != null)
+                        bool? Result = new MessageBoxCustom("Are you sure to delete this Team? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
+
+                        if (Result.Value)
                         {
-                            this.DialogResult = true;
-                            TeamUserUpdateCallback?.Invoke(currentUserInDialog);
-                        }
+                            Globals.simpleJiraDB.Teams.Remove(teamDelete);
+                            Globals.simpleJiraDB.SaveChanges();
+                            new MessageBoxCustom("Team deleted", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                            ResetAndLoadDataFromDB();
+                            if (currentUserInDialog != null)
+                            {
+                                this.DialogResult = true;
+                                TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                            }
+                        } 
                     }
                     else
                     {
-                        MessageBox.Show("Please remove the users under this team before deleting team", "Delete Team");
+                        new MessageBoxCustom("Please remove the projects and users under this team before delete", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         return;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Cannot find team to Delete", "Team Information");
+                    new MessageBoxCustom("Cannot find team to Delete", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+
                 }
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error Deleting User from database:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Error Deleting User from database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
         }
 
@@ -279,7 +287,12 @@ namespace SimpleJiraProject
             {
                 if ((string.IsNullOrEmpty(cmbUserList.Text)) || (string.IsNullOrEmpty(cmbUpdateTeamList.Text)) || (string.IsNullOrEmpty(cmbTeamList.Text)))
                 {
-                    MessageBox.Show("Please choose user and team to update", "User Information");
+                    new MessageBoxCustom("Please choose user and team to update", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                if (cmbTeamList.SelectedItem.Equals(cmbUpdateTeamList.SelectedItem))
+                {
+                    new MessageBoxCustom("Please choose a new team to update", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
                 Team fromTeam = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
@@ -293,7 +306,7 @@ namespace SimpleJiraProject
                     {
                         userUpdate.TeamId = toTeam.TeamId;
                         Globals.simpleJiraDB.SaveChanges();
-                        MessageBox.Show("User Updated", "User Information");
+                        new MessageBoxCustom("User Updated", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         ResetAndLoadDataFromDB();
                         if (currentUserInDialog != null)
                         {
@@ -303,17 +316,17 @@ namespace SimpleJiraProject
                     }
                     else
                     {
-                        MessageBox.Show("Cannot find user to update", "User Information");
+                        new MessageBoxCustom("Cannot find user to update", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Cannot find user's team to update", "User Information");
+                    new MessageBoxCustom("Cannot find user's team to update", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 }
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error Updating User into database:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Error Updating User into database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
         }
 
@@ -323,7 +336,7 @@ namespace SimpleJiraProject
             {
                 if ((string.IsNullOrEmpty(cmbUserList.Text)) || (string.IsNullOrEmpty(cmbTeamList.Text)))
                 {
-                    MessageBox.Show("Please choose user to delete", "User Information");
+                    new MessageBoxCustom("Please choose user to delete", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
                 Team team = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
@@ -331,27 +344,33 @@ namespace SimpleJiraProject
                 if (team != null)
                 {
                     User userDelete = Globals.simpleJiraDB.Users.Where(u => u.LoginName.Equals(cmbUserList.SelectedItem.ToString())).Where(ut => ut.TeamId == team.TeamId).FirstOrDefault<User>();
+                    
                     if (userDelete != null)
                     {
-                        Globals.simpleJiraDB.Users.Remove(userDelete);
-                        Globals.simpleJiraDB.SaveChanges();
-                        MessageBox.Show("User Deleted", "User Information");
-                        ResetAndLoadDataFromDB();
-                        if (currentUserInDialog != null)
+                        bool? Result = new MessageBoxCustom("Are you sure to delete this user? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
+
+                        if (Result.Value)
                         {
-                            this.DialogResult = true;
-                            TeamUserUpdateCallback?.Invoke(currentUserInDialog);
-                        }
+                            Globals.simpleJiraDB.Users.Remove(userDelete);
+                            Globals.simpleJiraDB.SaveChanges();
+                            new MessageBoxCustom("User Deleted", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                            ResetAndLoadDataFromDB();
+                            if (currentUserInDialog != null)
+                            {
+                                this.DialogResult = true;
+                                TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                            }
+                        }  
                     }
                     else
                     {
-                        MessageBox.Show("Cannot find User to Delete", "User Information");
+                        new MessageBoxCustom("Cannot find User to Delete", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     }
                 }
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error Deleting User from database:\n" + ex.Message, "Error Information");
+                new MessageBoxCustom("Error Deleting User from database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
         }
     }
