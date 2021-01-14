@@ -36,19 +36,19 @@ namespace SimpleJiraProject
             {
                 new MessageBoxCustom("Please input all fields", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            } else if (LoginName_Check(tbLoginName.Text))
+            } else if (UserValidation.LoginName_Check(tbLoginName.Text))
             {
                 new MessageBoxCustom("Login Name exists already, please choose another one", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            } else if (!IsValidEmail(tbEmail.Text))
+            } else if (!UserValidation.IsValidEmail(tbEmail.Text))
             {
                 new MessageBoxCustom("Please input correct email address", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            } else if (!IsValidPassword(tbPassword.Password) || !IsValidPassword(tbConfirmPassword.Password)) 
+            } else if (!UserValidation.IsValidPassword(tbPassword.Password) || !UserValidation.IsValidPassword(tbConfirmPassword.Password)) 
             {
                 new MessageBoxCustom("Password length Must be 8-12 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            } else if (!Password_Check(tbPassword.Password, tbConfirmPassword.Password))
+            } else if (!UserValidation.Password_Check(tbPassword.Password, tbConfirmPassword.Password))
             {
                 new MessageBoxCustom("Please confirm the same password", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
@@ -59,7 +59,7 @@ namespace SimpleJiraProject
                     LoginName = tbLoginName.Text,
                     FirstName = tbFirstName.Text,
                     LastName = tbLastName.Text,
-                    TeamId = Team_Check(cmbTeamList.Text),
+                    TeamId = UserValidation.Team_Check(cmbTeamList.Text),
                     EMAIL = tbEmail.Text,
                     PWDEncrypted = SecurePassword.Encrypt(tbConfirmPassword.Password),
                     Role = cmbRoleList.Text
@@ -83,52 +83,5 @@ namespace SimpleJiraProject
                     || string.IsNullOrEmpty(cmbRoleList.Text) || string.IsNullOrEmpty(tbPassword.Password)
                     || string.IsNullOrEmpty(tbEmail.Text) || string.IsNullOrEmpty(tbConfirmPassword.Password);
         }
-
-        private bool LoginName_Check(string loginName)
-        {
-            List<string> NameList = Globals.simpleJiraDB.Users.AsEnumerable().Select(u => u.LoginName).ToList<string>();
-            return NameList.Contains(loginName);
-        }
-
-        private bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        private bool IsValidPassword(string pwd)
-        {
-            return pwd.Length < 13 && pwd.Length > 7;
-        }
-
-        private bool Password_Check(string pwd, string confirmPwd)
-        {
-            return pwd == confirmPwd;
-        }
-
-        private int Team_Check(string team)
-        {
-            Team chooseTeam = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(team)).FirstOrDefault();
-            int teamId = chooseTeam != null ? chooseTeam.TeamId : 0;
-            if(teamId == 0)
-            {
-                Team newTeam = new Team { Name = team };
-                Globals.simpleJiraDB.Teams.Add(newTeam);
-                Globals.simpleJiraDB.SaveChanges();
-                return newTeam.TeamId;
-            }
-            else
-            {
-                return chooseTeam.TeamId;
-            } 
-        }
-
     }
 }

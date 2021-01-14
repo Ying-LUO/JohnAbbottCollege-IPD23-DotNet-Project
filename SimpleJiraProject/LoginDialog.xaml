@@ -44,7 +44,7 @@
             </Grid>
             <Button  Margin="38,277,32,171" Content="LOG IN" FontSize="18" IsDefault="True" x:Name="btLogin" Click="btLogin_Click" />
             <Button  Margin="38,404,32,44" Content="SIGN UP" FontSize="18" x:Name="btSignupFromLogin" Click="btSignupFromLogin_Click" />
-            <Label Content="Create an account." HorizontalAlignment="Left" Margin="38,360,0,0" VerticalAlignment="Top" Width="171" Foreground="#FFBBB7B7"/>
+            <Label Content="Create an account." HorizontalAlignment="Left" Margin="38,370,0,0" VerticalAlignment="Top" Width="171" Foreground="#FFBBB7B7"/>
         </Grid>
 
     </Grid>

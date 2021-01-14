@@ -147,7 +147,19 @@ namespace SimpleJiraProject
                     new MessageBoxCustom("Please input value", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
+                else if (!UserValidation.IsValidEmail(tbEmail.Text))
+                {
+                    new MessageBoxCustom("Please input correct email address", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                else if (!UserValidation.IsValidPassword(tbPassword.Password))
+                {
+                    new MessageBoxCustom("Password length Must be 8-12 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
                 User myAccount = Globals.simpleJiraDB.Users.Include("Team").Where(u => u.UserId == currentUserInDialog.UserId).FirstOrDefault<User>();
+
                 if (myAccount != null)
                 {
                     myAccount.LoginName = tbLoginName.Text;
