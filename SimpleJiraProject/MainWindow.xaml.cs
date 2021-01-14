@@ -41,11 +41,6 @@ namespace SimpleJiraProject
                     new MessageBoxCustom("Please login", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     new LoginDialog().ShowDialog();
                 }
-
-                allTeamsList = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
-
-                Globals.currentUser = loginUser;
-                LoadDataFromDb(Globals.currentUser);
             }
             catch (SystemException ex)
             {
@@ -69,16 +64,23 @@ namespace SimpleJiraProject
                 Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Where(p => p.TeamId == currentUser.TeamId).ToList<Project>();
                 foreach (Project p in Globals.currentTeamProjectList)
                 {
-                    p.AllTeamNamesList = allTeamsList;
+                    p.AllTeamNamesList = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
                 }
                 ProjectListView.ItemsSource = Globals.currentTeamProjectList;
                 IEnumerable<int> projectIds = Globals.currentTeamProjectList.Select(p => p.ProjectId).Distinct();
+
                 Globals.currentSprintList = Globals.simpleJiraDB.Sprints.Where(s => projectIds.Contains(s.ProjectId)).ToList<Sprint>();
+                IEnumerable<int> sprintIds = Globals.currentSprintList.Select(sp => sp.SprintId).Distinct();
+
                 SprintListView.ItemsSource = Globals.currentSprintList;
-                Globals.currentUserStoryList = Globals.simpleJiraDB.UserStories.Where(u => u.OwnerId == currentUser.UserId).ToList<UserStory>();
+
+                Globals.currentUserStoryList = Globals.simpleJiraDB.UserStories.Where(us => sprintIds.Contains(us.SprintId)).ToList<UserStory>();
+                IEnumerable<int> userStoryIds = Globals.currentUserStoryList.Select(us => us.UserStoryId).Distinct();
+
                 UserStoryListView.ItemsSource = Globals.currentUserStoryList;
-                TaskListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Task").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
-                DefectListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Defect").Where(u => u.OwnerId == currentUser.UserId).ToList<Issue>();
+
+                TaskListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Task").Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList<Issue>();
+                DefectListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Defect").Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList<Issue>();
             }
             else
             {

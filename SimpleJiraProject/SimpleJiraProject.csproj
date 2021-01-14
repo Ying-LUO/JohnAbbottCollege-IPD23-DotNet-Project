@@ -142,6 +142,7 @@
     <Compile Include="UserStory.cs">
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserValidation.cs" />
     <Page Include="AddEditIssueDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
