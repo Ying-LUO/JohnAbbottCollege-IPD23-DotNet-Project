@@ -27,7 +27,7 @@
             <TextBlock Text="Simple Jira Application" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
-                    <StackPanel Width="200">
+                    <StackPanel Width="250">
                         <Button Content="Log out" Name="btLogOut" Click="btLogOut_Click"/>
                         <Button Content="Team &amp; User Management" Name="btManageTeam" Click="btManageTeam_Click" />
                     </StackPanel>
@@ -114,7 +114,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
-            <Grid x:Name="SprintView"  Visibility="Visible" Margin="36,0,0,0" >
+            <Grid x:Name="SprintView"  Visibility="Hidden" Margin="36,0,0,0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0*"/>
                     <ColumnDefinition/>
