@@ -98,15 +98,15 @@ namespace SimpleJiraProject
         }
 
         
-        private void cmbUpdateTeamList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbUserList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cmbUpdateTeamList.SelectedItem != null)
+            if (string.IsNullOrEmpty(cmbUpdateTeamList.Text))
             {
-                btDeleteUser.Visibility = Visibility.Hidden;
+                btDeleteUser.Visibility = Visibility.Visible;
             }
             else
             {
-                btDeleteUser.Visibility = Visibility.Visible;
+                btDeleteUser.Visibility = Visibility.Hidden;
             }
         }
 
@@ -116,7 +116,7 @@ namespace SimpleJiraProject
             {
                 if (cmbTeamList.SelectedItem != null)
                 {
-                    List<string> userList = Globals.simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).AsEnumerable().Select(u => u.LoginName).ToList<string>();
+                    List<string> userList = Globals.simpleJiraDB.Users.Include("Team").Where(ut => ut.Team.Name.Equals(cmbTeamList.SelectedItem.ToString())).Where(u=>!u.LoginName.Equals("Admin")).AsEnumerable().Select(u => u.LoginName).ToList<string>();
 
                     if (userList != null)
                     {
@@ -243,22 +243,29 @@ namespace SimpleJiraProject
                 if (teamDelete != null)
                 {
                     int userCount = Globals.simpleJiraDB.Users.Include("Team").Where(u => u.TeamId == teamDelete.TeamId).ToList<User>().Count;
-                    if (userCount == 0)
+
+                    int projectCount = Globals.simpleJiraDB.Projects.Include("Team").Where(p => p.TeamId == teamDelete.TeamId).ToList<Project>().Count;
+                    
+                    if (userCount == 0 && projectCount == 0)
                     {
-                        Globals.simpleJiraDB.Teams.Remove(teamDelete);
-                        //TODO: CHECK PROJECT FOREIGN KEY BEFORE REMOVE TEAM
-                        Globals.simpleJiraDB.SaveChanges();
-                        MessageBox.Show("Team Deleted", "Team Information");
-                        ResetAndLoadDataFromDB();
-                        if (currentUserInDialog != null)
+                        bool? Result = new MessageBoxCustom("Are you sure to delete this Team? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
+
+                        if (Result.Value)
                         {
-                            this.DialogResult = true;
-                            TeamUserUpdateCallback?.Invoke(currentUserInDialog);
-                        }
+                            Globals.simpleJiraDB.Teams.Remove(teamDelete);
+                            Globals.simpleJiraDB.SaveChanges();
+                            MessageBox.Show("Team Deleted", "Team Information");
+                            ResetAndLoadDataFromDB();
+                            if (currentUserInDialog != null)
+                            {
+                                this.DialogResult = true;
+                                TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                            }
+                        } 
                     }
                     else
                     {
-                        MessageBox.Show("Please remove the users under this team before deleting team", "Delete Team");
+                        MessageBox.Show("Please remove the projects and users under this team before deleting team", "Delete Team");
                         return;
                     }
                 }
@@ -280,6 +287,11 @@ namespace SimpleJiraProject
                 if ((string.IsNullOrEmpty(cmbUserList.Text)) || (string.IsNullOrEmpty(cmbUpdateTeamList.Text)) || (string.IsNullOrEmpty(cmbTeamList.Text)))
                 {
                     MessageBox.Show("Please choose user and team to update", "User Information");
+                    return;
+                }
+                if (cmbTeamList.SelectedItem.Equals(cmbUpdateTeamList.SelectedItem))
+                {
+                    MessageBox.Show("Please choose a new team update", "User Information");
                     return;
                 }
                 Team fromTeam = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(cmbTeamList.SelectedItem.ToString())).FirstOrDefault<Team>();
@@ -331,17 +343,23 @@ namespace SimpleJiraProject
                 if (team != null)
                 {
                     User userDelete = Globals.simpleJiraDB.Users.Where(u => u.LoginName.Equals(cmbUserList.SelectedItem.ToString())).Where(ut => ut.TeamId == team.TeamId).FirstOrDefault<User>();
+                    
                     if (userDelete != null)
                     {
-                        Globals.simpleJiraDB.Users.Remove(userDelete);
-                        Globals.simpleJiraDB.SaveChanges();
-                        MessageBox.Show("User Deleted", "User Information");
-                        ResetAndLoadDataFromDB();
-                        if (currentUserInDialog != null)
+                        bool? Result = new MessageBoxCustom("Are you sure to delete this user? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
+
+                        if (Result.Value)
                         {
-                            this.DialogResult = true;
-                            TeamUserUpdateCallback?.Invoke(currentUserInDialog);
-                        }
+                            Globals.simpleJiraDB.Users.Remove(userDelete);
+                            Globals.simpleJiraDB.SaveChanges();
+                            MessageBox.Show("User Deleted", "User Information");
+                            ResetAndLoadDataFromDB();
+                            if (currentUserInDialog != null)
+                            {
+                                this.DialogResult = true;
+                                TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                            }
+                        }  
                     }
                     else
                     {

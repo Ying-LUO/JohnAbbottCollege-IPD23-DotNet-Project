@@ -36,19 +36,23 @@ namespace SimpleJiraProject
             {
                 MessageBox.Show("Please input all fields", "SignUp Information");
                 return;
-            }else if (LoginName_Check(tbLoginName.Text))
+            } else if (LoginName_Check(tbLoginName.Text))
             {
                 MessageBox.Show("Login Name exists already, please choose another one", "SignUp Information");
                 return;
-            }else if (!IsValidEmail(tbEmail.Text))
+            } else if (!IsValidEmail(tbEmail.Text))
             {
                 MessageBox.Show("Please input correct email address", "SignUp Information");
                 return;
-            }else if (!Password_Check(tbPassword.Password, tbConfirmPassword.Password))
+            } else if (!IsValidPassword(tbPassword.Password) || !IsValidPassword(tbConfirmPassword.Password)) 
+            {
+                MessageBox.Show("Password length Must be 8-12 characters", "SignUp Information");
+                return;
+            } else if (!Password_Check(tbPassword.Password, tbConfirmPassword.Password))
             {
                 MessageBox.Show("Please confirm the same password", "SignUp Information");
                 return;
-            }else
+            } else
             {
                 signupUser = new User
                 {
@@ -97,6 +101,11 @@ namespace SimpleJiraProject
             {
                 return false;
             }
+        }
+
+        private bool IsValidPassword(string pwd)
+        {
+            return pwd.Length < 13 && pwd.Length > 7;
         }
 
         private bool Password_Check(string pwd, string confirmPwd)

@@ -113,7 +113,7 @@
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <ComboBox Name="cmbUserList" FontSize="24"
+                        <ComboBox Name="cmbUserList" FontSize="24" SelectionChanged="cmbUserList_SelectionChanged"
                               materialDesign:HintAssist.Hint="Selete User">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -121,7 +121,7 @@
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <ComboBox Name="cmbUpdateTeamList" FontSize="24" SelectionChanged="cmbUpdateTeamList_SelectionChanged"
+                        <ComboBox Name="cmbUpdateTeamList" FontSize="24" 
                               materialDesign:HintAssist.Hint="Choose New Team">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
