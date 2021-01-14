@@ -12,4 +12,12 @@ namespace SimpleJiraProject
         [NotMapped]
         public ICollection<string> AllTeamNamesList { get; set; }
     }
+
+    public partial class Sprint
+    {
+        [NotMapped]
+        public SprintStatusEnum SprintStatus { get; set; }
+    }
+
+    public enum SprintStatusEnum { Planning, Ongoing, Released }
 }

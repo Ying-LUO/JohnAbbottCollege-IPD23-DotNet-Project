@@ -253,6 +253,18 @@ namespace SimpleJiraProject
             AddEditSprintDialog addEditSprint = new AddEditSprintDialog(sprint);
             addEditSprint.ShowDialog();
             LoadDataFromDb(Globals.currentUser);
+            
         }
+
+        private void SprintListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Globals.SelectedSprint = (Sprint)SprintListView.SelectedItem;
+            
+            if (Globals.SelectedSprint == null) { return; }
+           
+
+        }
+
+        
     }
 }

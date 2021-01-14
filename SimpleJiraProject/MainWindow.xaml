@@ -13,7 +13,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Foreground="White"
-        Title="Simple Jira Application" MinHeight="600" MinWidth="1080" Height="637.5" Width="1026" >
+        Title="Simple Jira Application" MinHeight="600" MinWidth="1080" Height="637.5" Width="1239" >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -92,7 +92,7 @@
                 </ListView>
             </StackPanel>
         </Grid>
-        <Grid HorizontalAlignment="Right" MinHeight="520" MinWidth="860" VerticalAlignment="Stretch" Margin="200 60 0 0">
+        <Grid HorizontalAlignment="Stretch"  MinHeight="520" MinWidth="860" VerticalAlignment="Stretch" Margin="205,60,0,0">
             <Grid x:Name="ProjectView" Visibility="Hidden" >
                 <ScrollViewer Foreground="{x:Null}" Grid.Row="1" Grid.Column="1" >
                     <StackPanel>
@@ -114,16 +114,32 @@
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
-            <Grid x:Name="SprintView" Visibility="Hidden" >
-                <ListView x:Name="SprintListView" MouseDoubleClick="SprintListView_MouseDoubleClick">
+            <Grid x:Name="SprintView"  Visibility="Visible" Margin="36,0,0,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <ListView x:Name="SprintListView"  MouseDoubleClick="SprintListView_MouseDoubleClick"  Grid.RowSpan="2" Grid.Column="1" Margin="0,22,94,0">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding SprintId}" Header="Sprint Id" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
-                            <GridViewColumn DisplayMemberBinding="{Binding ProjectId}" Header="ProjectId" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
+                            <GridViewColumn DisplayMemberBinding="{Binding StartDate, StringFormat=d}" Header="Start Date"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding ReleaseDate, StringFormat=d}" Header="Release Date"/>
+                            <!--<GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />-->
+                            <GridViewColumn DisplayMemberBinding="{Binding Project.Name}" Header="Project Name" />
+                            <GridViewColumn
+        Header="Status" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <local:SprintStatus />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>

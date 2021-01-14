@@ -14,5 +14,6 @@ namespace SimpleJiraProject
         public static List<UserStory> currentUserStoryList;
         public static MainWindow AppWindow;
         public static User currentUser;
+        public static Sprint SelectedSprint;
     }
 }

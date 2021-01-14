@@ -36,7 +36,7 @@ namespace SimpleJiraProject
         {
             InitializeComponent();
 
-            cmbStatus.ItemsSource = Globals.simpleJiraDB.Sprints.AsEnumerable().Select(s => s.Status).ToList<string>();
+            cmbStatus.ItemsSource = Enum.GetValues(typeof(SprintStatusEnum));
             createProjectNamesList();
             cmbProjectName.ItemsSource = ProjectsList;
 
@@ -46,7 +46,9 @@ namespace SimpleJiraProject
                 tbSprinttName.Text = sprint.Name;
                 dpStartDate.SelectedDate = sprint.StartDate;
                 dpReleaseDate.SelectedDate = sprint.ReleaseDate;
-                cmbStatus.SelectedItem = sprint.Status;
+                
+                Enum.TryParse(sprint.Status, out SprintStatusEnum enumStatus);
+                cmbStatus.SelectedItem = enumStatus;
                 tbDescription.Text = sprint.Description;
                 cmbProjectName.SelectedItem = sprint.Project.Name;
                 btAddUpdate.Content = "Update";
@@ -73,7 +75,7 @@ namespace SimpleJiraProject
                     currentSprint.Description = tbDescription.Text;
                     currentSprint.StartDate = (DateTime)dpStartDate.SelectedDate;
                     currentSprint.ReleaseDate = (DateTime)dpReleaseDate.SelectedDate;
-                    currentSprint.Status = (string)cmbStatus.SelectedItem;
+                    currentSprint.Status = cmbStatus.SelectedItem.ToString();
                     currentSprint.ProjectId = currentProjectId;
                 }
                 else
@@ -84,20 +86,16 @@ namespace SimpleJiraProject
                         Description = tbDescription.Text,
                         StartDate = (DateTime)dpStartDate.SelectedDate,
                         ReleaseDate = (DateTime)dpReleaseDate.SelectedDate,
-                        Status = (string)cmbStatus.SelectedItem,
+                        Status = cmbStatus.SelectedItem.ToString(),
                         ProjectId = currentProjectId,
 
                     };
                     Globals.simpleJiraDB.Sprints.Add(s);
-                }
-
-                
+                } 
                 Globals.simpleJiraDB.SaveChanges();
                 List<Sprint> currentProjectList = Globals.simpleJiraDB.Sprints.Include("Project").ToList();
-
-
-                DialogResult = true;
-
+               
+                DialogResult = true;  
             }
             catch (SystemException ex)
             {
@@ -108,8 +106,7 @@ namespace SimpleJiraProject
         public void createProjectNamesList()
         {
             foreach(Project p in Globals.currentTeamProjectList)
-            {
-                
+            { 
                 ProjectsList.Add(p.Name);
             }
         }
