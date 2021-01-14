@@ -22,39 +22,104 @@ namespace SimpleJiraProject
     public enum SprintStatusEnum2 { Planning, Ongoing, Released }
     public partial class SprintStatus : UserControl
     {
+        public string status;
         public SprintStatus()
         {
             InitializeComponent();
+            //getStatus();
+
+
+        }
+
+        //private void planning_Selected(object sender, RoutedEventArgs e)
+        //{
+        //    cmbStat.Background = planning.Background;
+        //    status = "Planning";
+        //    UpdateSprintStatus(status);
+        //}
+
+        //private void ongoing_Selected(object sender, RoutedEventArgs e)
+        //{
+        //    cmbStat.Background = ongoing.Background;
+        //    status = "Ongoing";
+        //    UpdateSprintStatus(status);
+        //}
+
+        //private void released_Selected(object sender, RoutedEventArgs e)
+        //{
+        //    cmbStat.Background = released.Background;
+        //    status = "Released";
+        //    UpdateSprintStatus(status);
+        //}
+
+        //public void UpdateSprintStatus(string status)
+        //{
             
-        }
+        //    Globals.SelectedSprint.Status = status;
+        //    Globals.simpleJiraDB.SaveChanges();
+        //    Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
 
-        private void planning_Selected(object sender, RoutedEventArgs e)
+        //}
+
+        //public void getStatus()
+        //{
+        //    foreach (Sprint s in Globals.currentSprintList)
+        //    {
+                
+        //            cmbStat.DisplayMemberPath = s.Status;
+                
+        //    }
+        //}
+
+        private void btStatus_Click(object sender, RoutedEventArgs e)
         {
-            cmbStat.Background = planning.Background;
-           //UpdateSprintStatus();
+
         }
 
-        private void ongoing_Selected(object sender, RoutedEventArgs e)
-        {
-            cmbStat.Background = ongoing.Background;
-            //UpdateSprintStatus();
-        }
-
-        private void released_Selected(object sender, RoutedEventArgs e)
-        {
-            cmbStat.Background = released.Background;
-            //UpdateSprintStatus();
-        }
-
-        public void UpdateSprintStatus()
+        private void miPlanning_Click(object sender, RoutedEventArgs e)
         {
             
-            Globals.SelectedSprint.Status = cmbStat.SelectedItem.ToString();
+            status = "Planning";
+            UpdateSprintStatus(status);
+            btStatus.Background = Brushes.LightGray;
+        }
+
+        private void miOngoing_Click(object sender, RoutedEventArgs e)
+        {
+            
+            status = "Ongoing";
+            UpdateSprintStatus(status);
+            btStatus.Background = Brushes.LightBlue;
+        }
+
+        private void miReleased_Click(object sender, RoutedEventArgs e)
+        {
+            
+            status = "Released";
+            UpdateSprintStatus(status);
+            btStatus.Background = Brushes.LightGreen;
+        }
+
+        public void UpdateSprintStatus(string status)
+        {
+
+            Globals.SelectedSprint.Status = status;
             Globals.simpleJiraDB.SaveChanges();
             Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
+            if (status == "Planning")
+            {
+                btStatus.Background = Brushes.LightGray;
+            }
+            if (status == "Ongoing")
+            {
+                btStatus.Background = Brushes.LightBlue;
+            }
+            if (status == "Released")
+            {
+                btStatus.Background = Brushes.LightGreen;
+            }
+
 
         }
-
-       
     }
 }
