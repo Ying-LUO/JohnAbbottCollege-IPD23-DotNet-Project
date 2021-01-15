@@ -123,7 +123,12 @@
                     <RowDefinition Height="0*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <ListView x:Name="SprintListView"  MouseDoubleClick="SprintListView_MouseDoubleClick"  Grid.RowSpan="2" Grid.Column="1" Margin="0,22,94,0">
+                <ListView x:Name="SprintListView"  MouseDoubleClick="SprintListView_MouseDoubleClick" SelectionChanged="SprintListView_SelectionChanged" Grid.RowSpan="2" Grid.Column="1" Margin="0,22,94,0">
+                    <!--<ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>-->
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
@@ -133,12 +138,14 @@
                             <!--<GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />-->
                             <GridViewColumn DisplayMemberBinding="{Binding Project.Name}" Header="Project Name" />
                             <GridViewColumn
-        Header="Status" Width="100">
+      Header="Status"  Width="100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
+                                        
                                         <local:SprintStatus />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
+                                
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>

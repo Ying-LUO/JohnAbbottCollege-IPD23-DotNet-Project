@@ -261,15 +261,14 @@ namespace SimpleJiraProject
             
         }
 
+        
         private void SprintListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Globals.SelectedSprint = (Sprint)SprintListView.SelectedItem;
-            
+            int listIndex = SprintListView.SelectedIndex;
+            Globals.SelectedSprint = Globals.currentSprintList[listIndex];
+            Console.WriteLine(SprintListView.SelectedIndex);
+
             if (Globals.SelectedSprint == null) { return; }
-           
-
         }
-
-        
     }
 }

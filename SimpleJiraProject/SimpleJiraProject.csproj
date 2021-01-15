@@ -130,6 +130,9 @@
     <Compile Include="SprintStatus.xaml.cs">
       <DependentUpon>SprintStatus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StatusDialog.xaml.cs">
+      <DependentUpon>StatusDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Team.cs">
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
     </Compile>
@@ -192,6 +195,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SprintStatus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StatusDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
