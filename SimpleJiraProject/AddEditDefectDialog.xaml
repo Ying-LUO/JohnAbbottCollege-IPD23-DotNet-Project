@@ -1,0 +1,58 @@
+﻿<Window x:Class="SimpleJiraProject.AddEditDefectDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:local="clr-namespace:SimpleJiraProject"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"  Foreground="White"
+        Title="Defect" Height="880" Width="1080">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Height="60" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="SteelBlue">
+            <TextBlock Name="tbAddEditSprintTitle" Text="Add New Defect" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="50,18,0,20" Width="224" TextAlignment="Center"/>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" IsCancel="True">
+                <materialDesign:PackIcon Kind="Power" />
+            </Button>
+        </Grid>
+        <Grid x:Name="GridMenu"  Width="75" Grid.Row="0" Grid.RowSpan="2" Background="LightSteelBlue" >
+        </Grid>
+        <Grid x:Name="DefectDialog" Grid.Row="1" Grid.Column="1" Margin="10">
+            <StackPanel>
+                <TextBox x:Name="tbDefectName" Foreground="Gray" materialDesign:HintAssist.Hint="Defect Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Height="45" />
+                <TextBox Name="tbDescription" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            VerticalAlignment="Top" Height="100" AcceptsReturn="True"
+                            Foreground="Gray" materialDesign:HintAssist.Hint="Description"
+                            TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                <DatePicker Name="dpStartDate" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
+                <DatePicker Name="dpCompleteDate" IsEnabled="False" materialDesign:HintAssist.Hint="Complete Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
+                <ComboBox x:Name="cmbPriority" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                <ComboBox x:Name="cmbStatus" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45"/>
+            </StackPanel>
+            <Button Name="btAddUpdate" Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" RenderTransformOrigin="0.408,0.622" Click="btAddUpdate_Click" Margin="0,431,0,306" />
+            <Button Content="Cancel" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="0,468,0,269" /> 
+        </Grid>
+    </Grid>
+</Window>
