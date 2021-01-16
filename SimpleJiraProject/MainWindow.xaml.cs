@@ -48,9 +48,6 @@ namespace SimpleJiraProject
                 new MessageBoxCustom("Fatal error connecting to database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 Environment.Exit(1);
             }
-            
-
-
         }
 
         public void LoadDataFromDb(User currentUser)
@@ -86,8 +83,31 @@ namespace SimpleJiraProject
 
                 UserStoryListView.ItemsSource = Globals.currentUserStoryList;
 
-                TaskListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Task").Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList<Issue>();
-                DefectListView.ItemsSource = Globals.simpleJiraDB.Issues.Where(i => i.Category == "Defect").Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList<Issue>();
+                TaskListView.ItemsSource = Globals.simpleJiraDB.Issues.Select(x => new IssueListView
+                {
+                    IssueId = x.IssueId,
+                    Name = x.Name,
+                    Description = x.Description,
+                    StartDate = x.StartDate,
+                    Priority = x.Priority,
+                    Status = x.Status,
+                    Category = x.Category,
+                    OwnerId = x.OwnerId,
+                    UserStoryId = x.UserStoryId
+                }).Where(i => i.Category == "Task").Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList();
+
+                DefectListView.ItemsSource = Globals.simpleJiraDB.Issues.Select(x => new IssueListView
+                {
+                    IssueId = x.IssueId,
+                    Name = x.Name,
+                    Description = x.Description,
+                    StartDate = x.StartDate,
+                    Priority = x.Priority,
+                    Status = x.Status,
+                    Category = x.Category,
+                    OwnerId = x.OwnerId,
+                    UserStoryId = x.UserStoryId
+                }).Where(i => i.Category == "Defect").Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList();
             }
             else
             {
@@ -112,31 +132,27 @@ namespace SimpleJiraProject
                 case 0:
                     HiddenView();
                     ProjectView.Visibility = Visibility.Visible;
-                    LoadDataFromDb(Globals.currentUser);
-
+                    //LoadDataFromDb(Globals.currentUser);
                     break;
                 case 1:
                     HiddenView();
-                   
                     SprintView.Visibility = Visibility.Visible;
-                    LoadDataFromDb(Globals.currentUser);
-
-                    
+                    //LoadDataFromDb(Globals.currentUser);
                     break;
                 case 2:
                     HiddenView();
                     UserStoryView.Visibility = Visibility.Visible;
-                    LoadDataFromDb(Globals.currentUser);
+                    //LoadDataFromDb(Globals.currentUser);
                     break;
                 case 3:
                     HiddenView();
                     DefectView.Visibility = Visibility.Visible;
-                    LoadDataFromDb(Globals.currentUser);
+                    //LoadDataFromDb(Globals.currentUser);
                     break;
                 case 4:
                     HiddenView();
                     TaskView.Visibility = Visibility.Visible;
-                    
+                    //LoadDataFromDb(Globals.currentUser);
                     break;
                 default:
                     HiddenView();
@@ -151,8 +167,6 @@ namespace SimpleJiraProject
                 AddEditProjectDialog addEditProject = new AddEditProjectDialog();
                 addEditProject.ShowDialog();
                 LoadDataFromDb(Globals.currentUser);
-                
-
             }
 
             if (SprintView.IsVisible)
@@ -173,6 +187,13 @@ namespace SimpleJiraProject
             {
                 AddEditDefectDialog addEditDefect = new AddEditDefectDialog(null);
                 addEditDefect.ShowDialog();
+                LoadDataFromDb(Globals.currentUser);
+            }
+
+            if (TaskView.IsVisible)
+            {
+                AddEditDefectDialog addEditTask = new AddEditDefectDialog(null);
+                addEditTask.ShowDialog();
                 LoadDataFromDb(Globals.currentUser);
             }
 
@@ -201,11 +222,9 @@ namespace SimpleJiraProject
 
             if (DefectView.IsVisible)
             {
-                int index = DefectListView.SelectedIndex;
-
-                if ( index >= 0)
+                if ( DefectListView.SelectedItem != null)
                 {
-                    AddEditDefectDialog addEditDefect = new AddEditDefectDialog( (Issue)DefectListView.SelectedItem);
+                    AddEditDefectDialog addEditDefect = new AddEditDefectDialog((IssueListView)DefectListView.SelectedItem);
                     addEditDefect.ShowDialog();
                     LoadDataFromDb(Globals.currentUser);
                 }
@@ -213,7 +232,20 @@ namespace SimpleJiraProject
                 {
                     new MessageBoxCustom("Please choose one defect to update", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok);
                 }
-                
+            }
+
+            if (TaskView.IsVisible)
+            {
+                if (TaskListView.SelectedItem != null)
+                {
+                    AddEditDefectDialog addEditTask = new AddEditDefectDialog((IssueListView)TaskListView.SelectedItem);
+                    addEditTask.ShowDialog();
+                    LoadDataFromDb(Globals.currentUser);
+                }
+                else
+                {
+                    new MessageBoxCustom("Please choose one task to update", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok);
+                }
             }
 
         }
