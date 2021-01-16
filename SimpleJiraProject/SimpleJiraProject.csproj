@@ -94,6 +94,7 @@
     <Compile Include="Issue.cs">
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IssueListView.cs" />
     <Compile Include="LoginDialog.xaml.cs">
       <DependentUpon>LoginDialog.xaml</DependentUpon>
     </Compile>

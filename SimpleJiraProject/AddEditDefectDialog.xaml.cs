@@ -27,7 +27,7 @@ namespace SimpleJiraProject
         Issue currentDefect;
         string imageLocation = string.Empty;
 
-        public AddEditDefectDialog(Issue defect)
+        public AddEditDefectDialog(IssueListView defect)
         {
             InitializeComponent();
             cmbPriority.ItemsSource = Enum.GetValues(typeof(IssuePriorityEnum)).Cast<IssuePriorityEnum>();
@@ -40,14 +40,14 @@ namespace SimpleJiraProject
             if (defect != null)
             {
                 this.DataContext = defect;
-                currentDefect = defect;
+                currentDefect = Globals.simpleJiraDB.Issues.Where(iss => iss.IssueId == defect.IssueId).FirstOrDefault();
                 tbTitle.Text = "Update Defect";
                 btAddUpdate.Content = "Update";
                 cmbUserList.SelectedValue = Globals.currentTeamUserList.Where(ut=>ut.UserId == defect.OwnerId).Select(u => u.LoginName).ToString();
                 cmbUserStoryList.SelectedItem = Globals.currentUserStoryList.Where(us=>us.UserStoryId == defect.UserStoryId).Select(ust=>ust.Name);
-                if (defect.Photo!=null)
+                if (currentDefect.Photo!=null)
                 {
-                    image.Source = (ImageSource)((new ImageSourceConverter()).ConvertFrom(defect.Photo));
+                    image.Source = (ImageSource)((new ImageSourceConverter()).ConvertFrom(currentDefect.Photo));
                 }
             }
             else
