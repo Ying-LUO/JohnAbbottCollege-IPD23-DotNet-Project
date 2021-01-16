@@ -20,7 +20,12 @@ namespace SimpleJiraProject
 
         public static bool IsValidPoint(int point)
         {
-            return point < 0 && point > 101;
+            //int
+            //if (int.TryParse(point, out int point))
+            //{
+
+
+                return point > 0 && point < 101;
         }
 
     }

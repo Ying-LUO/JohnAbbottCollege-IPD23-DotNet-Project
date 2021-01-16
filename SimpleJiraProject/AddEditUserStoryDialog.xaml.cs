@@ -53,6 +53,13 @@ namespace SimpleJiraProject
                 int currentSprintId = Globals.simpleJiraDB.Sprints.Where(s => s.Name.Equals(currentSprinttName)).Select(s => s.SprintId).FirstOrDefault();
                 string currentOwnerName = (string)cmbOwnerName.SelectedItem;
                 int currentUserStoryId = Globals.simpleJiraDB.Users.Where(us => us.LoginName.Equals(currentOwnerName)).Select(us => us.UserId).FirstOrDefault();
+                int point = 5;
+                Console.WriteLine(int.TryParse(tbPoints.Text, out point));
+                if (!int.TryParse(tbPoints.Text, out point))
+                {
+                    new MessageBoxCustom("Proiority must be a number between 1 - 100", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
 
                 if (!GeneralValidation.IsValidName(tbUserStoryName.Text))
                 {
@@ -64,6 +71,11 @@ namespace SimpleJiraProject
                     new MessageBoxCustom("Complete date must be after start date", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
+                else if (!GeneralValidation.IsValidPoint(point))
+                {
+                    new MessageBoxCustom("Proiority must be a number between 1 - 100", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
                 else
                 {
 
@@ -73,17 +85,15 @@ namespace SimpleJiraProject
                         currentUserStory.Description = tbDescription.Text;
                         currentUserStory.CreateDate = (DateTime)dpStartDate.SelectedDate;
                         currentUserStory.CompleteDate = (DateTime)dpCompleteDate.SelectedDate;
-                        currentUserStory.Status = (string)cmbStatus.SelectedItem;
-                        int point = 0;
-                        int.TryParse(tbPoints.Text, out point);
+                        currentUserStory.Status = (string)cmbStatus.SelectedItem; 
                         currentUserStory.Point = point;
                         currentUserStory.SprintId = currentSprintId;
                         currentUserStory.OwnerId = currentUserStoryId;
                     }
                     else
                     {
-                        int point = 0;
-                        int.TryParse(tbPoints.Text, out point);
+                        
+
                         UserStory u = new UserStory
                         {
                             Name = tbUserStoryName.Text,

@@ -131,7 +131,7 @@ namespace SimpleJiraProject
                 case 3:
                     HiddenView();
                     DefectView.Visibility = Visibility.Visible;
-                    Globals.AppWindow = new MainWindow(Globals.currentUser);
+                    LoadDataFromDb(Globals.currentUser);
                     break;
                 case 4:
                     HiddenView();

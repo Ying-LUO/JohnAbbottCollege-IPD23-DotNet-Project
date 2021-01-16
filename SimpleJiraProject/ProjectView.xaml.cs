@@ -22,6 +22,7 @@ namespace SimpleJiraProject
     {
         Project project;
         string updatedTeamName;
+        string projectName;
         
         public ProjectView()
         {
@@ -33,6 +34,8 @@ namespace SimpleJiraProject
             if (!GeneralValidation.IsValidName(tbProjectName.Text))
             {
                 new MessageBoxCustom("Project Name must be between 2-30 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                tbProjectName.Text = projectName;
+                tbEditProjectName.Text = projectName;
                 return;
             }
             else
@@ -42,8 +45,9 @@ namespace SimpleJiraProject
                 project.TeamId = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(updatedTeamName)).Select(t => t.TeamId).FirstOrDefault();
                 Globals.simpleJiraDB.SaveChanges();
                 Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Include("Team").ToList();
-            }
                 Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
+            }
+               
             
         }
 
@@ -54,6 +58,7 @@ namespace SimpleJiraProject
                 if(p.Name == tbProjectName.Text)
                 {
                     project = p;
+                    projectName = p.Name;
                     comboTeam.SelectedItem = p.Team.Name;
                 }
             }
