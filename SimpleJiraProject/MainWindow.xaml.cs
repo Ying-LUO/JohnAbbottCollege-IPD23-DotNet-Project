@@ -21,8 +21,6 @@ namespace SimpleJiraProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<string> allTeamsList;
-
         public MainWindow(User loginUser)
         {
             
@@ -72,6 +70,9 @@ namespace SimpleJiraProject
                 {
                     p.AllTeamNamesList = Globals.simpleJiraDB.Teams.AsEnumerable().Select(t => t.Name).ToList<string>();
                 }
+
+                Globals.currentTeamUserList = Globals.simpleJiraDB.Users.Where(u => u.TeamId == currentUser.TeamId).ToList<User>();
+
                 ProjectListView.ItemsSource = Globals.currentTeamProjectList;
                 IEnumerable<int> projectIds = Globals.currentTeamProjectList.Select(p => p.ProjectId).Distinct();
 

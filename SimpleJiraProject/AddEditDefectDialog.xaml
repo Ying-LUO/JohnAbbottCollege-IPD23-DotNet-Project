@@ -11,6 +11,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"  Foreground="White"
         Title="Defect" Height="880" Width="1080">
@@ -41,18 +42,18 @@
         </Grid>
         <Grid x:Name="DefectDialog" Grid.Row="1" Grid.Column="1" Margin="10">
             <StackPanel>
-                <TextBox x:Name="tbDefectName" Foreground="Gray" materialDesign:HintAssist.Hint="Defect Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Height="45" />
-                <TextBox Name="tbDescription" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            VerticalAlignment="Top" Height="100" AcceptsReturn="True"
+                <TextBox x:Name="tbDefectName" Text="{Binding Name}" Foreground="Gray" materialDesign:HintAssist.Hint="Defect Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Height="45" />
+                <TextBox Name="tbDescription" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Description}"
+                            VerticalAlignment="Top" Height="100" AcceptsReturn="True" MaxLength="255"
                             Foreground="Gray" materialDesign:HintAssist.Hint="Description"
                             TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
-                <DatePicker Name="dpStartDate" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
-                <DatePicker Name="dpCompleteDate" IsEnabled="False" materialDesign:HintAssist.Hint="Complete Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
-                <ComboBox x:Name="cmbPriority" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-                <ComboBox x:Name="cmbStatus" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45"/>
-                <ComboBox x:Name="cmbUserList" Foreground="Gray" materialDesign:HintAssist.Hint="Owner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-                <TextBox x:Name="tbUserStoryName" Foreground="Gray" materialDesign:HintAssist.Hint="Related User Story Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Height="45" />
-                <GroupBox Header="Add Photo" x:Name="gbPhoto" MouseDoubleClick="gbPhoto_MouseDoubleClick"
+                <DatePicker Name="dpStartDate" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartDate}" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
+                <DatePicker Name="dpCompleteDate" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding CompleteDate}" IsEnabled="False" materialDesign:HintAssist.Hint="Complete Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
+                <ComboBox x:Name="cmbPriority" Text="{Binding Priority}" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45" />
+                <ComboBox x:Name="cmbStatus" Text="{Binding Status}" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45"/>
+                <ComboBox x:Name="cmbUserList" Foreground="Gray" materialDesign:HintAssist.Hint="Owner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45" />
+                <ComboBox x:Name="cmbUserStoryList" MouseDoubleClick="tbUserStory_MouseDoubleClick" Foreground="Gray" materialDesign:HintAssist.Hint="Related User Story Name" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  Height="45" />
+                <GroupBox Header="Add Photo" x:Name="gbPhoto" MouseDoubleClick="gbPhoto_MouseDoubleClick" Margin="0 10"
                           Style="{DynamicResource MaterialDesignCardGroupBox}" Height="276">
                     <GroupBox.HeaderTemplate>
                         <DataTemplate>
@@ -73,8 +74,8 @@
                     <Image x:Name="image" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </GroupBox>
             </StackPanel>
-            <Button Name="btAddUpdate" Height="45" Width="200" Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" RenderTransformOrigin="0.408,0.622" Margin="777,700,0,24"/>
-            <Button Content="Cancel" Height="45" Width="200" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="549,700,228,24" /> 
+            <Button Name="btAddUpdate" Height="45" Width="200" Content="Save" Click="btAddUpdate_Click" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.408,0.622" Margin="777,700,0,24"/>
+            <Button Content="Cancel" Height="45" Width="200" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" Margin="549,700,228,24" /> 
         </Grid>
     </Grid>
 </Window>
