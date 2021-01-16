@@ -70,14 +70,11 @@
                             </StackPanel>
                         </DataTemplate>
                     </GroupBox.HeaderTemplate>
-                    <Image
-                            Source="{Binding}"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center" />
+                    <Image x:Name="image" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </GroupBox>
             </StackPanel>
-            <Button Name="btAddUpdate" Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" RenderTransformOrigin="0.408,0.622" Margin="0,690,0,47"/>
-            <Button Content="Cancel" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="0,727,0,10" /> 
+            <Button Name="btAddUpdate" Height="45" Width="200" Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" RenderTransformOrigin="0.408,0.622" Margin="777,700,0,24"/>
+            <Button Content="Cancel" Height="45" Width="200" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="549,700,228,24" /> 
         </Grid>
     </Grid>
 </Window>

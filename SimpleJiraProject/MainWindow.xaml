@@ -137,8 +137,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding ReleaseDate, StringFormat=d}" Header="Release Date"/>
                             <!--<GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />-->
                             <GridViewColumn DisplayMemberBinding="{Binding Project.Name}" Header="Project Name" />
-                            <GridViewColumn
-      Header="Status"  Width="100">
+                            <GridViewColumn Header="Status"  Width="100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         
@@ -168,7 +167,7 @@
                 </ListView>
             </Grid>
             <Grid x:Name="DefectView" Visibility="Hidden" >
-                <ListView x:Name="DefectListView" >
+                <ListView x:Name="DefectListView" MouseDoubleClick="btUpdate_Click">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding IssueId}" Header="Defect Id" />
