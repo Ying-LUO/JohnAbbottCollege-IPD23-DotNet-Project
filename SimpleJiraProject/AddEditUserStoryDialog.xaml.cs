@@ -54,43 +54,56 @@ namespace SimpleJiraProject
                 string currentOwnerName = (string)cmbOwnerName.SelectedItem;
                 int currentUserStoryId = Globals.simpleJiraDB.Users.Where(us => us.LoginName.Equals(currentOwnerName)).Select(us => us.UserId).FirstOrDefault();
 
-                if (currentUserStory != null)
+                if (!GeneralValidation.IsValidName(tbUserStoryName.Text))
                 {
-                    currentUserStory.Name = tbUserStoryName.Text;
-                    currentUserStory.Description = tbDescription.Text;
-                    currentUserStory.CreateDate = (DateTime)dpStartDate.SelectedDate;
-                    currentUserStory.CompleteDate = (DateTime)dpCompleteDate.SelectedDate;
-                    currentUserStory.Status = (string)cmbStatus.SelectedItem;
-                    int point = 0;
-                    int.TryParse(tbPoints.Text, out point);
-                    currentUserStory.Point = point;
-                    currentUserStory.SprintId = currentSprintId;
-                    currentUserStory.OwnerId = currentUserStoryId ;
+                    new MessageBoxCustom("User Story Name must be between 2-30 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                else if (!GeneralValidation.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpCompleteDate.SelectedDate))
+                {
+                    new MessageBoxCustom("Complete date must be after start date", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
                 }
                 else
                 {
-                    int point = 0;
-                    int.TryParse(tbPoints.Text, out point);
-                    UserStory u = new UserStory
+
+                    if (currentUserStory != null)
                     {
-                        Name = tbUserStoryName.Text,
-                        Description = tbDescription.Text,
-                        CreateDate = (DateTime)dpStartDate.SelectedDate,
-                        CompleteDate = (DateTime)dpCompleteDate.SelectedDate,
-                        Status = (string)cmbStatus.SelectedItem,
-                        Point = point,
-                        SprintId = currentSprintId,
-                        OwnerId = currentUserStoryId,
+                        currentUserStory.Name = tbUserStoryName.Text;
+                        currentUserStory.Description = tbDescription.Text;
+                        currentUserStory.CreateDate = (DateTime)dpStartDate.SelectedDate;
+                        currentUserStory.CompleteDate = (DateTime)dpCompleteDate.SelectedDate;
+                        currentUserStory.Status = (string)cmbStatus.SelectedItem;
+                        int point = 0;
+                        int.TryParse(tbPoints.Text, out point);
+                        currentUserStory.Point = point;
+                        currentUserStory.SprintId = currentSprintId;
+                        currentUserStory.OwnerId = currentUserStoryId;
+                    }
+                    else
+                    {
+                        int point = 0;
+                        int.TryParse(tbPoints.Text, out point);
+                        UserStory u = new UserStory
+                        {
+                            Name = tbUserStoryName.Text,
+                            Description = tbDescription.Text,
+                            CreateDate = (DateTime)dpStartDate.SelectedDate,
+                            CompleteDate = (DateTime)dpCompleteDate.SelectedDate,
+                            Status = (string)cmbStatus.SelectedItem,
+                            Point = point,
+                            SprintId = currentSprintId,
+                            OwnerId = currentUserStoryId,
 
-                    };
-                    Globals.simpleJiraDB.UserStories.Add(u);
+                        };
+                        Globals.simpleJiraDB.UserStories.Add(u);
+                    }
+
+
+                    Globals.simpleJiraDB.SaveChanges();
+                    List<UserStory> currentSprinttList = Globals.simpleJiraDB.UserStories.Include("Sprint").ToList();
+
                 }
-
-
-                Globals.simpleJiraDB.SaveChanges();
-                List<UserStory> currentSprinttList = Globals.simpleJiraDB.UserStories.Include("Sprint").ToList();
-
-
                 DialogResult = true;
 
             }

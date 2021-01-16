@@ -15,15 +15,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        
-        <ListView Name="CardListView" SelectionChanged="CardList_SelectionChanged">
-            
-                
-                
 
-            <materialDesign:Card Margin="12" materialDesign:ShadowAssist.ShadowDepth="Depth3"
-    Padding="12">
-
+        <ListView Name="CardListView">
+            <materialDesign:Card Margin="12" materialDesign:ShadowAssist.ShadowDepth="Depth3" Padding="12">
                 <materialDesign:Flipper Width="233" Height="295">
                     <materialDesign:Flipper.FrontContent>
                         <Grid Height="290" Width="230">
@@ -31,7 +25,6 @@
                                 <RowDefinition Height="150" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-
                             <Image Source="C:\Users\Khalil\Documents\software Developement\dotnet-2\Team9SimpleJira\Icons\p1.png" Height="155" Width="216"     Stretch="UniformToFill" />
                             <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Name="tbProjectName" Foreground="#FF7C7575" Text="{Binding Name}" HorizontalAlignment="Center" Margin="0,12,0,0" />
@@ -43,21 +36,6 @@
                                         <SolidColorBrush Color="#FF5294B9"/>
                                     </Button.Foreground>
                                 </Button>
-                                <!--<Button
-                    
-                    Click="btDelete_Click"
-                    Content="{materialDesign:PackIcon Kind=Delete, Size=20}">-->
-                                    <!-- mix up the colours by bringing in a named palette (see merged dictionaries at top) -->
-                                    <!--<Button.Background>
-                                        <SolidColorBrush Color="{StaticResource Primary300}"/>
-                                    </Button.Background>
-
-                                    <Button.Foreground>
-                                        <SolidColorBrush Color="{StaticResource Primary300Foreground}"/>
-                                    </Button.Foreground>-->
-                                <!--</Button>-->
-                                <!--<Button Content="Delete" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 4 0 0" Click="Delete_Click">
-                                </Button>-->
                             </StackPanel>
                         </Grid>
                     </materialDesign:Flipper.FrontContent>
@@ -82,7 +60,6 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-
                                 <TextBox Name="tbEditProjectName" Foreground="#FF7C7575" materialDesign:HintAssist.Hint="Project Name"         materialDesign:HintAssist.IsFloating="True" Margin="0 10 0 0" Text="{Binding Name}"/>
                                 <ComboBox ItemsSource="{Binding Path=AllTeamNamesList}" Name="comboTeam" Foreground="#FF7C7575" Grid.Row="1" materialDesign:HintAssist.Hint="Team" materialDesign:HintAssist.IsFloating="True" Margin="0 14 0 0"  />
 
@@ -95,8 +72,6 @@
                     </materialDesign:Flipper.BackContent>
                 </materialDesign:Flipper>
             </materialDesign:Card>
-                
-            
         </ListView>
     </Grid>
 </UserControl>

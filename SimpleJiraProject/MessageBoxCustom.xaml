@@ -36,25 +36,25 @@
             </Button>
         </StackPanel>
         <Grid Grid.Row="1" Grid.ColumnSpan="2">
-            <Grid Margin="20">
+            <Grid Margin="20,20,20,-14">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto" MinHeight="76"/>
+                    <RowDefinition Height="auto" MinHeight="67"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" Margin="0,0,0,59" Grid.RowSpan="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <materialDesign:TransitioningContent>
+                    <materialDesign:TransitioningContent Margin="0,0,0,10" Grid.RowSpan="2">
                         <materialDesign:TransitioningContent.OpeningEffects >
                             <materialDesign:TransitionEffect Kind="FadeIn" />
                             <materialDesign:TransitionEffect Kind="SlideInFromBottom" />
                         </materialDesign:TransitioningContent.OpeningEffects>
-                        <TextBox x:Name="txtMessage" HorizontalAlignment="Center" IsReadOnly="True" Grid.Row="0" Margin="5" materialDesign:HintAssist.Hint="" FontSize="18" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox x:Name="txtMessage" HorizontalAlignment="Center" IsReadOnly="True" Grid.Row="0" Margin="5" materialDesign:HintAssist.Hint="" FontSize="14" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     </materialDesign:TransitioningContent>
 
                 </Grid>

@@ -49,7 +49,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Margin="0,10,0,-15" >
                 <TextBox x:Name="tbUserStoryName" Foreground="Gray" materialDesign:HintAssist.Hint="User Story Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,0" Height="45" />
-                <DatePicker Name="dpStartDate" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,50,10,0" Height="45" />
+                <DatePicker Name="dpStartDate" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,50,10,0" Height="45" />
                 <DatePicker Name="dpCompleteDate" materialDesign:HintAssist.Hint="Complete Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,50,10,0" Height="45" />
 
                 <ComboBox x:Name="cmbSprintName" Foreground="Gray" materialDesign:HintAssist.Hint=" Sprint Name" Style="{StaticResource MaterialDesignComboBox}" Margin="10,50,0,40" HorizontalAlignment="Left"  Height="45" Width="348" />
@@ -64,7 +64,7 @@
                 <TextBox Name="tbDescription" VerticalAlignment="Top" Height="79" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Description" Margin="0,20,0,0"  />
                 <ComboBox x:Name="cmbStatus" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignComboBox}"  HorizontalAlignment="Left"  Height="45" Width="253" Margin="0,40,0,0" />
                 <TextBox Name="tbPoints" VerticalAlignment="Top" Height="49" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Margin="0,50,0,0"  />
-                <Label Content="Enter number between 10 and 90" Margin="0,10,0,0" Foreground="#FFACB9BD"/>
+                <Label Content="Enter number between 1 and 100" Margin="0,10,0,0" Foreground="#FFACB9BD"/>
 
 
 

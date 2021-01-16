@@ -30,12 +30,21 @@ namespace SimpleJiraProject
 
         private void btUpdate_Click(object sender, RoutedEventArgs e)
         {
-            project.Name = tbEditProjectName.Text;
-            updatedTeamName = (string)comboTeam.SelectedItem;
-            project.TeamId = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(updatedTeamName)).Select(t => t.TeamId).FirstOrDefault();
-            Globals.simpleJiraDB.SaveChanges();
-            Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Include("Team").ToList();
-            Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
+            if (!GeneralValidation.IsValidName(tbProjectName.Text))
+            {
+                new MessageBoxCustom("Project Name must be between 2-30 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                return;
+            }
+            else
+            {
+                project.Name = tbEditProjectName.Text;
+                updatedTeamName = (string)comboTeam.SelectedItem;
+                project.TeamId = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(updatedTeamName)).Select(t => t.TeamId).FirstOrDefault();
+                Globals.simpleJiraDB.SaveChanges();
+                Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Include("Team").ToList();
+            }
+                Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
+            
         }
 
         private void btEdit_Click(object sender, RoutedEventArgs e)
@@ -48,19 +57,6 @@ namespace SimpleJiraProject
                     comboTeam.SelectedItem = p.Team.Name;
                 }
             }
-        }
-
-        private void CardList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //int listIndex = CardListView.SelectedIndex;
-            //if (listIndex != -1)
-            //{
-                //Globals.SelectedProject = Globals.currentTeamProjectList[listIndex];
-                //Project p = Globals.currentTeamProjectList[listIndex];
-                //Console.WriteLine(p.Name);
-            //}
-
-            //Globals.SelectedProject = (Project)CardListView.SelectedItem;
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)

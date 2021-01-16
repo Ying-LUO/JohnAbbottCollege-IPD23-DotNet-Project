@@ -21,16 +21,6 @@ namespace SimpleJiraProject
     {
         public List<string> ProjectsList = new List<string>();
         Sprint currentSprint; // null when adding, non-null when editing
-        //public event Action<Sprint> AddNewSprintCallback;
-
-        //public AddEditSprintDialog()
-        //{
-        //    InitializeComponent();
-
-        //    cmbStatus.ItemsSource = Globals.simpleJiraDB.Sprints.AsEnumerable().Select(s => s.Status).ToList<string>();
-        //    createProjectNamesList();
-        //    cmbProjectName.ItemsSource = ProjectsList;
-        //}
 
         internal AddEditSprintDialog(Sprint sprint)
         {
@@ -43,7 +33,7 @@ namespace SimpleJiraProject
             if(sprint != null) //Updating
             {
                 currentSprint = sprint;
-                tbSprinttName.Text = sprint.Name;
+                tbSprintName.Text = sprint.Name;
                 dpStartDate.SelectedDate = sprint.StartDate;
                 dpReleaseDate.SelectedDate = sprint.ReleaseDate;
                 
@@ -53,8 +43,7 @@ namespace SimpleJiraProject
                 cmbProjectName.SelectedItem = sprint.Project.Name;
                 btAddUpdate.Content = "Update";
                 tbAddEditSprintTitle.Text = String.Format("Update Sprint: {0}", sprint.Name);
-            }
-            
+            }           
         }
 
         private void btExit_Click(object sender, RoutedEventArgs e)
@@ -69,33 +58,51 @@ namespace SimpleJiraProject
                 string currentProjectName = (string)cmbProjectName.SelectedItem;
                 int currentProjectId = Globals.simpleJiraDB.Projects.Where(p => p.Name.Equals(currentProjectName)).Select(p => p.ProjectId).FirstOrDefault();
 
-                if(currentSprint != null)
+                if (!GeneralValidation.IsValidName(tbSprintName.Text))
                 {
-                    currentSprint.Name = tbSprinttName.Text;
-                    currentSprint.Description = tbDescription.Text;
-                    currentSprint.StartDate = (DateTime)dpStartDate.SelectedDate;
-                    currentSprint.ReleaseDate = (DateTime)dpReleaseDate.SelectedDate;
-                    currentSprint.Status = cmbStatus.SelectedItem.ToString();
-                    currentSprint.ProjectId = currentProjectId;
+                    new MessageBoxCustom("Name must be between 2-30 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                else if (!GeneralValidation.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpReleaseDate.SelectedDate))
+                {
+                    new MessageBoxCustom("Release date must be after start date", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
                 }
                 else
                 {
-                    Sprint s = new Sprint
-                    {
-                        Name = tbSprinttName.Text,
-                        Description = tbDescription.Text,
-                        StartDate = (DateTime)dpStartDate.SelectedDate,
-                        ReleaseDate = (DateTime)dpReleaseDate.SelectedDate,
-                        Status = cmbStatus.SelectedItem.ToString(),
-                        ProjectId = currentProjectId,
 
-                    };
-                    Globals.simpleJiraDB.Sprints.Add(s);
-                } 
-                Globals.simpleJiraDB.SaveChanges();
-                List<Sprint> currentProjectList = Globals.simpleJiraDB.Sprints.Include("Project").ToList();
-               
-                DialogResult = true;  
+                    if (currentSprint != null)
+                    {
+                        currentSprint.Name = tbSprintName.Text;
+                        currentSprint.Description = tbDescription.Text;
+                        currentSprint.StartDate = (DateTime)dpStartDate.SelectedDate;
+                        currentSprint.ReleaseDate = (DateTime)dpReleaseDate.SelectedDate;
+                        currentSprint.Status = cmbStatus.SelectedItem.ToString();
+                        currentSprint.ProjectId = currentProjectId;
+                    }
+                    else
+                    {
+                   
+                        Sprint s = new Sprint
+                        {
+                            Name = tbSprintName.Text,
+                            Description = tbDescription.Text,
+                            StartDate = (DateTime)dpStartDate.SelectedDate,
+                            ReleaseDate = (DateTime)dpReleaseDate.SelectedDate,
+                            Status = cmbStatus.SelectedItem.ToString(),
+                            ProjectId = currentProjectId,
+
+                        };
+                        Globals.simpleJiraDB.Sprints.Add(s);
+                    }
+                    Globals.simpleJiraDB.SaveChanges();
+                    List<Sprint> currentProjectList = Globals.simpleJiraDB.Sprints.Include("Project").ToList();
+
+                   
+                }
+
+                DialogResult = true;
+
             }
             catch (SystemException ex)
             {
