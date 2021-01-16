@@ -51,7 +51,7 @@
                 <ComboBox x:Name="cmbPriority" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
                 <ComboBox x:Name="cmbStatus" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45"/>
             </StackPanel>
-            <Button Name="btAddUpdate" Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" RenderTransformOrigin="0.408,0.622" Click="btAddUpdate_Click" Margin="0,431,0,306" />
+            <Button Name="btAddUpdate" Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" RenderTransformOrigin="0.408,0.622"  Margin="0,431,0,306" />
             <Button Content="Cancel" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="0,468,0,269" /> 
         </Grid>
     </Grid>

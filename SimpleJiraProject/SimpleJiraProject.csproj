@@ -145,6 +145,9 @@
     <Compile Include="UserStory.cs">
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserStoryStatus.xaml.cs">
+      <DependentUpon>UserStoryStatus.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserValidation.cs" />
     <Page Include="AddEditDefectDialog.xaml">
       <SubType>Designer</SubType>
@@ -203,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TeamUserManagementDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserStoryStatus.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
