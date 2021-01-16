@@ -42,7 +42,6 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
                 <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -56,7 +55,6 @@
                         </materialDesign:TransitioningContent.OpeningEffects>
                         <TextBox x:Name="txtMessage" HorizontalAlignment="Center" IsReadOnly="True" Grid.Row="0" Margin="5" materialDesign:HintAssist.Hint="" FontSize="18" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     </materialDesign:TransitioningContent>
-
                 </Grid>
                 <Grid Grid.Row="1" Margin="0,20,0,5">
                     <Grid.ColumnDefinitions>
@@ -65,8 +63,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
-                    <Button x:Name="btnOk" Click="btnOk_Click" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5" Width="100" Content="OK" ToolTip="Ok"/>
+                    <Button x:Name="btnOk" Click="btnOk_Click" IsDefault="True" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5" Width="100" Content="OK" ToolTip="Ok"/>
                     <Button x:Name="btnCancel" Click="btnCancel_Click" Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5" Width="100" Content="Cancel" ToolTip="Cancel"/>
                     <Button x:Name="btnYes" Click="btnYes_Click" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5" Width="100" Content="Yes" ToolTip="Yes"/>
                     <Button x:Name="btnNo" Click="btnNo_Click" Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5" Width="100" Content="No" ToolTip="No"/>

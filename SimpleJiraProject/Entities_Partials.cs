@@ -20,4 +20,8 @@ namespace SimpleJiraProject
     }
 
     public enum SprintStatusEnum { Planning, Ongoing, Released }
+
+    public enum IssuePriorityEnum { VeryLow, Low, Medium, High, VeryHigh}
+
+    public enum IssueStatusEnum { Todo, InProcess, Blocked, Verified, Resolved}
 }
