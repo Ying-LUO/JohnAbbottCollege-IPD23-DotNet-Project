@@ -30,6 +30,7 @@ namespace SimpleJiraProject
                 dpStartDate.SelectedDate = userStory.CreateDate;
                 dpCompleteDate.SelectedDate = userStory.CompleteDate;
                 cmbStatus.SelectedItem = userStory.Status;
+                tbPoints.Text = userStory.Point.ToString();
                 tbDescription.Text = userStory.Description;
                 cmbSprintName.SelectedItem = userStory.Sprint.Name;
                 cmbOwnerName.SelectedItem = userStory.User.LoginName;
@@ -60,11 +61,16 @@ namespace SimpleJiraProject
                     currentUserStory.CreateDate = (DateTime)dpStartDate.SelectedDate;
                     currentUserStory.CompleteDate = (DateTime)dpCompleteDate.SelectedDate;
                     currentUserStory.Status = (string)cmbStatus.SelectedItem;
+                    int point = 0;
+                    int.TryParse(tbPoints.Text, out point);
+                    currentUserStory.Point = point;
                     currentUserStory.SprintId = currentSprintId;
                     currentUserStory.OwnerId = currentUserStoryId ;
                 }
                 else
                 {
+                    int point = 0;
+                    int.TryParse(tbPoints.Text, out point);
                     UserStory u = new UserStory
                     {
                         Name = tbUserStoryName.Text,
@@ -72,6 +78,7 @@ namespace SimpleJiraProject
                         CreateDate = (DateTime)dpStartDate.SelectedDate,
                         CompleteDate = (DateTime)dpCompleteDate.SelectedDate,
                         Status = (string)cmbStatus.SelectedItem,
+                        Point = point,
                         SprintId = currentSprintId,
                         OwnerId = currentUserStoryId,
 

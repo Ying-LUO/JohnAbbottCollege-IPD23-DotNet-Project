@@ -15,13 +15,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListBox>
+        
+        <ListView Name="CardListView" SelectionChanged="CardList_SelectionChanged">
+            
+                
+                
+
             <materialDesign:Card Margin="12" materialDesign:ShadowAssist.ShadowDepth="Depth3"
     Padding="12">
 
-                <materialDesign:Flipper>
+                <materialDesign:Flipper Width="233" Height="295">
                     <materialDesign:Flipper.FrontContent>
-                        <Grid Height="256" Width="220">
+                        <Grid Height="290" Width="230">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="150" />
                                 <RowDefinition Height="*" />
@@ -29,14 +34,35 @@
 
                             <Image Source="C:\Users\Khalil\Documents\software Developement\dotnet-2\Team9SimpleJira\Icons\p1.png" Height="155" Width="216"     Stretch="UniformToFill" />
                             <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Name="tbProjectName" Foreground="#FF7C7575" Text="{Binding Name}"/>
-                                <Button Content="Edit" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 4 0 0" Click="btEdit_Click">
+                                <TextBlock Name="tbProjectName" Foreground="#FF7C7575" Text="{Binding Name}" HorizontalAlignment="Center" Margin="0,12,0,0" />
+                                <Button Content="Edit" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 20 0 0" Click="btEdit_Click">
                                 </Button>
+                                <Button Margin="160,0,5,0" Style="{StaticResource MaterialDesignIconButton}" ToolTip="MaterialDesignIconButton" Click="Delete_Click">
+                                    <materialDesign:PackIcon Kind="Delete" />
+                                    <Button.Foreground>
+                                        <SolidColorBrush Color="#FF5294B9"/>
+                                    </Button.Foreground>
+                                </Button>
+                                <!--<Button
+                    
+                    Click="btDelete_Click"
+                    Content="{materialDesign:PackIcon Kind=Delete, Size=20}">-->
+                                    <!-- mix up the colours by bringing in a named palette (see merged dictionaries at top) -->
+                                    <!--<Button.Background>
+                                        <SolidColorBrush Color="{StaticResource Primary300}"/>
+                                    </Button.Background>
+
+                                    <Button.Foreground>
+                                        <SolidColorBrush Color="{StaticResource Primary300Foreground}"/>
+                                    </Button.Foreground>-->
+                                <!--</Button>-->
+                                <!--<Button Content="Delete" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 4 0 0" Click="Delete_Click">
+                                </Button>-->
                             </StackPanel>
                         </Grid>
                     </materialDesign:Flipper.FrontContent>
                     <materialDesign:Flipper.BackContent>
-                        <Grid Height="256" Width="220">
+                        <Grid Height="290" Width="230">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
@@ -69,6 +95,8 @@
                     </materialDesign:Flipper.BackContent>
                 </materialDesign:Flipper>
             </materialDesign:Card>
-        </ListBox>
+                
+            
+        </ListView>
     </Grid>
 </UserControl>

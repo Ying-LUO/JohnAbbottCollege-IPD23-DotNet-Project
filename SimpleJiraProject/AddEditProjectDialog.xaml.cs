@@ -53,7 +53,7 @@ namespace SimpleJiraProject
                 };
                 Globals.simpleJiraDB.Projects.Add(p);
                 Globals.simpleJiraDB.SaveChanges();
-                Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Include("Team").ToList();
+                //Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Include("Team").ToList();
 
 
                 DialogResult = true;

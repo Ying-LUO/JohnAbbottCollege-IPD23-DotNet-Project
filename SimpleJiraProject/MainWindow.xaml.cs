@@ -23,9 +23,12 @@ namespace SimpleJiraProject
     {
         public MainWindow(User loginUser)
         {
+            
+            
             InitializeComponent();
             Globals.AppWindow = this;
             ProjectView.Visibility = Visibility.Visible;
+
             try
             {
                 if (loginUser != null)
@@ -45,6 +48,9 @@ namespace SimpleJiraProject
                 new MessageBoxCustom("Fatal error connecting to database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 Environment.Exit(1);
             }
+            
+
+
         }
 
         public void LoadDataFromDb(User currentUser)
@@ -106,23 +112,31 @@ namespace SimpleJiraProject
                 case 0:
                     HiddenView();
                     ProjectView.Visibility = Visibility.Visible;
+                    LoadDataFromDb(Globals.currentUser);
 
                     break;
                 case 1:
                     HiddenView();
+                   
                     SprintView.Visibility = Visibility.Visible;
+                    LoadDataFromDb(Globals.currentUser);
+
+                    
                     break;
                 case 2:
                     HiddenView();
                     UserStoryView.Visibility = Visibility.Visible;
+                    LoadDataFromDb(Globals.currentUser);
                     break;
                 case 3:
                     HiddenView();
                     DefectView.Visibility = Visibility.Visible;
+                    Globals.AppWindow = new MainWindow(Globals.currentUser);
                     break;
                 case 4:
                     HiddenView();
                     TaskView.Visibility = Visibility.Visible;
+                    
                     break;
                 default:
                     HiddenView();
@@ -182,9 +196,7 @@ namespace SimpleJiraProject
 
             if (UserStoryView.IsVisible)
             {
-                AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog(null);
-                addEditUserStory.ShowDialog();
-                LoadDataFromDb(Globals.currentUser);
+                EditSelectedUserStory();
             }
 
             if (DefectView.IsVisible)
@@ -210,7 +222,14 @@ namespace SimpleJiraProject
         {
             if (ProjectView.IsVisible)
             {
-                
+                if (Globals.SelectedProject == null)
+                {
+                    new MessageBoxCustom("Select Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
+                Globals.simpleJiraDB.Projects.Remove(Globals.SelectedProject);
+                Globals.simpleJiraDB.SaveChanges();
                 LoadDataFromDb(Globals.currentUser);
 
 
@@ -223,8 +242,9 @@ namespace SimpleJiraProject
                     new MessageBoxCustom("Select Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
-                Sprint sprint = (Sprint)SprintListView.SelectedItem;
-                Globals.simpleJiraDB.Sprints.Remove(sprint);
+                //Sprint sprint = (Sprint)SprintListView.SelectedItem;
+                //Globals.currentSprintList.Remove(Globals.SelectedSprint);
+                Globals.simpleJiraDB.Sprints.Remove(Globals.SelectedSprint);
                 Globals.simpleJiraDB.SaveChanges();
                 LoadDataFromDb(Globals.currentUser);
             }
@@ -236,10 +256,9 @@ namespace SimpleJiraProject
                     new MessageBoxCustom("Select User Story to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
-                UserStory userStory = (UserStory)UserStoryListView.SelectedItem;
-                AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog(null);
-                addEditUserStory.ShowDialog();
-                Globals.simpleJiraDB.UserStories.Remove(userStory);
+                //UserStory userStory = (UserStory)UserStoryListView.SelectedItem;
+                Globals.simpleJiraDB.UserStories.Remove(Globals.SelectedUserStory);
+                Globals.simpleJiraDB.SaveChanges();
                 LoadDataFromDb(Globals.currentUser);
             }
         }
@@ -290,10 +309,44 @@ namespace SimpleJiraProject
         private void SprintListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int listIndex = SprintListView.SelectedIndex;
-            Globals.SelectedSprint = Globals.currentSprintList[listIndex];
+            if(listIndex != -1) 
+            {
+                Globals.SelectedSprint = Globals.currentSprintList[listIndex];
+            }
+           
             Console.WriteLine(SprintListView.SelectedIndex);
 
-            if (Globals.SelectedSprint == null) { return; }
+            //if (Globals.SelectedSprint == null) { return; }
         }
+
+        private void UserStoryListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            EditSelectedUserStory();
+        }
+
+        private void UserStoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int listIndex = UserStoryListView.SelectedIndex;
+            if(listIndex != -1)
+            {
+                Globals.SelectedUserStory = Globals.currentUserStoryList[listIndex];
+            }
+            
+            Console.WriteLine(UserStoryListView.SelectedIndex);
+
+            //if (Globals.SelectedSprint == null) { return; }
+        }
+
+        public void EditSelectedUserStory()
+        {
+            UserStory userStory = (UserStory)UserStoryListView.SelectedItem;
+            if (userStory == null) { return; }
+            AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog(userStory);
+            addEditUserStory.ShowDialog();
+            LoadDataFromDb(Globals.currentUser);
+
+        }
+
+        
     }
 }

@@ -49,5 +49,26 @@ namespace SimpleJiraProject
                 }
             }
         }
+
+        private void CardList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //int listIndex = CardListView.SelectedIndex;
+            //if (listIndex != -1)
+            //{
+                //Globals.SelectedProject = Globals.currentTeamProjectList[listIndex];
+                //Project p = Globals.currentTeamProjectList[listIndex];
+                //Console.WriteLine(p.Name);
+            //}
+
+            //Globals.SelectedProject = (Project)CardListView.SelectedItem;
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            Project SelectedProject = Globals.simpleJiraDB.Projects.Where(p => p.Name.Equals(tbProjectName.Text)).FirstOrDefault();
+            Globals.simpleJiraDB.Projects.Remove(SelectedProject);
+            Globals.simpleJiraDB.SaveChanges();
+            Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
+        }
     }
-}
+    }
