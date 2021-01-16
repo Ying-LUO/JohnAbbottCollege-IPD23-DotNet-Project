@@ -32,7 +32,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Height="60" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="SteelBlue">
-            <TextBlock Name="tbAddEditSprintTitle" Text="Add New Defect" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="50,18,0,20" Width="224" TextAlignment="Center"/>
+            <TextBlock Name="tbTitle" Text="Add New Defect" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="50,18,0,20" Width="224" TextAlignment="Center"/>
             <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" IsCancel="True">
                 <materialDesign:PackIcon Kind="Power" />
             </Button>
@@ -50,9 +50,31 @@
                 <DatePicker Name="dpCompleteDate" IsEnabled="False" materialDesign:HintAssist.Hint="Complete Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
                 <ComboBox x:Name="cmbPriority" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
                 <ComboBox x:Name="cmbStatus" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45"/>
+                <ComboBox x:Name="cmbUserList" Foreground="Gray" materialDesign:HintAssist.Hint="Owner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                <TextBox x:Name="tbUserStoryName" Foreground="Gray" materialDesign:HintAssist.Hint="Related User Story Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Height="45" />
+                <GroupBox Header="Add Photo" x:Name="gbPhoto" MouseDoubleClick="gbPhoto_MouseDoubleClick"
+                          Style="{DynamicResource MaterialDesignCardGroupBox}" Height="276">
+                    <GroupBox.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon
+                                  Kind="ImageArea"
+                                  Height="32"
+                                  Width="32"
+                                  VerticalAlignment="Center" />
+                                <TextBlock
+                                  Margin="8,0,0,0"
+                                  VerticalAlignment="Center"
+                                  Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                  Text="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupBox.HeaderTemplate>
+                    <Image x:Name="image" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </GroupBox>
             </StackPanel>
-            <Button Name="btAddUpdate" Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" RenderTransformOrigin="0.408,0.622"  Margin="0,431,0,306" />
-            <Button Content="Cancel" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="0,468,0,269" /> 
+            <Button Name="btAddUpdate" Height="45" Width="200" Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" RenderTransformOrigin="0.408,0.622" Margin="777,700,0,24"/>
+            <Button Content="Cancel" Height="45" Width="200" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="549,700,228,24" /> 
         </Grid>
     </Grid>
 </Window>

@@ -290,7 +290,7 @@
                 </materialDesign:PopupBox>
             </Grid>
             <Grid x:Name="DefectView" Visibility="Hidden" >
-                <ListView x:Name="DefectListView" >
+                <ListView x:Name="DefectListView" MouseDoubleClick="btUpdate_Click">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding IssueId}" Header="Defect Id" />

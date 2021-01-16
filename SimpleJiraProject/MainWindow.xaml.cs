@@ -168,6 +168,13 @@ namespace SimpleJiraProject
                 LoadDataFromDb(Globals.currentUser);
             }
 
+            if (DefectView.IsVisible)
+            {
+                AddEditDefectDialog addEditDefect = new AddEditDefectDialog(null);
+                addEditDefect.ShowDialog();
+                LoadDataFromDb(Globals.currentUser);
+            }
+
         }
 
         private void btUpdate_Click(object sender, RoutedEventArgs e)
@@ -189,6 +196,23 @@ namespace SimpleJiraProject
             if (UserStoryView.IsVisible)
             {
                 EditSelectedUserStory();
+            }
+
+            if (DefectView.IsVisible)
+            {
+                int index = DefectListView.SelectedIndex;
+
+                if ( index >= 0)
+                {
+                    AddEditDefectDialog addEditDefect = new AddEditDefectDialog( (Issue)DefectListView.SelectedItem);
+                    addEditDefect.ShowDialog();
+                    LoadDataFromDb(Globals.currentUser);
+                }
+                else
+                {
+                    new MessageBoxCustom("Please choose one defect to update", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok);
+                }
+                
             }
 
         }
