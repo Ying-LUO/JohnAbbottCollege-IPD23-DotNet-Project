@@ -18,12 +18,24 @@ namespace SimpleJiraProject
     /// Interaction logic for AddEditDefectDialog.xaml
     /// </summary>
     public partial class AddEditDefectDialog : Window
-    {
-        public AddEditDefectDialog()
+    { 
+        public AddEditDefectDialog(Issue defect)
         {
             InitializeComponent();
+            if (defect != null)
+            {
+                tbTitle.Text = "Update Defect";
+                cmbUserList.SelectedItem = defect.OwnerId;
+            }
+            else
+            {
+                cmbUserList.SelectedIndex = -1;
+            }
         }
 
-
+        private void gbPhoto_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Add photo");
+        }
     }
 }

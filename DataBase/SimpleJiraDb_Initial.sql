@@ -59,9 +59,9 @@ CREATE TABLE Users
 (
 	UserId int IDENTITY(1,1) NOT NULL, -- auto-generated number
 	LoginName NVARCHAR(40) NOT NULL,
-    PasswordHash BINARY(64) NOT NULL,
     FirstName NVARCHAR(50) NOT NULL,
     LastName NVARCHAR(50) NOT NULL,
+    PWDEncrypted NVARCHAR(200) NOT NULL,
 	Role nvarchar(50) NOT NULL,
 	EMAIL NVARCHAR(50) NOT NULL,
 	TeamId int NOT NULL,
