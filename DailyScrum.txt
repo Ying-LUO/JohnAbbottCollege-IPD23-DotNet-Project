@@ -353,3 +353,54 @@ Ying:
 2. Todo:
 * Working on defect/task features
 3. Need assistant:
+
+
+============================================================================================
+Day 11: 2021-Jan-14 Thursday
+============================================================================================
+Khalil:
+
+1- Done:
+	*Sprint Dialog to Update and delete sprints
+	*Fix few issues
+	*Update Trello
+2- Todo:
+	
+	*working on UserStory Dialog to add, Update and delete UserStories
+	*Fix combo box issue
+	*Update Trello
+
+3- Need assistant:
+	*N/A
+Ying:
+1. Done:
+* Finished the issue(defect/task) dialog
+* Refactor the layout of related windows
+2. Todo:
+* Working on unit test
+3. Need assistant:
+
+============================================================================================
+Day 12: 2021-Jan-15 Friday
+============================================================================================
+Khalil:
+
+1- Done:
+	*Sprint Dialog to Update and delete sprints
+	*Fix few issues
+	*Update Trello
+2- Todo:
+	
+	*working on UserStory Dialog to add, Update and delete UserStories
+	*Fix combo box issue
+	*Update Trello
+
+3- Need assistant:
+	*N/A
+Ying:
+1. Done:
+* Finished the unit test for validation class
+* Finished the installer for the project by using MS VS installer project
+2. Todo:
+* Working on presentation
+3. Need assistant:
