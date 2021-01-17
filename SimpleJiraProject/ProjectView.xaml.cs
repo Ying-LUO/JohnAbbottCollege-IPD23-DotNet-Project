@@ -36,6 +36,8 @@ namespace SimpleJiraProject
                 new MessageBoxCustom("Project Name must be between 2-30 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 tbProjectName.Text = projectName;
                 tbEditProjectName.Text = projectName;
+                project.Name = projectName;
+                Globals.simpleJiraDB.SaveChanges();
                 return;
             }
             else
