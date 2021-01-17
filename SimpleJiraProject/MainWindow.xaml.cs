@@ -24,8 +24,6 @@ namespace SimpleJiraProject
     {
         public MainWindow(User loginUser)
         {
-            
-            
             InitializeComponent();
             Globals.AppWindow = this;
             ProjectView.Visibility = Visibility.Visible;
@@ -49,6 +47,11 @@ namespace SimpleJiraProject
                 new MessageBoxCustom("Fatal error connecting to database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 Environment.Exit(1);
             }
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
 
         public void LoadDataFromDb(User currentUser)
@@ -168,6 +171,7 @@ namespace SimpleJiraProject
             {
                 AddEditIssueDialog addEditIssue = new AddEditIssueDialog(null);
                 addEditIssue.ShowDialog();
+                IssueListView.ItemsSource = null;
                 LoadDataFromDb(Globals.currentUser);
             }
         }
@@ -197,6 +201,7 @@ namespace SimpleJiraProject
                 {
                     AddEditIssueDialog addEditIssue = new AddEditIssueDialog((IssueListItem)IssueListView.SelectedItem);
                     addEditIssue.ShowDialog();
+                    IssueListView.ItemsSource = null;
                     LoadDataFromDb(Globals.currentUser);
                 }
                 else
@@ -246,6 +251,42 @@ namespace SimpleJiraProject
                 Globals.simpleJiraDB.UserStories.Remove(Globals.SelectedUserStory);
                 Globals.simpleJiraDB.SaveChanges();
                 LoadDataFromDb(Globals.currentUser);
+            }
+
+            if (IssueView.IsVisible)
+            {
+                try
+                {
+                    if (IssueListView.SelectedIndex < 0)
+                    {
+                        new MessageBoxCustom("Select Issue to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
+                    IssueListItem currentIssue = (IssueListItem)IssueListView.SelectedItem;
+
+                    Issue issueDelete = Globals.simpleJiraDB.Issues.Where(iss => iss.IssueId == currentIssue.IssueId).FirstOrDefault<Issue>();
+                    if (issueDelete != null)
+                    {
+                        bool? Result = new MessageBoxCustom("Are you sure to delete this Team? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
+
+                        if (Result.Value)
+                        {
+
+                            Globals.simpleJiraDB.Issues.Remove(issueDelete);
+                            Globals.simpleJiraDB.SaveChanges();
+                            LoadDataFromDb(Globals.currentUser);
+                        }
+                    }
+                    else
+                    {
+                        new MessageBoxCustom("Cannot find Issue to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    new MessageBoxCustom("Error Deleting Issue from database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                }
             }
         }
 
@@ -337,10 +378,7 @@ namespace SimpleJiraProject
             if (IssueListView.SelectedItem != null) {
                 AddEditIssueDialog addEditIssue = new AddEditIssueDialog((IssueListItem)IssueListView.SelectedItem);
                 addEditIssue.ShowDialog();
-                foreach (DataGridColumn column in IssueListView.Columns)
-                {
-                    column.SortDirection = null;
-                }
+                IssueListView.ItemsSource = null;
                 LoadDataFromDb(Globals.currentUser);
             }
         }
