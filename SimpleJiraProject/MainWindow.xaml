@@ -82,7 +82,7 @@
                     <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="CalendarTask" Height="25" Width="25" Margin="10" VerticalAlignment="Center"/>
-                            <TextBlock Text="Task" VerticalAlignment="Center" Margin="20 10" />
+                            <TextBlock Text="Issue" VerticalAlignment="Center" Margin="20 10" />
                         </StackPanel>
                     </ListViewItem>
                 </ListView>

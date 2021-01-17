@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -334,7 +335,10 @@ namespace SimpleJiraProject
             if (IssueListView.SelectedItem != null) {
                 AddEditIssueDialog addEditIssue = new AddEditIssueDialog((IssueListItem)IssueListView.SelectedItem);
                 addEditIssue.ShowDialog();
-                //TODO:toFix
+                foreach (DataGridColumn column in IssueListView.Columns)
+                {
+                    column.SortDirection = null;
+                }
                 LoadDataFromDb(Globals.currentUser);
             }
         }
