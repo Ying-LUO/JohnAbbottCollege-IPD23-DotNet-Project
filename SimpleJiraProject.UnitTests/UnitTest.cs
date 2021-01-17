@@ -28,15 +28,15 @@ namespace SimpleJiraProject.UnitTests
         {
             GeneralValidation val = new GeneralValidation();
             string pwd = "wrong";
-            Assert.IsFalse(val.IsValidEmail(pwd));
+            Assert.IsFalse(val.IsValidPassword(pwd));
         }
 
         [TestMethod]
         public void Validate_RightPassword_ReturnTrue()
         {
             GeneralValidation val = new GeneralValidation();
-            string pwd = "rightpassword";
-            Assert.IsFalse(val.IsValidEmail(pwd));
+            string pwd = "password";
+            Assert.IsTrue(val.IsValidPassword(pwd));
         }
 
         [TestMethod]
@@ -44,14 +44,39 @@ namespace SimpleJiraProject.UnitTests
         {
             GeneralValidation val = new GeneralValidation();
             string name = "name";
-            Assert.IsFalse(val.IsValidEmail(name));
+            Assert.IsTrue(val.IsValidShortName(name));
         }
 
         [TestMethod]
-        public void Validate_WrongName_ReturnFale()
+        public void Validate_WrongName_ReturnFalse()
         {
             GeneralValidation val = new GeneralValidation();
-            Assert.IsFalse(val.IsValidEmail(null));
+            string name = string.Join("", Enumerable.Repeat(0, 51).Select(n => (char)new Random().Next(127)));
+            Assert.IsFalse(val.IsValidShortName(name));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void Validate_WrongName_ThrowException()
+        {
+            GeneralValidation val = new GeneralValidation();
+            val.IsValidShortName(null);
+        }
+
+        [TestMethod]
+        public void Validate_WrongLongName_ReturnFalse()
+        {
+            GeneralValidation val = new GeneralValidation();
+            string name = string.Join("", Enumerable.Repeat(0, 256).Select(n => (char)new Random().Next(127)));
+            Assert.IsFalse(val.IsValidLongName(name));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void Validate_WrongLongName_ThrowException()
+        {
+            GeneralValidation val = new GeneralValidation();
+            val.IsValidLongName(null);
         }
 
         [TestMethod]
