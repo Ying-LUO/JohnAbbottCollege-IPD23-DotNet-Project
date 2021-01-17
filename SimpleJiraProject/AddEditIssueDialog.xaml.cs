@@ -145,7 +145,8 @@ namespace SimpleJiraProject
         {
             if (string.IsNullOrEmpty(tbIssueName.Text) || string.IsNullOrEmpty(tbDescription.Text) 
                 || cmbCategory.SelectedIndex<0 || cmbPriority.SelectedIndex < 0 || cmbStatus.SelectedIndex <0
-                || cmbUserList.SelectedIndex<0 || cmbUserStoryList.SelectedIndex<0)
+                || cmbUserList.SelectedIndex<0 || cmbUserStoryList.SelectedIndex<0 || !Globals.Validator.IsValidLongName(tbIssueName.Text)
+                || !Globals.Validator.IsValidDescription(tbDescription.Text))
             {
                 return false;
             }
@@ -176,6 +177,11 @@ namespace SimpleJiraProject
                         if (cmbStatus.SelectedItem.Equals(IssueStatusEnum.Resolved))
                         {
                             currentIssue.CompleteDate = DateTime.Now;
+                            if (!Globals.Validator.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)currentIssue.CompleteDate))
+                            {
+                                new MessageBoxCustom("Complete date must be after start date", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                                return;
+                            }
                         }
                         else
                         {

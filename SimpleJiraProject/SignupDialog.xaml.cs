@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -32,48 +33,68 @@ namespace SimpleJiraProject
 
         private void btSignup_Click(object sender, RoutedEventArgs e)
         {
-            if (Blank_Check())
+            try
             {
-                new MessageBoxCustom("Please input all fields", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                return;
-            } else if (Globals.Validator.LoginName_Check(tbLoginName.Text))
-            {
-                new MessageBoxCustom("Login Name exists already, please choose another one", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                return;
-            } else if (!Globals.Validator.IsValidEmail(tbEmail.Text))
-            {
-                new MessageBoxCustom("Please input correct email address", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                return;
-            } else if (!Globals.Validator.IsValidPassword(tbPassword.Password) || !Globals.Validator.IsValidPassword(tbConfirmPassword.Password)) 
-            {
-                new MessageBoxCustom("Password length Must be 8-12 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                return;
-            } else if (!Globals.Validator.Password_Check(tbPassword.Password, tbConfirmPassword.Password))
-            {
-                new MessageBoxCustom("Please confirm the same password", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                return;
-            } else
-            {
-                signupUser = new User
+                if (Blank_Check())
                 {
-                    LoginName = tbLoginName.Text,
-                    FirstName = tbFirstName.Text,
-                    LastName = tbLastName.Text,
-                    TeamId = Globals.Validator.Team_Check(cmbTeamList.Text),
-                    EMAIL = tbEmail.Text,
-                    PWDEncrypted = SecurePassword.Encrypt(tbConfirmPassword.Password),
-                    Role = cmbRoleList.Text
-                };
-                Globals.simpleJiraDB.Users.Add(signupUser);
-                Globals.simpleJiraDB.SaveChanges();
-                new MessageBoxCustom("New User Registered", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    new MessageBoxCustom("Please input all fields", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                else if (Globals.Validator.LoginName_Check(tbLoginName.Text))
+                {
+                    new MessageBoxCustom("Login Name exists already, please choose another one", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                else if (!Globals.Validator.IsValidEmail(tbEmail.Text))
+                {
+                    new MessageBoxCustom("Please input correct email address", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                else if (!Globals.Validator.IsValidPassword(tbPassword.Password) || !Globals.Validator.IsValidPassword(tbConfirmPassword.Password))
+                {
+                    new MessageBoxCustom("Password length Must be 8-12 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                else if (!Globals.Validator.IsValidShortName(cmbTeamList.Text) || !Globals.Validator.IsValidShortName(cmbRoleList.Text) 
+                        || !Globals.Validator.IsValidShortName(tbFirstName.Text) || !Globals.Validator.IsValidShortName(tbLastName.Text)
+                        || !Globals.Validator.IsValidShortName(tbLoginName.Text))
+                {
+                    new MessageBoxCustom("Length Must 1-50 Characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                else if (!Globals.Validator.Password_Check(tbPassword.Password, tbConfirmPassword.Password))
+                {
+                    new MessageBoxCustom("Please confirm the same password", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                else
+                {
+                    signupUser = new User
+                    {
+                        LoginName = tbLoginName.Text,
+                        FirstName = tbFirstName.Text,
+                        LastName = tbLastName.Text,
+                        TeamId = Globals.Validator.Team_Check(cmbTeamList.Text),
+                        EMAIL = tbEmail.Text,
+                        PWDEncrypted = SecurePassword.Encrypt(tbConfirmPassword.Password),
+                        Role = cmbRoleList.Text
+                    };
+                    Globals.simpleJiraDB.Users.Add(signupUser);
+                    Globals.simpleJiraDB.SaveChanges();
+                    new MessageBoxCustom("New User Registered", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                }
+                if (signupUser != null)
+                {
+                    this.DialogResult = true;
+                    SignupCallback?.Invoke(signupUser);
+                    this.Close();
+                }
             }
-            if (signupUser != null)
+            catch (SqlException ex)
             {
-                this.DialogResult = true;
-                SignupCallback?.Invoke(signupUser);
-                this.Close();
+                new MessageBoxCustom("Error saving data into database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
             }
+
         }
 
         private bool Blank_Check()

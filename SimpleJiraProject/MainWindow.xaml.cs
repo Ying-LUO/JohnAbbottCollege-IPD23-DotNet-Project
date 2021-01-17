@@ -215,19 +215,6 @@ namespace SimpleJiraProject
 
         private void btDelete_Click(object sender, RoutedEventArgs e)
         {
-            //if (ProjectView.IsVisible)
-            //{
-            //    if (Globals.SelectedProject == null)
-            //    {
-            //        new MessageBoxCustom("Select Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-            //        return;
-            //    }
-
-            //    Globals.simpleJiraDB.Projects.Remove(Globals.SelectedProject);
-            //    Globals.simpleJiraDB.SaveChanges();
-            //    LoadDataFromDb(Globals.currentUser);
-            //}
-
             if (SprintView.IsVisible)
             {
                 if (SprintListView.SelectedIndex == -1)
@@ -235,8 +222,6 @@ namespace SimpleJiraProject
                     new MessageBoxCustom("Select Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
-                //Sprint sprint = (Sprint)SprintListView.SelectedItem;
-                //Globals.currentSprintList.Remove(Globals.SelectedSprint);
                 Globals.simpleJiraDB.Sprints.Remove(Globals.SelectedSprint);
                 Globals.simpleJiraDB.SaveChanges();
                 LoadDataFromDb(Globals.currentUser);
@@ -249,7 +234,6 @@ namespace SimpleJiraProject
                     new MessageBoxCustom("Select User Story to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
-                //UserStory userStory = (UserStory)UserStoryListView.SelectedItem;
                 Globals.simpleJiraDB.UserStories.Remove(Globals.SelectedUserStory);
                 Globals.simpleJiraDB.SaveChanges();
                 LoadDataFromDb(Globals.currentUser);

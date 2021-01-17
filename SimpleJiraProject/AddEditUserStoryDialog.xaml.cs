@@ -71,9 +71,14 @@ namespace SimpleJiraProject
                     return;
                 }
 
-                if (!Globals.Validator.IsValidName(tbUserStoryName.Text))
+                if (!Globals.Validator.IsValidLongName(tbUserStoryName.Text))
                 {
-                    new MessageBoxCustom("User Story Name must be between 2-30 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    new MessageBoxCustom("User Story Name must be between 1-100 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                else if (!Globals.Validator.IsValidDescription(tbDescription.Text))
+                {
+                    new MessageBoxCustom("Description must be between 1-255 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
                 else if (!Globals.Validator.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpCompleteDate.SelectedDate))

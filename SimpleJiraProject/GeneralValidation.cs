@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleJiraProject
 {
-    class GeneralValidation
+    public class GeneralValidation
     {
         public bool LoginName_Check(string loginName)
         {
@@ -54,9 +54,19 @@ namespace SimpleJiraProject
             }
         }
 
-        public bool IsValidName(string name)
+        public bool IsValidShortName(string name)
         {
-            return name.Length < 30 && name.Length > 1;
+            return name.Length < 50 && name.Length > 1;
+        }
+
+        public bool IsValidLongName(string name)
+        {
+            return name.Length < 100 && name.Length > 1;
+        }
+
+        public bool IsValidDescription(string description)
+        {
+            return description.Length < 255 && description.Length > 1;
         }
 
         public bool IsValidDate(DateTime date1, DateTime date2)
@@ -66,7 +76,7 @@ namespace SimpleJiraProject
 
         public bool IsValidPoint(int point)
         {
-                return point > 0 && point < 101;
+                return point > 0 && point < 100;
         }
 
     }
