@@ -13,7 +13,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Foreground="White"
-        Title="Simple Jira Application" MinHeight="600" MinWidth="1080" Height="637.5" Width="1239" >
+        Title="Simple Jira Application" MinHeight="600" MinWidth="1080" Height="637.5" Width="1330" >
 
     <Window.Resources>
         <ResourceDictionary>
@@ -210,7 +210,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding Point}" Header="Point" />
                             <GridViewColumn DisplayMemberBinding="{Binding Sprint.Name}" Header="Sprint" />
                             <GridViewColumn DisplayMemberBinding="{Binding User.FirstName}" Header="Owner" />
-                            <GridViewColumn Header="Status"  Width="100">
+                            <GridViewColumn Header="Status"  Width="128">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <local:UserStoryStatus />

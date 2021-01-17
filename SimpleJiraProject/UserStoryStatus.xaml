@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Name="btStatus">
-            <TextBlock Text="{Binding Status , Mode=OneWay}"  Width="85" />
+        <Button Name="btStatus" HorizontalContentAlignment="Center">
+            <TextBlock Name="tbStatus" Text="{Binding Status , Mode=OneWay}"   Height="18" HorizontalAlignment="Center" />
         </Button>
         <Grid.ContextMenu>
             <ContextMenu>
