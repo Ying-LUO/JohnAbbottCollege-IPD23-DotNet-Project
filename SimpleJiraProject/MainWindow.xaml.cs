@@ -334,6 +334,7 @@ namespace SimpleJiraProject
             if (IssueListView.SelectedItem != null) {
                 AddEditIssueDialog addEditIssue = new AddEditIssueDialog((IssueListItem)IssueListView.SelectedItem);
                 addEditIssue.ShowDialog();
+                //TODO:toFix
                 LoadDataFromDb(Globals.currentUser);
             }
         }
