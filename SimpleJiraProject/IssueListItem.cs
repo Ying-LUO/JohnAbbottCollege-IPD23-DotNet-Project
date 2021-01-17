@@ -16,9 +16,11 @@ namespace SimpleJiraProject
         public string Priority { get; set; }
         public string Category { get; set; }
         public string Status { get; set; }
-
         public int OwnerId { get; set; }
         public int UserStoryId { get; set; }
+
+        public virtual User User { get; set; }
+        public virtual UserStory UserStory { get; set; }
 
     }
 }

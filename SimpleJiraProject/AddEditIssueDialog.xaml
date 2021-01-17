@@ -14,7 +14,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"  Foreground="White"
-        Title="Defect" Height="788" Width="921">
+        Title="Issue" Height="788" Width="921">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -70,13 +70,7 @@
                             <ComboBox x:Name="cmbStatus" Text="{Binding Status}" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="51" />
                             <ComboBox x:Name="cmbUserList" Foreground="Gray" materialDesign:HintAssist.Hint="Owner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="63"  />
                         </StackPanel>
-
-
                     </Grid>
-
-
-
-
                     <GroupBox Header="Add Photo" x:Name="gbPhoto" MouseDoubleClick="gbPhoto_MouseDoubleClick" 
                           Style="{DynamicResource MaterialDesignCardGroupBox}" Height="324" Width="709" >
                         <GroupBox.HeaderTemplate>
@@ -101,13 +95,8 @@
                         <Button x:Name="btAddUpdate" Height="Auto" Content="Save" Click="btAddUpdate_Click" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.408,0.622" Margin="645,0,64,0"  />
                         <Button Content="Cancel" Height="Auto" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.677,1.227" Margin="469,0,233,0"   />
                     </Grid>
-
-
                 </StackPanel>
-                
             </ScrollViewer  >
-            
-            
         </Grid>
     </Grid>
 </Window>

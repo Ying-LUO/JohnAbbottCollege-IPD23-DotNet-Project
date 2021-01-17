@@ -47,7 +47,7 @@ namespace SimpleJiraProject
                 int currentTeamId = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(currentTeamName)).Select(t => t.TeamId).FirstOrDefault();
 
 
-                if (!GeneralValidation.IsValidName(tbProjectName.Text))
+                if (!Globals.Validator.IsValidName(tbProjectName.Text))
                 {
                     new MessageBoxCustom("Project Name must be between 2-30 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;

@@ -98,7 +98,9 @@ namespace SimpleJiraProject
                     Status = x.Status,
                     Category = x.Category,
                     OwnerId = x.OwnerId,
-                    UserStoryId = x.UserStoryId
+                    UserStoryId = x.UserStoryId,
+                    User = x.User,
+                    UserStory = x.UserStory
                 }).Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList();
 
                 Globals.currentIssueList = Globals.simpleJiraDB.Issues.Where(i => userStoryIds.Contains(i.UserStoryId)).ToList<Issue>();
@@ -306,8 +308,8 @@ namespace SimpleJiraProject
         private void btLogOut_Click(object sender, RoutedEventArgs e)
         {
             Globals.currentUser = null;
-            this.Close();
             LoginDialog login = new LoginDialog();
+            this.Hide();
             login.LoginCallback += (u) => { Globals.currentUser = u; };
             bool? result = login.ShowDialog();  
 
@@ -340,10 +342,6 @@ namespace SimpleJiraProject
             {
                 Globals.SelectedSprint = Globals.currentSprintList[listIndex];
             }
-           
-            Console.WriteLine(SprintListView.SelectedIndex);
-
-            //if (Globals.SelectedSprint == null) { return; }
         }
 
         private void UserStoryListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -358,10 +356,6 @@ namespace SimpleJiraProject
             {
                 Globals.SelectedUserStory = Globals.currentUserStoryList[listIndex];
             }
-            
-            Console.WriteLine(UserStoryListView.SelectedIndex);
-
-            //if (Globals.SelectedSprint == null) { return; }
         }
 
         public void EditSelectedUserStory()
@@ -390,8 +384,6 @@ namespace SimpleJiraProject
             {
                 Globals.SelectedIssue = Globals.currentIssueList[listIndex];
             }
-
-            Console.WriteLine(IssueListView.SelectedIndex);
         }
     }
 }

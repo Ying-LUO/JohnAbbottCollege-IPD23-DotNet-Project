@@ -36,19 +36,19 @@ namespace SimpleJiraProject
             {
                 new MessageBoxCustom("Please input all fields", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            } else if (UserValidation.LoginName_Check(tbLoginName.Text))
+            } else if (Globals.Validator.LoginName_Check(tbLoginName.Text))
             {
                 new MessageBoxCustom("Login Name exists already, please choose another one", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            } else if (!UserValidation.IsValidEmail(tbEmail.Text))
+            } else if (!Globals.Validator.IsValidEmail(tbEmail.Text))
             {
                 new MessageBoxCustom("Please input correct email address", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            } else if (!UserValidation.IsValidPassword(tbPassword.Password) || !UserValidation.IsValidPassword(tbConfirmPassword.Password)) 
+            } else if (!Globals.Validator.IsValidPassword(tbPassword.Password) || !Globals.Validator.IsValidPassword(tbConfirmPassword.Password)) 
             {
                 new MessageBoxCustom("Password length Must be 8-12 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
-            } else if (!UserValidation.Password_Check(tbPassword.Password, tbConfirmPassword.Password))
+            } else if (!Globals.Validator.Password_Check(tbPassword.Password, tbConfirmPassword.Password))
             {
                 new MessageBoxCustom("Please confirm the same password", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 return;
@@ -59,7 +59,7 @@ namespace SimpleJiraProject
                     LoginName = tbLoginName.Text,
                     FirstName = tbFirstName.Text,
                     LastName = tbLastName.Text,
-                    TeamId = UserValidation.Team_Check(cmbTeamList.Text),
+                    TeamId = Globals.Validator.Team_Check(cmbTeamList.Text),
                     EMAIL = tbEmail.Text,
                     PWDEncrypted = SecurePassword.Encrypt(tbConfirmPassword.Password),
                     Role = cmbRoleList.Text

@@ -118,8 +118,11 @@ namespace SimpleJiraProject
         {
             if (currentIssue != null)
             {
-                AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog(currentIssue.UserStory);
+                UserStory selectedUserStory = Globals.currentUserStoryList.Where(us => us.Name.Equals(cmbUserStoryList.SelectedItem.ToString())).FirstOrDefault();
+                AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog(selectedUserStory);
                 addEditUserStory.ShowDialog();
+                cmbUserStoryList.ItemsSource = Globals.currentUserStoryList.AsEnumerable().Select(us => us.Name).ToList<string>();
+                cmbUserStoryList.Items.Refresh();
             }
         }
 

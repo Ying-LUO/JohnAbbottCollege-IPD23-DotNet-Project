@@ -30,8 +30,8 @@
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
                 <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
                     <StackPanel Width="250">
-                        <Button Content="Log out" Name="btLogOut" Click="btLogOut_Click"/>
                         <Button Content="Team &amp; User Management" Name="btManageTeam" Click="btManageTeam_Click" />
+                        <Button Content="Log out" Name="btLogOut" Click="btLogOut_Click"/>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
@@ -259,14 +259,15 @@
                           materialDesign:DataGridAssist.CellPadding="15 13 13 13"
                           materialDesign:DataGridAssist.ColumnHeaderPadding="15 13 13 13" AutoGenerateColumns="False" Margin="20,20,94,20">
                     <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding IssueId}" Header="Issue Id" />
                         <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
                         <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
                         <DataGridTextColumn Binding="{Binding StartDate, StringFormat=d}" Header="Start Date" />
                         <DataGridTextColumn Binding="{Binding CompleteDate, StringFormat=d}"  Header="Complete Date"/>
                         <DataGridTextColumn Binding="{Binding Priority}" Header="Priority"/>
                         <DataGridTextColumn Binding="{Binding Category}" Header="Category" />
-                        <DataGridTextColumn Binding="{Binding UserId}" Header="Owner"/>
-                        <DataGridTextColumn Binding="{Binding UserStoryId}" Header="User Story" />
+                        <DataGridTextColumn Binding="{Binding User.LoginName}" Header="Owner"/>
+                        <DataGridTextColumn Binding="{Binding UserStory.Name}" Header="User Story" />
                         <DataGridTemplateColumn  Header="Status">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

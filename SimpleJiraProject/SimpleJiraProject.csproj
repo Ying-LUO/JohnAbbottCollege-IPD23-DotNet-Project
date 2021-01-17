@@ -153,7 +153,6 @@
     <Compile Include="UserStoryStatus.xaml.cs">
       <DependentUpon>UserStoryStatus.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserValidation.cs" />
     <Page Include="AddEditIssueDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

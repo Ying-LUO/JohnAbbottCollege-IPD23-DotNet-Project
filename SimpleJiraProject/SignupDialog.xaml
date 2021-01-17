@@ -14,7 +14,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="SignupDialog" Height="650" Width="664.377" WindowStartupLocation="CenterOwner">
+        Title="Signup" Height="650" Width="664.377" WindowStartupLocation="CenterOwner">
     <Grid x:Name="LoginView">
         <Grid VerticalAlignment="Top">
             <TextBox Text="SIGN UP NEW USER" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>

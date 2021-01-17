@@ -58,12 +58,12 @@ namespace SimpleJiraProject
                 string currentProjectName = (string)cmbProjectName.SelectedItem;
                 int currentProjectId = Globals.simpleJiraDB.Projects.Where(p => p.Name.Equals(currentProjectName)).Select(p => p.ProjectId).FirstOrDefault();
 
-                if (!GeneralValidation.IsValidName(tbSprintName.Text))
+                if (!Globals.Validator.IsValidName(tbSprintName.Text))
                 {
                     new MessageBoxCustom("Name must be between 2-30 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
-                else if (!GeneralValidation.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpReleaseDate.SelectedDate))
+                else if (!Globals.Validator.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpReleaseDate.SelectedDate))
                 {
                     new MessageBoxCustom("Release date must be after start date", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;

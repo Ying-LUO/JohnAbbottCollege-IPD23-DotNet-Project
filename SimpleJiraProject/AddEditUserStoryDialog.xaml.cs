@@ -71,17 +71,17 @@ namespace SimpleJiraProject
                     return;
                 }
 
-                if (!GeneralValidation.IsValidName(tbUserStoryName.Text))
+                if (!Globals.Validator.IsValidName(tbUserStoryName.Text))
                 {
                     new MessageBoxCustom("User Story Name must be between 2-30 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
-                else if (!GeneralValidation.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpCompleteDate.SelectedDate))
+                else if (!Globals.Validator.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpCompleteDate.SelectedDate))
                 {
                     new MessageBoxCustom("Complete date must be after start date", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
                 }
-                else if (!GeneralValidation.IsValidPoint(point))
+                else if (!Globals.Validator.IsValidPoint(point))
                 {
                     new MessageBoxCustom("Proiority must be a number between 1 - 100", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     return;
