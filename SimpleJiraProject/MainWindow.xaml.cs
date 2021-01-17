@@ -217,26 +217,66 @@ namespace SimpleJiraProject
         {
             if (SprintView.IsVisible)
             {
-                if (SprintListView.SelectedIndex == -1)
+                try
                 {
-                    new MessageBoxCustom("Select Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
+                    if (SprintListView.SelectedIndex == -1)
+                    {
+                        new MessageBoxCustom("Select Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+                    bool? Result = new MessageBoxCustom("Are you sure to delete Selected Sprint? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
+
+                    if (Result.Value)
+                    {
+                        Globals.simpleJiraDB.Sprints.Remove(Globals.SelectedSprint);
+                        Globals.simpleJiraDB.SaveChanges();
+                        LoadDataFromDb(Globals.currentUser);
+                    }
+                    else
+                    {
+                        new MessageBoxCustom("Cannot find Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    }
                 }
-                Globals.simpleJiraDB.Sprints.Remove(Globals.SelectedSprint);
-                Globals.simpleJiraDB.SaveChanges();
-                LoadDataFromDb(Globals.currentUser);
+                catch (SqlException ex)
+                {
+                    new MessageBoxCustom("Error Deleting Sprint from database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                }
             }
 
             if (UserStoryView.IsVisible)
             {
-                if (UserStoryListView.SelectedIndex == -1)
+                try
                 {
-                    new MessageBoxCustom("Select User Story to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
+                    if (UserStoryListView.SelectedIndex == -1)
+                    {
+                        new MessageBoxCustom("Select User Story to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+                    bool? Result = new MessageBoxCustom("Are you sure to delete Selected User Story? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
+
+                    if (Result.Value)
+                    {
+                        if (Globals.currentIssueList == null)
+                        {
+                            Globals.simpleJiraDB.UserStories.Remove(Globals.SelectedUserStory);
+                            Globals.simpleJiraDB.SaveChanges();
+                            LoadDataFromDb(Globals.currentUser);
+                        }
+                        else
+                        {
+                            new MessageBoxCustom("Select User Story has Issues attached you need to clear these issues to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        new MessageBoxCustom("Cannot find User Story to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    }
                 }
-                Globals.simpleJiraDB.UserStories.Remove(Globals.SelectedUserStory);
-                Globals.simpleJiraDB.SaveChanges();
-                LoadDataFromDb(Globals.currentUser);
+                catch (SqlException ex)
+                {
+                    new MessageBoxCustom("Error Deleting User Story from database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                }
             }
 
             if (IssueView.IsVisible)

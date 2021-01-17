@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace SimpleJiraProject
                 tbProjectName.Text = projectName;
                 tbEditProjectName.Text = projectName;
                 project.Name = projectName;
-                Globals.simpleJiraDB.SaveChanges();
+                //Globals.simpleJiraDB.SaveChanges();
                 return;
             }
             else
@@ -68,10 +69,33 @@ namespace SimpleJiraProject
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            Project SelectedProject = Globals.simpleJiraDB.Projects.Where(p => p.Name.Equals(tbProjectName.Text)).FirstOrDefault();
-            Globals.simpleJiraDB.Projects.Remove(SelectedProject);
-            Globals.simpleJiraDB.SaveChanges();
-            Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
+            try
+            {
+                if (CardListView.SelectedIndex == -1)
+                {
+                    new MessageBoxCustom("Select Project to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                bool? Result = new MessageBoxCustom("Are you sure to delete Selected Project? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
+
+                if (Result.Value)
+                {
+                    Project SelectedProject = Globals.simpleJiraDB.Projects.Where(p => p.Name.Equals(tbProjectName.Text)).FirstOrDefault();
+                    Globals.simpleJiraDB.Projects.Remove(SelectedProject);
+                    Globals.simpleJiraDB.SaveChanges();
+                    Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
+                }
+                else
+                {
+                    new MessageBoxCustom("Cannot find Project to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                }
+            }
+            catch (SqlException ex)
+            {
+                new MessageBoxCustom("Error Deleting Project from database:\n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+            }
+
+            
         }
     }
     }
