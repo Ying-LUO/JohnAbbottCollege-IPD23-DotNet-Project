@@ -83,31 +83,19 @@ namespace SimpleJiraProject
 
                 UserStoryListView.ItemsSource = Globals.currentUserStoryList;
 
-                TaskListView.ItemsSource = Globals.simpleJiraDB.Issues.Select(x => new IssueListView
+                IssueListView.ItemsSource = Globals.simpleJiraDB.Issues.Select(x => new IssueListItem
                 {
                     IssueId = x.IssueId,
                     Name = x.Name,
                     Description = x.Description,
                     StartDate = x.StartDate,
+                    CompleteDate = x.CompleteDate,
                     Priority = x.Priority,
                     Status = x.Status,
                     Category = x.Category,
                     OwnerId = x.OwnerId,
                     UserStoryId = x.UserStoryId
-                }).Where(i => i.Category == "Task").Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList();
-
-                DefectListView.ItemsSource = Globals.simpleJiraDB.Issues.Select(x => new IssueListView
-                {
-                    IssueId = x.IssueId,
-                    Name = x.Name,
-                    Description = x.Description,
-                    StartDate = x.StartDate,
-                    Priority = x.Priority,
-                    Status = x.Status,
-                    Category = x.Category,
-                    OwnerId = x.OwnerId,
-                    UserStoryId = x.UserStoryId
-                }).Where(i => i.Category == "Defect").Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList();
+                }).Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList();
             }
             else
             {
@@ -121,8 +109,7 @@ namespace SimpleJiraProject
             ProjectView.Visibility = Visibility.Hidden;
             SprintView.Visibility = Visibility.Hidden;
             UserStoryView.Visibility = Visibility.Hidden;
-            DefectView.Visibility = Visibility.Hidden;
-            TaskView.Visibility = Visibility.Hidden;
+            IssueView.Visibility = Visibility.Hidden;
         }
 
         private void MenuList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -132,27 +119,18 @@ namespace SimpleJiraProject
                 case 0:
                     HiddenView();
                     ProjectView.Visibility = Visibility.Visible;
-                    //LoadDataFromDb(Globals.currentUser);
                     break;
                 case 1:
                     HiddenView();
                     SprintView.Visibility = Visibility.Visible;
-                    //LoadDataFromDb(Globals.currentUser);
                     break;
                 case 2:
                     HiddenView();
                     UserStoryView.Visibility = Visibility.Visible;
-                    //LoadDataFromDb(Globals.currentUser);
                     break;
                 case 3:
                     HiddenView();
-                    DefectView.Visibility = Visibility.Visible;
-                    //LoadDataFromDb(Globals.currentUser);
-                    break;
-                case 4:
-                    HiddenView();
-                    TaskView.Visibility = Visibility.Visible;
-                    //LoadDataFromDb(Globals.currentUser);
+                    IssueView.Visibility = Visibility.Visible;
                     break;
                 default:
                     HiddenView();
@@ -183,20 +161,12 @@ namespace SimpleJiraProject
                 LoadDataFromDb(Globals.currentUser);
             }
 
-            if (DefectView.IsVisible)
+            if (IssueView.IsVisible)
             {
-                AddEditDefectDialog addEditDefect = new AddEditDefectDialog(null);
-                addEditDefect.ShowDialog();
+                AddEditIssueDialog addEditIssue = new AddEditIssueDialog(null);
+                addEditIssue.ShowDialog();
                 LoadDataFromDb(Globals.currentUser);
             }
-
-            if (TaskView.IsVisible)
-            {
-                AddEditDefectDialog addEditTask = new AddEditDefectDialog(null);
-                addEditTask.ShowDialog();
-                LoadDataFromDb(Globals.currentUser);
-            }
-
         }
 
         private void btUpdate_Click(object sender, RoutedEventArgs e)
@@ -206,8 +176,6 @@ namespace SimpleJiraProject
                 AddEditProjectDialog addEditProject = new AddEditProjectDialog();
                 addEditProject.ShowDialog();
                 LoadDataFromDb(Globals.currentUser);
-
-
             }
 
             if (SprintView.IsVisible)
@@ -220,12 +188,12 @@ namespace SimpleJiraProject
                 EditSelectedUserStory();
             }
 
-            if (DefectView.IsVisible)
+            if (IssueView.IsVisible)
             {
-                if ( DefectListView.SelectedItem != null)
+                if ( IssueListView.SelectedItem != null)
                 {
-                    AddEditDefectDialog addEditDefect = new AddEditDefectDialog((IssueListView)DefectListView.SelectedItem);
-                    addEditDefect.ShowDialog();
+                    AddEditIssueDialog addEditIssue = new AddEditIssueDialog((IssueListItem)IssueListView.SelectedItem);
+                    addEditIssue.ShowDialog();
                     LoadDataFromDb(Globals.currentUser);
                 }
                 else
@@ -233,21 +201,6 @@ namespace SimpleJiraProject
                     new MessageBoxCustom("Please choose one defect to update", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok);
                 }
             }
-
-            if (TaskView.IsVisible)
-            {
-                if (TaskListView.SelectedItem != null)
-                {
-                    AddEditDefectDialog addEditTask = new AddEditDefectDialog((IssueListView)TaskListView.SelectedItem);
-                    addEditTask.ShowDialog();
-                    LoadDataFromDb(Globals.currentUser);
-                }
-                else
-                {
-                    new MessageBoxCustom("Please choose one task to update", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok);
-                }
-            }
-
         }
 
         private void btDelete_Click(object sender, RoutedEventArgs e)
@@ -263,8 +216,6 @@ namespace SimpleJiraProject
                 Globals.simpleJiraDB.Projects.Remove(Globals.SelectedProject);
                 Globals.simpleJiraDB.SaveChanges();
                 LoadDataFromDb(Globals.currentUser);
-
-
             }
 
             if (SprintView.IsVisible)
@@ -376,9 +327,15 @@ namespace SimpleJiraProject
             AddEditUserStoryDialog addEditUserStory = new AddEditUserStoryDialog(userStory);
             addEditUserStory.ShowDialog();
             LoadDataFromDb(Globals.currentUser);
-
         }
 
-        
+        private void IssueListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (IssueListView.SelectedItem != null) {
+                AddEditIssueDialog addEditIssue = new AddEditIssueDialog((IssueListItem)IssueListView.SelectedItem);
+                addEditIssue.ShowDialog();
+                LoadDataFromDb(Globals.currentUser);
+            }
+        }
     }
 }

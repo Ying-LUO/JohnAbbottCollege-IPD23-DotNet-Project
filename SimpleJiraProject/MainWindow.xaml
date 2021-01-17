@@ -81,12 +81,6 @@
                     </ListViewItem>
                     <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="PencilAdd" Height="25" Width="25" Margin="10" VerticalAlignment="Center"/>
-                            <TextBlock Text="Defect" VerticalAlignment="Center" Margin="20 10" />
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="60">
-                        <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="CalendarTask" Height="25" Width="25" Margin="10" VerticalAlignment="Center"/>
                             <TextBlock Text="Task" VerticalAlignment="Center" Margin="20 10" />
                         </StackPanel>
@@ -118,44 +112,15 @@
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
-
-
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0*"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0*"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <ListView Name="ProjectListView"  MouseDoubleClick="SprintListView_MouseDoubleClick" SelectionChanged="ProjectListView_SelectionChanged"  Grid.RowSpan="2" Grid.Column="1" Margin="0,22,94,0" >
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"  />
-                            
-                            <GridViewColumn DisplayMemberBinding="{Binding Team.Name}" Header="Project Name" />
-                           
-                        </GridView>
-                    </ListView.View>
-                </ListView>-->
-
-                <materialDesign:PopupBox
-            Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Margin="32"
-            Grid.Row="1">
+                <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            Margin="32"
+                                            Grid.Row="1">
                     <StackPanel>
-                        <Button
-                    ToolTip="New"
-                    Click="btNew_Click"
-                    Content="{materialDesign:PackIcon Kind=OpenInNew, Size=20}"/>
-
-
+                        <Button ToolTip="New" Click="btNew_Click" Content="{materialDesign:PackIcon Kind=OpenInNew, Size=20}"/>
                     </StackPanel>
                 </materialDesign:PopupBox>
-
-
             </Grid>
 
             <Grid x:Name="SprintView"  Visibility="Hidden" Margin="36,0,0,0" >
@@ -289,49 +254,21 @@
                     </StackPanel>
                 </materialDesign:PopupBox>
             </Grid>
-            <Grid x:Name="DefectView" Visibility="Hidden" >
-                <ListView x:Name="DefectListView" MouseDoubleClick="btUpdate_Click">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding IssueId}" Header="Defect Id" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
-                            <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priority" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
-                            <GridViewColumn DisplayMemberBinding="{Binding UserStoryId}" Header="UserStoryId" />
-                            <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <materialDesign:PopupBox
-            Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Margin="32"
-            Grid.Row="1">
+            <Grid x:Name="IssueView" Visibility="Hidden" >
+                <DataGrid x:Name="IssueListView"  CanUserSortColumns="True" CanUserAddRows="False" MouseDoubleClick="IssueListView_MouseDoubleClick"
+                          materialDesign:DataGridAssist.CellPadding="5 3 3 3"
+                          materialDesign:DataGridAssist.ColumnHeaderPadding="5 3 3 3" />
+                <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                            HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="32" Grid.Row="1">
                     <StackPanel>
-                        <Button
-                    ToolTip="New"
-                    Click="btNew_Click"
-                    Content="{materialDesign:PackIcon Kind=OpenInNew, Size=20}"/>
+                        <Button ToolTip="New"  Click="btNew_Click" Content="{materialDesign:PackIcon Kind=OpenInNew, Size=20}"/>
+                        <Button ToolTip="Update" Click="btUpdate_Click" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Content="{materialDesign:PackIcon Kind=Update, Size=20}"/>
 
-                        <Button
-                    ToolTip="Update"
-                    Click="btUpdate_Click"
-                    Background="{DynamicResource PrimaryHueLightBrush}"
-                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                    Content="{materialDesign:PackIcon Kind=Update, Size=20}"/>
-
-                        <Button
-                    ToolTip="Delete"
-                    Click="btDelete_Click"
-                    Content="{materialDesign:PackIcon Kind=Delete, Size=20}">
+                        <Button ToolTip="Delete"  Click="btDelete_Click" Content="{materialDesign:PackIcon Kind=Delete, Size=20}">
                             <!-- mix up the colours by bringing in a named palette (see merged dictionaries at top) -->
                             <Button.Background>
                                 <SolidColorBrush Color="{StaticResource Primary300}"/>
                             </Button.Background>
-
                             <Button.Foreground>
                                 <SolidColorBrush Color="{StaticResource Primary300Foreground}"/>
                             </Button.Foreground>
@@ -339,95 +276,6 @@
                     </StackPanel>
                 </materialDesign:PopupBox>
             </Grid>
-            <Grid x:Name="TaskView" Visibility="Hidden" >
-                <ListView x:Name="TaskListView" >
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding IssueId}" Header="Task Id" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
-                            <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="StartDate" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priority" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
-                            <GridViewColumn DisplayMemberBinding="{Binding UserStoryId}" Header="UserStoryId" />
-                            <GridViewColumn DisplayMemberBinding="{Binding OwnerId}" Header="OwnerId" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <materialDesign:PopupBox
-            Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Margin="32"
-            Grid.Row="1">
-                    <StackPanel>
-                        <Button
-                    ToolTip="New"
-                    Click="btNew_Click"
-                    Content="{materialDesign:PackIcon Kind=OpenInNew, Size=20}"/>
-
-                        <Button
-                    ToolTip="Update"
-                    Click="btUpdate_Click"
-                    Background="{DynamicResource PrimaryHueLightBrush}"
-                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                    Content="{materialDesign:PackIcon Kind=Update, Size=20}"/>
-
-                        <Button
-                    ToolTip="Delete"
-                    Click="btDelete_Click"
-                    Content="{materialDesign:PackIcon Kind=Delete, Size=20}">
-                            <!-- mix up the colours by bringing in a named palette (see merged dictionaries at top) -->
-                            <Button.Background>
-                                <SolidColorBrush Color="{StaticResource Primary300}"/>
-                            </Button.Background>
-
-                            <Button.Foreground>
-                                <SolidColorBrush Color="{StaticResource Primary300Foreground}"/>
-                            </Button.Foreground>
-                        </Button>
-                    </StackPanel>
-                </materialDesign:PopupBox>
-            </Grid>
-
-
-
-            <!--<materialDesign:PopupBox
-            Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Margin="32"
-            Grid.Row="1">
-                <StackPanel>
-                    <Button
-                    ToolTip="New"
-                    Click="btNew_Click"
-                    Content="{materialDesign:PackIcon Kind=OpenInNew, Size=20}"/>
-
-                    <Button
-                    ToolTip="Update"
-                    Click="btUpdate_Click"
-                    Background="{DynamicResource PrimaryHueLightBrush}"
-                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                    Content="{materialDesign:PackIcon Kind=Update, Size=20}"/>
-
-                    <Button
-                    ToolTip="Delete"
-                    Click="btDelete_Click"
-                    Content="{materialDesign:PackIcon Kind=Delete, Size=20}">
-                        -->
-            <!-- mix up the colours by bringing in a named palette (see merged dictionaries at top) -->
-            <!--
-                        <Button.Background>
-                            <SolidColorBrush Color="{StaticResource Primary300}"/>
-                        </Button.Background>
-
-                        <Button.Foreground>
-                            <SolidColorBrush Color="{StaticResource Primary300Foreground}"/>
-                        </Button.Foreground>
-                    </Button>
-                </StackPanel>
-            </materialDesign:PopupBox>-->
         </Grid>
     </Grid>
 </Window>

@@ -73,9 +73,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddEditDefectDialog.xaml.cs">
-      <DependentUpon>AddEditDefectDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="AddEditIssueDialog.xaml.cs">
       <DependentUpon>AddEditIssueDialog.xaml</DependentUpon>
     </Compile>
@@ -94,7 +91,7 @@
     <Compile Include="Issue.cs">
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="IssueListView.cs" />
+    <Compile Include="IssueListItem.cs" />
     <Compile Include="LoginDialog.xaml.cs">
       <DependentUpon>LoginDialog.xaml</DependentUpon>
     </Compile>
@@ -151,10 +148,6 @@
       <DependentUpon>UserStoryStatus.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserValidation.cs" />
-    <Page Include="AddEditDefectDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="AddEditIssueDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

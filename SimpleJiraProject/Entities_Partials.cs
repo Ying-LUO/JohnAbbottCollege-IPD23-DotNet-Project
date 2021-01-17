@@ -24,4 +24,6 @@ namespace SimpleJiraProject
     public enum IssuePriorityEnum { VeryLow, Low, Medium, High, VeryHigh}
 
     public enum IssueStatusEnum { Todo, InProcess, Blocked, Verified, Resolved}
+
+    public enum IssueCategoryEnum { Defect, Task}
 }

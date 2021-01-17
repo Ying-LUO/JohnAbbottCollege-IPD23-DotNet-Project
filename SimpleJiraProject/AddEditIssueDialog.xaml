@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="14"
@@ -11,9 +11,10 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"  Foreground="White"
-        Title="UserStory" Height="532.67" Width="860.251" ResizeMode="NoResize">
+        Title="Defect" Height="950" Width="1080">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,49 +24,59 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Grid Height="60" VerticalAlignment="Top" Background="SteelBlue">
-            <TextBlock Text="Add Issue" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="101,18,0,20" Width="134" TextAlignment="Center"/>
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="Update User Information" Content="My Account" x:Name="btMyAccount"  VerticalAlignment="Center" FontSize="18" Visibility="Hidden"/>
-                <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
-                    <StackPanel Width="150">
-                        <Button Content="Save" Name="btSave" />
-                        <Separator />
-                        <Button Content="Exit" Name="btExit" Click="btExit_Click"/>
-                    </StackPanel>
-                </materialDesign:PopupBox>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Height="60" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="SteelBlue">
+            <TextBlock Name="tbTitle" Text="Add New Issue" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="50,18,0,20" Width="224" TextAlignment="Center"/>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" IsCancel="True">
+                <materialDesign:PackIcon Kind="Power" />
+            </Button>
+        </Grid>
+        <Grid x:Name="GridMenu"  Width="75" Grid.Row="0" Grid.RowSpan="2" Background="LightSteelBlue" >
+        </Grid>
+        <Grid x:Name="IssueDialog" Grid.Row="1" Grid.Column="1" Margin="10">
+            <StackPanel>
+                <ComboBox x:Name="cmbCategory" Text="{Binding Category}" Foreground="Gray" materialDesign:HintAssist.Hint="Issue Category" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45"/>
+                <TextBox x:Name="tbIssueName" Text="{Binding Name}" Foreground="Gray" materialDesign:HintAssist.Hint="Issue Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Height="45" />
+                <TextBox Name="tbDescription" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Description}"
+                            VerticalAlignment="Top" Height="100" AcceptsReturn="True" MaxLength="255"
+                            Foreground="Gray" materialDesign:HintAssist.Hint="Description"
+                            TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                <DatePicker Name="dpStartDate" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartDate}" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
+                <DatePicker Name="dpCompleteDate" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding CompleteDate}" IsEnabled="False" materialDesign:HintAssist.Hint="Complete Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
+                <ComboBox x:Name="cmbPriority" Text="{Binding Priority}" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45" />
+                <ComboBox x:Name="cmbStatus" Text="{Binding Status}" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45"/>
+                <ComboBox x:Name="cmbUserList" Foreground="Gray" materialDesign:HintAssist.Hint="Owner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45" />
+                <ComboBox x:Name="cmbUserStoryList" MouseDoubleClick="tbUserStory_MouseDoubleClick" Foreground="Gray" materialDesign:HintAssist.Hint="Related User Story Name" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  Height="45" />
+                <GroupBox Header="Add Photo" x:Name="gbPhoto" MouseDoubleClick="gbPhoto_MouseDoubleClick" Margin="0 10"
+                          Style="{DynamicResource MaterialDesignCardGroupBox}" Height="276">
+                    <GroupBox.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon
+                                  Kind="ImageArea"
+                                  Height="32"
+                                  Width="32"
+                                  VerticalAlignment="Center" />
+                                <TextBlock
+                                  Margin="8,0,0,0"
+                                  VerticalAlignment="Center"
+                                  Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                  Text="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupBox.HeaderTemplate>
+                    <Image x:Name="image" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </GroupBox>
             </StackPanel>
+            <Button Name="btAddUpdate" Height="45" Width="200" Content="Save" Click="btAddUpdate_Click" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.408,0.622" Margin="777,767,0,27"/>
+            <Button Content="Cancel" Height="45" Width="200" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" Margin="549,767,228,27" /> 
         </Grid>
-        <Grid x:Name="GridMenu"  Width="75" HorizontalAlignment="Left" Background="LightSteelBlue" >
-        </Grid>
-        <Grid   Width="368"  HorizontalAlignment="Center" Margin="117,65,350,0" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="0*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Margin="0,23,0,0" >
-                <TextBox x:Name="tbIssueName" Foreground="Gray" materialDesign:HintAssist.Hint="Issue Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,0" Height="45" />
-                <DatePicker  materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,40,10,0" Height="45" />
-                <DatePicker  materialDesign:HintAssist.Hint="Complete Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,40,10,0" Height="45" />
-
-                <ComboBox x:Name="cmbUserStoryName" Foreground="Gray" materialDesign:HintAssist.Hint=" User Story Name" Style="{StaticResource MaterialDesignComboBox}" Margin="10,40,0,40" HorizontalAlignment="Left"  Height="45" Width="358" />
-
-            </StackPanel>
-
-        </Grid>
-        <Grid   Width="253"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="439" Margin="0,0,36,0">
-            <StackPanel Margin="0,23,0,0" >
-                <ComboBox x:Name="cmbOwnerName1" Foreground="Gray" materialDesign:HintAssist.Hint="Owner Name" Style="{StaticResource MaterialDesignComboBox}" HorizontalAlignment="Left"  Height="45" Width="253" />
-
-                <TextBox VerticalAlignment="Top" Height="127" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Description" Margin="0,40,0,0"  />
-                <ComboBox x:Name="cmbStatus1" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignComboBox}"  HorizontalAlignment="Left"  Height="45" Width="253" Margin="0,40,0,0" />
-
-
-            </StackPanel>
-        </Grid>
-        <Button Content="Cancel" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton"  RenderTransformOrigin="0.086,0.716" Margin="288,436,474,23" Height="Auto" />
-        <Button Content="Save" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton"  RenderTransformOrigin="0.096,0.927" Margin="481,436,276,23" Height="Auto"  />
-
-
     </Grid>
 </Window>
