@@ -12,7 +12,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:SimpleJiraProject"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Closed="LoginWindow_Closed"
         Title="Login" Height="570" Width="880" WindowStartupLocation="CenterScreen">
     <Grid x:Name="LoginView" Visibility="Visible">
         <Grid.Background>

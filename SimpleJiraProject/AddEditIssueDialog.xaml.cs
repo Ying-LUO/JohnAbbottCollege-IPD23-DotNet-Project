@@ -26,6 +26,7 @@ namespace SimpleJiraProject
     {
         Issue currentIssue;
         string imageLocation = string.Empty;
+        static long threshold = 2621440;    // 2.5MB
 
         public AddEditIssueDialog(IssueListItem issue)
         {
@@ -82,15 +83,25 @@ namespace SimpleJiraProject
                     string fileName = openFileDialog.FileName;
                     if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
                     {
-                        if (currentIssue!=null)
+                        var fileLength = new FileInfo(fileName).Length;
+
+                        if(fileLength < threshold)
                         {
-                            currentIssue.Photo = File.ReadAllBytes(fileName);
-                            image.Source = new BitmapImage(new Uri(fileName));
+                            if (currentIssue != null)
+                            {
+                                currentIssue.Photo = File.ReadAllBytes(fileName);
+                                image.Source = new BitmapImage(new Uri(fileName));
+                            }
+                            else
+                            {
+                                imageLocation = fileName;
+                                image.Source = new BitmapImage(new Uri(fileName));
+                            }
                         }
                         else
                         {
-                            imageLocation = fileName;
-                            image.Source = new BitmapImage(new Uri(fileName));
+                            MessageBox.Show("Image size too larger(over 2.5MB)");
+                            return;
                         }
                     }
                 }
@@ -168,6 +179,7 @@ namespace SimpleJiraProject
                         Globals.simpleJiraDB.SaveChanges();
                         new MessageBoxCustom("New Issue Updated", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         clearForm();
+                        this.Close();
                     }
                     else
                     {
@@ -205,6 +217,7 @@ namespace SimpleJiraProject
                         Globals.simpleJiraDB.SaveChanges();
                         new MessageBoxCustom("New Issue Added", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         clearForm();
+                        this.Close();
                     }
                 }
                 else

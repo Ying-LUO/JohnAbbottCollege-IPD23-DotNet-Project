@@ -37,6 +37,18 @@ namespace SimpleJiraProject
             }
         }
 
+        private void LoginWindow_Closed(object sender, EventArgs e)
+        {
+            if (loginUser != null)
+            {
+                this.Close();
+            }
+            else
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
+        }
+
         private void btLogin_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -48,9 +60,9 @@ namespace SimpleJiraProject
                     string pwd = SecurePassword.Decrypt(loginUser.PWDEncrypted);
                     if (tbPassword.Password.Equals(pwd))
                     {
-                        this.DialogResult = true;
                         LoginCallback?.Invoke(loginUser);
                         this.Close();
+                        new MainWindow(loginUser).ShowDialog();
                     }
                     else
                     {

@@ -12,7 +12,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:SimpleJiraProject"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Foreground="White"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Foreground="White" Closed="MainWindow_Closed"
         Title="Simple Jira Application" MinHeight="600" MinWidth="1080" Height="637.5" Width="1330" >
 
     <Window.Resources>
@@ -255,7 +255,7 @@
                 </materialDesign:PopupBox>
             </Grid>
             <Grid x:Name="IssueView" Visibility="Hidden" >
-                <DataGrid x:Name="IssueListView"  CanUserSortColumns="True" CanUserAddRows="False" MouseDoubleClick="IssueListView_MouseDoubleClick"
+                <DataGrid x:Name="IssueListView"  CanUserSortColumns="True" CanUserAddRows="False" MouseDoubleClick="IssueListView_MouseDoubleClick" IsReadOnly="True"
                           materialDesign:DataGridAssist.CellPadding="5 3 3 3"
                           materialDesign:DataGridAssist.ColumnHeaderPadding="5 3 3 3" />
                 <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
