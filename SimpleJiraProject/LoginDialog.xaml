@@ -38,8 +38,8 @@
             <Grid  Margin="10,40,10,208">
                 <TextBox Text="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="DarkGray"  FontSize="18"/>
                 <StackPanel Margin="0,56,0,0" >
-                    <TextBox x:Name="tbLoginName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
-                    <PasswordBox x:Name="tbPassword" MaxLength="8" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="26,35,27,0" />
+                    <TextBox MaxLength="50" x:Name="tbLoginName" Foreground="Gray" materialDesign:HintAssist.Hint="USER NAME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="26,0,27,0" />
+                    <PasswordBox x:Name="tbPassword" MaxLength="12" Foreground="Gray" materialDesign:HintAssist.Hint="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="26,35,27,0" />
                 </StackPanel>
             </Grid>
             <Button  Margin="38,277,32,171" Content="LOG IN" FontSize="18" IsDefault="True" x:Name="btLogin" Click="btLogin_Click" />

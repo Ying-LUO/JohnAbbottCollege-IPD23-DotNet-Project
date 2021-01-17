@@ -48,7 +48,7 @@
                 <ColumnDefinition Width="0*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Margin="0,10,0,-15" >
-                <TextBox x:Name="tbUserStoryName" Foreground="Gray" materialDesign:HintAssist.Hint="User Story Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,0" Height="45" />
+                <TextBox x:Name="tbUserStoryName" MaxLength="100" Foreground="Gray" materialDesign:HintAssist.Hint="User Story Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,0" Height="45" />
                 <DatePicker Name="dpStartDate" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,50,10,0" Height="45" />
                 <DatePicker Name="dpCompleteDate" materialDesign:HintAssist.Hint="Complete Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,50,10,0" Height="45" />
 
@@ -61,13 +61,10 @@
             <StackPanel Margin="0,10,0,-26" >
                 <ComboBox x:Name="cmbOwnerName" Foreground="Gray" materialDesign:HintAssist.Hint="Owner Name" Style="{StaticResource MaterialDesignComboBox}" HorizontalAlignment="Left"  Height="45" Width="253" />
 
-                <TextBox Name="tbDescription" VerticalAlignment="Top" Height="79" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Description" Margin="0,20,0,0"  />
+                <TextBox Name="tbDescription" MaxLength="255" VerticalAlignment="Top" Height="79" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Description" Margin="0,20,0,0"  />
                 <ComboBox x:Name="cmbStatus" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignComboBox}"  HorizontalAlignment="Left"  Height="45" Width="253" Margin="0,40,0,0" />
-                <TextBox Name="tbPoints" VerticalAlignment="Top" Height="49" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Margin="0,50,0,0"  />
-                <Label Content="Enter number between 1 and 100" Margin="0,10,0,0" Foreground="#FFACB9BD"/>
-
-
-
+                <TextBox Name="tbPoints" MaxLength="2" VerticalAlignment="Top" Height="49" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Margin="0,50,0,0"  />
+                <Label Content="Enter number between 1 to 99" Margin="0,10,0,0" Foreground="#FFACB9BD" />
             </StackPanel>
         </Grid>
         <Button Content="Cancel" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton"  RenderTransformOrigin="0.086,0.716"  Grid.Column="1" Height="Auto" Margin="184,462,0,41" HorizontalAlignment="Left" Width="128" />

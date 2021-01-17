@@ -40,7 +40,7 @@
         </Grid>
         <Grid x:Name="ProjectDialog" Height="312" Width="470" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <StackPanel Margin="31,51,0,38">
-                <TextBox x:Name="tbProjectName" Foreground="Gray" materialDesign:HintAssist.Hint="Project Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,36,0" Height="45" />
+                <TextBox x:Name="tbProjectName" MaxLength="50" Foreground="Gray" materialDesign:HintAssist.Hint="Project Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,36,0" Height="45" />
                 <ComboBox x:Name="comboTeam" Foreground="Gray" materialDesign:HintAssist.Hint="TEAM" Style="{StaticResource MaterialDesignComboBox}" Margin="0, 60" HorizontalAlignment="Left" Width="403" Height="45"/>
             </StackPanel>
             <Button Content="Cancel" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="74,256,296,24" />

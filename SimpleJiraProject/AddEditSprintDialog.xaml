@@ -40,11 +40,11 @@
         </Grid>
         <Grid x:Name="SprintDialog" Height="372" Width="470" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <StackPanel Margin="-93,-254,30,79">
-                <TextBox x:Name="tbSprintName" Foreground="Gray" materialDesign:HintAssist.Hint="Sprint Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,93,0" Height="45" />
+                <TextBox x:Name="tbSprintName" MaxLength="100" Foreground="Gray" materialDesign:HintAssist.Hint="Sprint Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,93,0" Height="45" />
                 <DatePicker Name="dpStartDate" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,40,93,0" Height="45" />
                 <DatePicker Name="dpReleaseDate" materialDesign:HintAssist.Hint="Release Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,40,93,0" Height="45" />
                 <ComboBox x:Name="cmbStatus" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignComboBox}" Margin="0,40,93,0" HorizontalAlignment="Left"  Height="45" Width="440" />
-                <TextBox Name="tbDescription" VerticalAlignment="Top" Height="85" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Description" Margin="0,40,93,0"  />
+                <TextBox Name="tbDescription" MaxLength="255" VerticalAlignment="Top" Height="85" TextWrapping="Wrap" Foreground="Gray" materialDesign:HintAssist.Hint="Description" Margin="0,40,93,0"  />
 
                 <ComboBox x:Name="cmbProjectName" Foreground="Gray" materialDesign:HintAssist.Hint="Project Name" Style="{StaticResource MaterialDesignComboBox}" Margin="0,40" HorizontalAlignment="Left"  Height="45" Width="440" />
 

@@ -20,7 +20,7 @@ namespace SimpleJiraProject
         public static Sprint SelectedSprint;
         public static UserStory SelectedUserStory;
         public static Issue SelectedIssue;
-        public static GeneralValidation Validator;
+        public static GeneralValidation Validator = new GeneralValidation();
     }
 }
 

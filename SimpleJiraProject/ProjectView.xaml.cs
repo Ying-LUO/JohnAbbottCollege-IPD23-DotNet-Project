@@ -32,7 +32,7 @@ namespace SimpleJiraProject
 
         private void btUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (!Globals.Validator.IsValidName(tbProjectName.Text))
+            if (!Globals.Validator.IsValidShortName(tbProjectName.Text))
             {
                 new MessageBoxCustom("Project Name must be between 2-30 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 tbProjectName.Text = projectName;

@@ -53,20 +53,22 @@ namespace SimpleJiraProject
         {
             try
             {
-                loginUser = Globals.simpleJiraDB.Users.Where(u => u.LoginName == tbLoginName.Text).FirstOrDefault();
-
-                if (loginUser != null)
+                if (Globals.Validator.IsValidShortName(tbLoginName.Text) && Globals.Validator.LoginName_Check(tbLoginName.Text))
                 {
-                    string pwd = SecurePassword.Decrypt(loginUser.PWDEncrypted);
-                    if (tbPassword.Password.Equals(pwd))
+                    loginUser = Globals.simpleJiraDB.Users.Where(u => u.LoginName == tbLoginName.Text).FirstOrDefault();
+                    if (loginUser != null)
                     {
-                        LoginCallback?.Invoke(loginUser);
-                        this.Close();
-                        new MainWindow(loginUser).ShowDialog();
-                    }
-                    else
-                    {
-                        new MessageBoxCustom("Password Incorrect", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        string pwd = SecurePassword.Decrypt(loginUser.PWDEncrypted);
+                        if (tbPassword.Password.Equals(pwd))
+                        {
+                            LoginCallback?.Invoke(loginUser);
+                            this.Close();
+                            new MainWindow(loginUser).ShowDialog();
+                        }
+                        else
+                        {
+                            new MessageBoxCustom("Password Incorrect", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        }
                     }
                 }
                 else

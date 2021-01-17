@@ -55,7 +55,7 @@
                     <Grid Width="746" Height="288">
                         <StackPanel Margin="0,0,386,10" >
                             <ComboBox x:Name="cmbCategory" Text="{Binding Category}" Foreground="Gray" materialDesign:HintAssist.Hint="Issue Category" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="49" />
-                            <TextBox x:Name="tbIssueName" Text="{Binding Name}" Foreground="Gray" materialDesign:HintAssist.Hint="Issue Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="55"  />
+                            <TextBox x:Name="tbIssueName" MaxLength="100" Text="{Binding Name}" Foreground="Gray" materialDesign:HintAssist.Hint="Issue Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="55"  />
                             <TextBox Name="tbDescription" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Description}"
                             VerticalAlignment="Top" Height="102" AcceptsReturn="True" MaxLength="255"
                             Foreground="Gray" materialDesign:HintAssist.Hint="Description"
