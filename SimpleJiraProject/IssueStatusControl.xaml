@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Name="btStatus" HorizontalContentAlignment="Center">
+        <Button Name="btStatus" HorizontalContentAlignment="Center" ToolTip="Right Click to update the Status">
             <TextBlock Name="tbStatus" Text="{Binding Status , Mode=OneWay}"   Height="18" HorizontalAlignment="Center" />
         </Button>
         <Grid.ContextMenu>

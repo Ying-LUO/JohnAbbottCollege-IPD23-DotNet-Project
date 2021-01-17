@@ -18,19 +18,22 @@
 
         <ListView Name="CardListView">
             <materialDesign:Card Margin="12" materialDesign:ShadowAssist.ShadowDepth="Depth3" Padding="12">
-                <materialDesign:Flipper Width="233" Height="295">
+                <materialDesign:Flipper Width="233" Height="295" Foreground="#DD000000">
                     <materialDesign:Flipper.FrontContent>
                         <Grid Height="290" Width="230">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="150" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Image Source="C:\Users\Khalil\Documents\software Developement\dotnet-2\Team9SimpleJira\Icons\p1.png" Height="155" Width="216"     Stretch="UniformToFill" />
+                            <Image Source="Icons\project.png" Height="155" Width="216"     Stretch="UniformToFill" />
+                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" ToolTip="Project theme will be available next release" Margin="170,120,0,0" Width="25" Height="25" Background="#FF5294B9">
+                                <materialDesign:PackIcon Kind="Camera" Height="17" Width="17"  />
+                            </Button>
                             <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Name="tbProjectName" Foreground="#FF7C7575" Text="{Binding Name}" HorizontalAlignment="Center" Margin="0,12,0,0" />
                                 <Button Content="Edit" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="0 20 0 0" Click="btEdit_Click">
                                 </Button>
-                                <Button Margin="160,0,5,0" Style="{StaticResource MaterialDesignIconButton}" ToolTip="MaterialDesignIconButton" Click="Delete_Click">
+                                <Button Margin="160,0,5,0" Style="{StaticResource MaterialDesignIconButton}" ToolTip="Delete Project" Click="Delete_Click">
                                     <materialDesign:PackIcon Kind="Delete" />
                                     <Button.Foreground>
                                         <SolidColorBrush Color="#FF5294B9"/>

@@ -18,7 +18,7 @@
                 Content="Released" />
         </ComboBox>-->
 
-        <Button Name="btStatus" Click="btStatus_Click">
+        <Button Name="btStatus" Click="btStatus_Click" ToolTip="Right Click to update the Status">
             <TextBlock Text="{Binding Status , Mode=OneWay}"  Width="85" />
         </Button>
         <Grid.ContextMenu>

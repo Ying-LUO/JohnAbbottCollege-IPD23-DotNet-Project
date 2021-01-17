@@ -255,10 +255,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Icons\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Icons\project.png" />
     <Content Include="SimpleJiraModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SimpleJiraModel.edmx</DependentUpon>
