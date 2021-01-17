@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Windows;
 
@@ -16,28 +17,37 @@ namespace SimpleJiraProject
         internal AddEditUserStoryDialog(UserStory userStory)
         {
             InitializeComponent();
-
-            cmbStatus.ItemsSource = Globals.simpleJiraDB.UserStories.AsEnumerable().Select(us => us.Status).ToList<string>();
-            createSprintNamesList();
-            cmbSprintName.ItemsSource = SprintsList;
-            createOwnerNamesList();
-            cmbOwnerName.ItemsSource = Globals.simpleJiraDB.UserStories.AsEnumerable().Select(us => us.User.LoginName).ToList<string>();
-
-            if (userStory != null) //Updating
+            try
             {
-                currentUserStory = userStory;
-                tbUserStoryName.Text = userStory.Name;
-                dpStartDate.SelectedDate = userStory.CreateDate;
-                dpCompleteDate.SelectedDate = userStory.CompleteDate;
-                cmbStatus.SelectedItem = userStory.Status;
-                tbPoints.Text = userStory.Point.ToString();
-                tbDescription.Text = userStory.Description;
-                cmbSprintName.SelectedItem = userStory.Sprint.Name;
-                cmbOwnerName.SelectedItem = userStory.User.LoginName;
-                btAddUpdate.Content = "Update";
-                tbAddEditUserStoryTitle.Text = string.Format("Update Sprint: {0}", userStory.Name);
+                cmbStatus.ItemsSource = Enum.GetValues(typeof(UserStoryStatusEnum)).Cast<UserStoryStatusEnum>();
+                cmbOwnerName.ItemsSource = Globals.currentTeamUserList.AsEnumerable().Select(u => u.LoginName).ToList<string>();
+                createSprintNamesList();
+                cmbSprintName.ItemsSource = SprintsList;
+                //createOwnerNamesList();
+                //cmbOwnerName.ItemsSource = Globals.simpleJiraDB.UserStories.AsEnumerable().Select(us => us.User.LoginName).ToList<string>();
+
+                if (userStory != null) //Updating
+                {
+                    currentUserStory = userStory;
+                    tbUserStoryName.Text = userStory.Name;
+                    dpStartDate.SelectedDate = userStory.CreateDate;
+                    dpCompleteDate.SelectedDate = userStory.CompleteDate;
+                    Enum.TryParse(userStory.Status, out UserStoryStatusEnum enumStatus);
+                    cmbStatus.SelectedItem = enumStatus;
+                    tbPoints.Text = userStory.Point.ToString();
+                    tbDescription.Text = userStory.Description;
+                    cmbSprintName.SelectedItem = userStory.Sprint.Name;
+                    cmbOwnerName.SelectedItem = userStory.User.LoginName;
+                    btAddUpdate.Content = "Update";
+                    tbAddEditUserStoryTitle.Text = string.Format("Update Sprint: {0}", userStory.Name);
+                }
             }
-            
+            catch (SqlException ex)
+            {
+                new MessageBoxCustom("ERROR Loading data from database: \n" + ex.Message, MessageBoxCustom.MessageType.Error, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+            }
+
+
         }
 
         private void btExit_Click(object sender, RoutedEventArgs e)
@@ -85,7 +95,8 @@ namespace SimpleJiraProject
                         currentUserStory.Description = tbDescription.Text;
                         currentUserStory.CreateDate = (DateTime)dpStartDate.SelectedDate;
                         currentUserStory.CompleteDate = (DateTime)dpCompleteDate.SelectedDate;
-                        currentUserStory.Status = (string)cmbStatus.SelectedItem; 
+                        currentUserStory.Status = cmbStatus.SelectedItem.ToString();
+                        Console.WriteLine(currentUserStory.Status);
                         currentUserStory.Point = point;
                         currentUserStory.SprintId = currentSprintId;
                         currentUserStory.OwnerId = currentUserStoryId;
@@ -100,7 +111,7 @@ namespace SimpleJiraProject
                             Description = tbDescription.Text,
                             CreateDate = (DateTime)dpStartDate.SelectedDate,
                             CompleteDate = (DateTime)dpCompleteDate.SelectedDate,
-                            Status = (string)cmbStatus.SelectedItem,
+                            Status = cmbStatus.SelectedItem.ToString(),
                             Point = point,
                             SprintId = currentSprintId,
                             OwnerId = currentUserStoryId,

@@ -14,7 +14,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"  Foreground="White"
-        Title="Defect" Height="950" Width="1080">
+        Title="Defect" Height="788" Width="921">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -40,43 +40,74 @@
         </Grid>
         <Grid x:Name="GridMenu"  Width="75" Grid.Row="0" Grid.RowSpan="2" Background="LightSteelBlue" >
         </Grid>
-        <Grid x:Name="IssueDialog" Grid.Row="1" Grid.Column="1" Margin="10">
-            <StackPanel>
-                <ComboBox x:Name="cmbCategory" Text="{Binding Category}" Foreground="Gray" materialDesign:HintAssist.Hint="Issue Category" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45"/>
-                <TextBox x:Name="tbIssueName" Text="{Binding Name}" Foreground="Gray" materialDesign:HintAssist.Hint="Issue Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Height="45" />
-                <TextBox Name="tbDescription" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Description}"
-                            VerticalAlignment="Top" Height="100" AcceptsReturn="True" MaxLength="255"
+        <Grid x:Name="IssueDialog" Grid.Row="1" Grid.Column="2" Margin="10">
+            <ScrollViewer Foreground="{x:Null}" Grid.Row="1" Grid.Column="1" >
+
+                <StackPanel RenderTransformOrigin="0.5,0.5" Height="674">
+                    <StackPanel.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleY="-0.185"/>
+                            <RotateTransform/>
+                            <TranslateTransform Y="0.747"/>
+                        </TransformGroup>
+                    </StackPanel.RenderTransform>
+                    <Grid Width="746" Height="288">
+                        <StackPanel Margin="0,0,386,10" >
+                            <ComboBox x:Name="cmbCategory" Text="{Binding Category}" Foreground="Gray" materialDesign:HintAssist.Hint="Issue Category" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="49" />
+                            <TextBox x:Name="tbIssueName" Text="{Binding Name}" Foreground="Gray" materialDesign:HintAssist.Hint="Issue Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="55"  />
+                            <TextBox Name="tbDescription" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Description}"
+                            VerticalAlignment="Top" Height="102" AcceptsReturn="True" MaxLength="255"
                             Foreground="Gray" materialDesign:HintAssist.Hint="Description"
-                            TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
-                <DatePicker Name="dpStartDate" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartDate}" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
-                <DatePicker Name="dpCompleteDate" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding CompleteDate}" IsEnabled="False" materialDesign:HintAssist.Hint="Complete Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="45" />
-                <ComboBox x:Name="cmbPriority" Text="{Binding Priority}" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45" />
-                <ComboBox x:Name="cmbStatus" Text="{Binding Status}" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45"/>
-                <ComboBox x:Name="cmbUserList" Foreground="Gray" materialDesign:HintAssist.Hint="Owner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="45" />
-                <ComboBox x:Name="cmbUserStoryList" MouseDoubleClick="tbUserStory_MouseDoubleClick" Foreground="Gray" materialDesign:HintAssist.Hint="Related User Story Name" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  Height="45" />
-                <GroupBox Header="Add Photo" x:Name="gbPhoto" MouseDoubleClick="gbPhoto_MouseDoubleClick" Margin="0 10"
-                          Style="{DynamicResource MaterialDesignCardGroupBox}" Height="276">
-                    <GroupBox.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon
+                            TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  />
+
+                            <ComboBox x:Name="cmbUserStoryList" MouseDoubleClick="tbUserStory_MouseDoubleClick" Foreground="Gray" materialDesign:HintAssist.Hint="Related User Story Name" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  Height="66" />
+                        </StackPanel>
+                        <StackPanel Margin="420,0,0,10">
+                            <DatePicker Name="dpStartDate" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartDate}" materialDesign:HintAssist.Hint="Start Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="50" />
+                            <DatePicker Name="dpCompleteDate" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding CompleteDate}" IsEnabled="False" materialDesign:HintAssist.Hint="Complete Date" Foreground="Gray"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="54"  />
+                            <ComboBox x:Name="cmbPriority" Text="{Binding Priority}" Foreground="Gray" materialDesign:HintAssist.Hint="Priority" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="53"  />
+                            <ComboBox x:Name="cmbStatus" Text="{Binding Status}" Foreground="Gray" materialDesign:HintAssist.Hint="Status" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="51" />
+                            <ComboBox x:Name="cmbUserList" Foreground="Gray" materialDesign:HintAssist.Hint="Owner" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="63"  />
+                        </StackPanel>
+
+
+                    </Grid>
+
+
+
+
+                    <GroupBox Header="Add Photo" x:Name="gbPhoto" MouseDoubleClick="gbPhoto_MouseDoubleClick" 
+                          Style="{DynamicResource MaterialDesignCardGroupBox}" Height="324" Width="709" >
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
                                   Kind="ImageArea"
                                   Height="32"
                                   Width="32"
                                   VerticalAlignment="Center" />
-                                <TextBlock
+                                    <TextBlock
                                   Margin="8,0,0,0"
                                   VerticalAlignment="Center"
                                   Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
                                   Text="{Binding}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupBox.HeaderTemplate>
-                    <Image x:Name="image" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                </GroupBox>
-            </StackPanel>
-            <Button Name="btAddUpdate" Height="45" Width="200" Content="Save" Click="btAddUpdate_Click" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.408,0.622" Margin="777,767,0,27"/>
-            <Button Content="Cancel" Height="45" Width="200" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" Margin="549,767,228,27" /> 
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <Image x:Name="image" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </GroupBox>
+                    <Grid Margin="0,25,0,0">
+                        <Button x:Name="btAddUpdate" Height="Auto" Content="Save" Click="btAddUpdate_Click" IsDefault="True" Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.408,0.622" Margin="645,0,64,0"  />
+                        <Button Content="Cancel" Height="Auto" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.677,1.227" Margin="469,0,233,0"   />
+                    </Grid>
+
+
+                </StackPanel>
+                
+            </ScrollViewer  >
+            
+            
         </Grid>
     </Grid>
 </Window>

@@ -100,6 +100,8 @@ namespace SimpleJiraProject
                     OwnerId = x.OwnerId,
                     UserStoryId = x.UserStoryId
                 }).Where(iss => userStoryIds.Contains(iss.UserStoryId)).ToList();
+
+                Globals.currentIssueList = Globals.simpleJiraDB.Issues.Where(i => userStoryIds.Contains(i.UserStoryId)).ToList<Issue>();
             }
             else
             {
@@ -211,18 +213,18 @@ namespace SimpleJiraProject
 
         private void btDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (ProjectView.IsVisible)
-            {
-                if (Globals.SelectedProject == null)
-                {
-                    new MessageBoxCustom("Select Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
-                }
+            //if (ProjectView.IsVisible)
+            //{
+            //    if (Globals.SelectedProject == null)
+            //    {
+            //        new MessageBoxCustom("Select Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+            //        return;
+            //    }
 
-                Globals.simpleJiraDB.Projects.Remove(Globals.SelectedProject);
-                Globals.simpleJiraDB.SaveChanges();
-                LoadDataFromDb(Globals.currentUser);
-            }
+            //    Globals.simpleJiraDB.Projects.Remove(Globals.SelectedProject);
+            //    Globals.simpleJiraDB.SaveChanges();
+            //    LoadDataFromDb(Globals.currentUser);
+            //}
 
             if (SprintView.IsVisible)
             {
@@ -379,6 +381,17 @@ namespace SimpleJiraProject
                 IssueListView.ItemsSource = null;
                 LoadDataFromDb(Globals.currentUser);
             }
+        }
+
+        private void IssueListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int listIndex = IssueListView.SelectedIndex;
+            if (listIndex != -1)
+            {
+                Globals.SelectedIssue = Globals.currentIssueList[listIndex];
+            }
+
+            Console.WriteLine(IssueListView.SelectedIndex);
         }
     }
 }

@@ -95,6 +95,9 @@
       <DependentUpon>SimpleJiraModel.tt</DependentUpon>
     </Compile>
     <Compile Include="IssueListItem.cs" />
+    <Compile Include="IssueStatusControl.xaml.cs">
+      <DependentUpon>IssueStatusControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginDialog.xaml.cs">
       <DependentUpon>LoginDialog.xaml</DependentUpon>
     </Compile>
@@ -164,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddEditUserStoryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IssueStatusControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
