@@ -13,7 +13,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:SimpleJiraProject"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Foreground="White" Closed="MainWindow_Closed"
-        Title="Simple Jira Application" MinHeight="600" MinWidth="1080" Height="637.5" Width="1330" >
+        Title="Simple Jira Application" MinHeight="600" MinWidth="1080" Height="637.5" Width="1340" >
 
     <Window.Resources>
         <ResourceDictionary>
