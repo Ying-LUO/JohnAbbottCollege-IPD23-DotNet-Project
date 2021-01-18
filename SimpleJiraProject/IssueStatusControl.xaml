@@ -14,9 +14,9 @@
             <ContextMenu>
                 <MenuItem Header="Todo" Name="miTodo" Background="#FFECE4E4" Click="miTodo_Click" />
                 <MenuItem Header="InProcess" Name="miInProcess" Background="#FF60BAE4" Click="miInProcess_Click"/>
-                <MenuItem Header="Blocked" Name="miBlocked" Background="#FF4CD1A0" Click="miBlocked_Click"/>
-                <MenuItem Header="Verified" Name="miVerified" Background="#FFECE4E4" Click="miVerified_Click"/>
-                <MenuItem Header="Resolved" Name="miResolved" Background="#FF60BAE4" Click="miResolved_Click"/>
+                <MenuItem Header="Blocked" Name="miBlocked" Background="#FFF55858" Click="miBlocked_Click"/>
+                <MenuItem Header="Verified" Name="miVerified" Background="#FFF7ED1B" Click="miVerified_Click"/>
+                <MenuItem Header="Resolved" Name="miResolved" Background="#FF5FEA6C" Click="miResolved_Click"/>
             </ContextMenu>
         </Grid.ContextMenu>
     </Grid>

@@ -210,7 +210,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding Point}" Header="Point" />
                             <GridViewColumn DisplayMemberBinding="{Binding Sprint.Name}" Header="Sprint" />
                             <GridViewColumn DisplayMemberBinding="{Binding User.FirstName}" Header="Owner" />
-                            <GridViewColumn Header="Status">
+                            <GridViewColumn Header="Status" Width="130">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <local:UserStoryStatus />
