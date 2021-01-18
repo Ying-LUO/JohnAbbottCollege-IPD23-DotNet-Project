@@ -361,14 +361,14 @@ Day 11: 2021-Jan-14 Thursday
 Khalil:
 
 1- Done:
-	*Sprint Dialog to Update and delete sprints
-	*Fix few issues
-	*Update Trello
-2- Todo:
-	
-	*working on UserStory Dialog to add, Update and delete UserStories
+	*Working on UserStory Dialog to add, Update and delete UserStories
 	*Fix combo box issue
 	*Update Trello
+2- Todo:
+	*Implement Status Update
+	*Implement the missing Validation
+	*Update Trello
+	
 
 3- Need assistant:
 	*N/A
@@ -386,13 +386,15 @@ Day 12: 2021-Jan-15 Friday
 Khalil:
 
 1- Done:
-	*Sprint Dialog to Update and delete sprints
-	*Fix few issues
+	*Implement Status Update
+	*Implement the missing Validation
 	*Update Trello
+	
 2- Todo:
 	
-	*working on UserStory Dialog to add, Update and delete UserStories
-	*Fix combo box issue
+	*Handle delete issue for related object
+	*Fixing issue
+	*review
 	*Update Trello
 
 3- Need assistant:
