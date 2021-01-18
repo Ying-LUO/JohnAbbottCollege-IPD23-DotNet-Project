@@ -29,16 +29,9 @@
         </Grid.ColumnDefinitions>
         <Grid Height="60" VerticalAlignment="Top" Background="SteelBlue" Grid.ColumnSpan="2">
             <TextBlock Name="tbAddEditUserStoryTitle" Text="Add New User Story" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="101,18,0,20" Width="224" TextAlignment="Center"/>
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" ToolTip="Update User Information" Content="My Account" x:Name="btMyAccount"  VerticalAlignment="Center" FontSize="18" Visibility="Hidden"/>
-                <materialDesign:PopupBox Margin="10" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" >
-                    <StackPanel Width="150">
-                        <Button Content="Save" Name="btSave" />
-                        <Separator />
-                        <Button Content="Exit" Name="btExit" Click="btExit_Click"/>
-                    </StackPanel>
-                </materialDesign:PopupBox>
-            </StackPanel>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" IsCancel="True">
+                <materialDesign:PackIcon Kind="Power" Height="20" Width="20" />
+            </Button>
         </Grid>
         <Grid x:Name="GridMenu"  Width="75" HorizontalAlignment="Left" Background="LightSteelBlue" Grid.ColumnSpan="2" >
         </Grid>

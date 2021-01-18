@@ -59,78 +59,87 @@ namespace SimpleJiraProject
         {
             try
             {
-                string currentSprinttName = (string)cmbSprintName.SelectedItem;
-                int currentSprintId = Globals.simpleJiraDB.Sprints.Where(s => s.Name.Equals(currentSprinttName)).Select(s => s.SprintId).FirstOrDefault();
-                string currentOwnerName = (string)cmbOwnerName.SelectedItem;
-                int currentUserStoryId = Globals.simpleJiraDB.Users.Where(us => us.LoginName.Equals(currentOwnerName)).Select(us => us.UserId).FirstOrDefault();
-                int point = 5;
-                Console.WriteLine(int.TryParse(tbPoints.Text, out point));
-                if (!int.TryParse(tbPoints.Text, out point))
+                if (validation())
                 {
-                    new MessageBoxCustom("Proiority must be a number between 1 - 100", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-
-                if (!Globals.Validator.IsValidLongName(tbUserStoryName.Text))
-                {
-                    new MessageBoxCustom("User Story Name must be between 1-100 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-                else if (!Globals.Validator.IsValidDescription(tbDescription.Text))
-                {
-                    new MessageBoxCustom("Description must be between 1-255 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-                else if (!Globals.Validator.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpCompleteDate.SelectedDate))
-                {
-                    new MessageBoxCustom("Complete date must be after start date", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-                else if (!Globals.Validator.IsValidPoint(point))
-                {
-                    new MessageBoxCustom("Proiority must be a number between 1 - 100", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-                else
-                {
-
-                    if (currentUserStory != null)
+                    string currentSprinttName = (string)cmbSprintName.SelectedItem;
+                    int currentSprintId = Globals.simpleJiraDB.Sprints.Where(s => s.Name.Equals(currentSprinttName)).Select(s => s.SprintId).FirstOrDefault();
+                    string currentOwnerName = (string)cmbOwnerName.SelectedItem;
+                    int currentUserStoryId = Globals.simpleJiraDB.Users.Where(us => us.LoginName.Equals(currentOwnerName)).Select(us => us.UserId).FirstOrDefault();
+                    int point = 5;
+                    Console.WriteLine(int.TryParse(tbPoints.Text, out point));
+                    if (!int.TryParse(tbPoints.Text, out point))
                     {
-                        currentUserStory.Name = tbUserStoryName.Text;
-                        currentUserStory.Description = tbDescription.Text;
-                        currentUserStory.CreateDate = (DateTime)dpStartDate.SelectedDate;
-                        currentUserStory.CompleteDate = (DateTime)dpCompleteDate.SelectedDate;
-                        currentUserStory.Status = cmbStatus.SelectedItem.ToString();
-                        Console.WriteLine(currentUserStory.Status);
-                        currentUserStory.Point = point;
-                        currentUserStory.SprintId = currentSprintId;
-                        currentUserStory.OwnerId = currentUserStoryId;
+                        new MessageBoxCustom("Proiority must be a number between 1 - 100", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
+                    if (!Globals.Validator.IsValidLongName(tbUserStoryName.Text))
+                    {
+                        new MessageBoxCustom("User Story Name must be between 1-100 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+                    else if (!Globals.Validator.IsValidDescription(tbDescription.Text))
+                    {
+                        new MessageBoxCustom("Description must be between 1-255 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+                    else if (!Globals.Validator.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpCompleteDate.SelectedDate))
+                    {
+                        new MessageBoxCustom("Complete date must be after start date", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+                    else if (!Globals.Validator.IsValidPoint(point))
+                    {
+                        new MessageBoxCustom("Proiority must be a number between 1 - 100", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
                     }
                     else
                     {
-                        
 
-                        UserStory u = new UserStory
+                        if (currentUserStory != null)
                         {
-                            Name = tbUserStoryName.Text,
-                            Description = tbDescription.Text,
-                            CreateDate = (DateTime)dpStartDate.SelectedDate,
-                            CompleteDate = (DateTime)dpCompleteDate.SelectedDate,
-                            Status = cmbStatus.SelectedItem.ToString(),
-                            Point = point,
-                            SprintId = currentSprintId,
-                            OwnerId = currentUserStoryId,
+                            currentUserStory.Name = tbUserStoryName.Text;
+                            currentUserStory.Description = tbDescription.Text;
+                            currentUserStory.CreateDate = (DateTime)dpStartDate.SelectedDate;
+                            currentUserStory.CompleteDate = (DateTime)dpCompleteDate.SelectedDate;
+                            currentUserStory.Status = cmbStatus.SelectedItem.ToString();
+                            Console.WriteLine(currentUserStory.Status);
+                            currentUserStory.Point = point;
+                            currentUserStory.SprintId = currentSprintId;
+                            currentUserStory.OwnerId = currentUserStoryId;
+                        }
+                        else
+                        {
 
-                        };
-                        Globals.simpleJiraDB.UserStories.Add(u);
+
+                            UserStory u = new UserStory
+                            {
+                                Name = tbUserStoryName.Text,
+                                Description = tbDescription.Text,
+                                CreateDate = (DateTime)dpStartDate.SelectedDate,
+                                CompleteDate = (DateTime)dpCompleteDate.SelectedDate,
+                                Status = cmbStatus.SelectedItem.ToString(),
+                                Point = point,
+                                SprintId = currentSprintId,
+                                OwnerId = currentUserStoryId,
+
+                            };
+                            Globals.simpleJiraDB.UserStories.Add(u);
+                        }
+
+
+                        Globals.simpleJiraDB.SaveChanges();
+                        List<UserStory> currentSprinttList = Globals.simpleJiraDB.UserStories.Include("Sprint").ToList();
+
                     }
-
-
-                    Globals.simpleJiraDB.SaveChanges();
-                    List<UserStory> currentSprinttList = Globals.simpleJiraDB.UserStories.Include("Sprint").ToList();
-
+                    DialogResult = true;
                 }
-                DialogResult = true;
+                else
+                {
+                    new MessageBoxCustom("All fields are required", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                
 
             }
             catch (SystemException ex)
@@ -145,6 +154,18 @@ namespace SimpleJiraProject
             {
 
                 SprintsList.Add(s.Name);
+            }
+        }
+
+        private bool validation()
+        {
+            if (cmbStatus.SelectedIndex < 0 || cmbOwnerName.SelectedIndex < 0 || cmbSprintName.SelectedIndex < 0 || dpStartDate.SelectedDate == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 

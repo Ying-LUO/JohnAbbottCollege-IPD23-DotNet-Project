@@ -43,33 +43,54 @@ namespace SimpleJiraProject
         {
             try
             {
-                string currentTeamName = (string)comboTeam.SelectedItem;
-                int currentTeamId = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(currentTeamName)).Select(t => t.TeamId).FirstOrDefault();
-
-
-                if (!Globals.Validator.IsValidShortName(tbProjectName.Text))
+                if (validation())
                 {
-                    new MessageBoxCustom("Project Name must be between 1-50 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
+                    string currentTeamName = (string)comboTeam.SelectedItem;
+                    int currentTeamId = Globals.simpleJiraDB.Teams.Where(t => t.Name.Equals(currentTeamName)).Select(t => t.TeamId).FirstOrDefault();
+
+
+                    if (!Globals.Validator.IsValidShortName(tbProjectName.Text))
+                    {
+                        new MessageBoxCustom("Project Name must be between 1-50 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+                    else
+                    {
+                        Project p = new Project
+                        {
+                            Name = tbProjectName.Text,
+                            TeamId = currentTeamId,
+                        };
+                        Globals.simpleJiraDB.Projects.Add(p);
+                        Globals.simpleJiraDB.SaveChanges();
+                        //Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Include("Team").ToList();
+
+                    }
+                    DialogResult = true;
                 }
                 else
                 {
-                    Project p = new Project
-                    {
-                        Name = tbProjectName.Text,
-                        TeamId = currentTeamId,
-                    };
-                    Globals.simpleJiraDB.Projects.Add(p);
-                    Globals.simpleJiraDB.SaveChanges();
-                    //Globals.currentTeamProjectList = Globals.simpleJiraDB.Projects.Include("Team").ToList();
-
+                    new MessageBoxCustom("All fields are required", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
                 }
-                DialogResult = true;
+                
 
             }
             catch (SystemException ex)
             {
                 new MessageBoxCustom("Database operation failed:\n" + ex.Message, MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+            }
+        }
+
+        private bool validation()
+        {
+            if (tbProjectName.Text == null || comboTeam.SelectedIndex < 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }

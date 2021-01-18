@@ -228,13 +228,23 @@ namespace SimpleJiraProject
 
                     if (Result.Value)
                     {
-                        Globals.simpleJiraDB.Sprints.Remove(Globals.SelectedSprint);
-                        Globals.simpleJiraDB.SaveChanges();
-                        LoadDataFromDb(Globals.currentUser);
+                        if(Globals.currentUserStoryList == null)
+                        {
+                            Globals.simpleJiraDB.Sprints.Remove(Globals.SelectedSprint);
+                            Globals.simpleJiraDB.SaveChanges();
+                            LoadDataFromDb(Globals.currentUser);
+                        }
+                        else
+                        {
+                            new MessageBoxCustom("Selected Sprint has User Stories attached, you need to clear these User Stories to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                            return;
+                        }
+                        
                     }
                     else
                     {
-                        new MessageBoxCustom("Cannot find Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        //new MessageBoxCustom("Cannot find Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
                     }
                 }
                 catch (SqlException ex)
@@ -252,25 +262,28 @@ namespace SimpleJiraProject
                         new MessageBoxCustom("Select User Story to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         return;
                     }
+                    else
+                    {
+                        Globals.SelectedUserStory = Globals.currentUserStoryList[UserStoryListView.SelectedIndex];
+                        if (IsUserStoryHasChild(Globals.SelectedUserStory))
+                        {
+                            new MessageBoxCustom("Selected User Story has Issues attached you need to clear these issues to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                            return;
+                        }
+                    }
+                    
                     bool? Result = new MessageBoxCustom("Are you sure to delete Selected User Story? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
 
                     if (Result.Value)
                     {
-                        if (Globals.currentIssueList == null)
-                        {
-                            Globals.simpleJiraDB.UserStories.Remove(Globals.SelectedUserStory);
-                            Globals.simpleJiraDB.SaveChanges();
-                            LoadDataFromDb(Globals.currentUser);
-                        }
-                        else
-                        {
-                            new MessageBoxCustom("Select User Story has Issues attached you need to clear these issues to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                            return;
-                        }
+                        Globals.simpleJiraDB.UserStories.Remove(Globals.SelectedUserStory);
+                        Globals.simpleJiraDB.SaveChanges();
+                        LoadDataFromDb(Globals.currentUser);
                     }
                     else
                     {
-                        new MessageBoxCustom("Cannot find User Story to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        
+                        return;
                     }
                 }
                 catch (SqlException ex)
@@ -408,6 +421,29 @@ namespace SimpleJiraProject
             {
                 Globals.SelectedIssue = Globals.currentIssueList[listIndex];
             }
+        }
+
+        private bool IsUserStoryHasChild(UserStory userStory)
+        {
+            foreach (Issue issue in Globals.currentIssueList)
+            {
+                if (Globals.SelectedUserStory == issue.UserStory) 
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private bool IsSprintHasChild(UserStory userStory)
+        {
+            foreach (UserStory userStoru in Globals.currentUserStoryList)
+            {
+                if (Globals.SelectedSprint == userStoru.Sprint)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -146,7 +146,7 @@ namespace SimpleJiraProject
             if (string.IsNullOrEmpty(tbIssueName.Text) || string.IsNullOrEmpty(tbDescription.Text) 
                 || cmbCategory.SelectedIndex<0 || cmbPriority.SelectedIndex < 0 || cmbStatus.SelectedIndex <0
                 || cmbUserList.SelectedIndex<0 || cmbUserStoryList.SelectedIndex<0 || !Globals.Validator.IsValidLongName(tbIssueName.Text)
-                || !Globals.Validator.IsValidDescription(tbDescription.Text))
+                || !Globals.Validator.IsValidDescription(tbDescription.Text) || dpStartDate.SelectedDate == null)
             {
                 return false;
             }
@@ -233,7 +233,7 @@ namespace SimpleJiraProject
                 }
                 else
                 {
-                    new MessageBoxCustom("Please input value", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    new MessageBoxCustom("All fields are required", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                 } 
             }
             catch (SqlException ex)

@@ -80,14 +80,23 @@ namespace SimpleJiraProject
 
                 if (Result.Value)
                 {
-                    Project SelectedProject = Globals.simpleJiraDB.Projects.Where(p => p.Name.Equals(tbProjectName.Text)).FirstOrDefault();
-                    Globals.simpleJiraDB.Projects.Remove(SelectedProject);
-                    Globals.simpleJiraDB.SaveChanges();
-                    Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
+                    if(Globals.currentSprintList == null)
+                    {
+                        Project SelectedProject = Globals.simpleJiraDB.Projects.Where(p => p.Name.Equals(tbProjectName.Text)).FirstOrDefault();
+                        Globals.simpleJiraDB.Projects.Remove(SelectedProject);
+                        Globals.simpleJiraDB.SaveChanges();
+                        Globals.AppWindow.LoadDataFromDb(Globals.currentUser);
+                    }
+                    else
+                    {
+                        new MessageBoxCustom("Selected Project has Sprints attached, you need to clear these Sprints to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
                 }
                 else
                 {
-                    new MessageBoxCustom("Cannot find Project to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    //new MessageBoxCustom("Cannot find Project to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
                 }
             }
             catch (SqlException ex)

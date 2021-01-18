@@ -55,64 +55,85 @@ namespace SimpleJiraProject
         {
             try
             {
-                string currentProjectName = (string)cmbProjectName.SelectedItem;
-                int currentProjectId = Globals.simpleJiraDB.Projects.Where(p => p.Name.Equals(currentProjectName)).Select(p => p.ProjectId).FirstOrDefault();
+                if (validation())
+                {
+                    string currentProjectName = (string)cmbProjectName.SelectedItem;
+                    int currentProjectId = Globals.simpleJiraDB.Projects.Where(p => p.Name.Equals(currentProjectName)).Select(p => p.ProjectId).FirstOrDefault();
 
-                if (!Globals.Validator.IsValidLongName(tbSprintName.Text))
-                {
-                    new MessageBoxCustom("Name must be between 1-100 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-                else if (!Globals.Validator.IsValidDescription(tbDescription.Text))
-                {
-                    new MessageBoxCustom("Description must be between 1-255 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-                else if (!Globals.Validator.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpReleaseDate.SelectedDate))
-                {
-                    new MessageBoxCustom("Release date must be after start date", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-                else
-                {
-
-                    if (currentSprint != null)
+                    if (!Globals.Validator.IsValidLongName(tbSprintName.Text))
                     {
-                        currentSprint.Name = tbSprintName.Text;
-                        currentSprint.Description = tbDescription.Text;
-                        currentSprint.StartDate = (DateTime)dpStartDate.SelectedDate;
-                        currentSprint.ReleaseDate = (DateTime)dpReleaseDate.SelectedDate;
-                        currentSprint.Status = cmbStatus.SelectedItem.ToString();
-                        currentSprint.ProjectId = currentProjectId;
+                        new MessageBoxCustom("Name must be between 1-100 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+                    else if (!Globals.Validator.IsValidDescription(tbDescription.Text))
+                    {
+                        new MessageBoxCustom("Description must be between 1-255 characters", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+                    else if (!Globals.Validator.IsValidDate((DateTime)dpStartDate.SelectedDate, (DateTime)dpReleaseDate.SelectedDate))
+                    {
+                        new MessageBoxCustom("Release date must be after start date", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        return;
                     }
                     else
                     {
-                   
-                        Sprint s = new Sprint
+
+                        if (currentSprint != null)
                         {
-                            Name = tbSprintName.Text,
-                            Description = tbDescription.Text,
-                            StartDate = (DateTime)dpStartDate.SelectedDate,
-                            ReleaseDate = (DateTime)dpReleaseDate.SelectedDate,
-                            Status = cmbStatus.SelectedItem.ToString(),
-                            ProjectId = currentProjectId,
+                            currentSprint.Name = tbSprintName.Text;
+                            currentSprint.Description = tbDescription.Text;
+                            currentSprint.StartDate = (DateTime)dpStartDate.SelectedDate;
+                            currentSprint.ReleaseDate = (DateTime)dpReleaseDate.SelectedDate;
+                            currentSprint.Status = cmbStatus.SelectedItem.ToString();
+                            currentSprint.ProjectId = currentProjectId;
+                        }
+                        else
+                        {
 
-                        };
-                        Globals.simpleJiraDB.Sprints.Add(s);
+                            Sprint s = new Sprint
+                            {
+                                Name = tbSprintName.Text,
+                                Description = tbDescription.Text,
+                                StartDate = (DateTime)dpStartDate.SelectedDate,
+                                ReleaseDate = (DateTime)dpReleaseDate.SelectedDate,
+                                Status = cmbStatus.SelectedItem.ToString(),
+                                ProjectId = currentProjectId,
+
+                            };
+                            Globals.simpleJiraDB.Sprints.Add(s);
+                        }
+                        Globals.simpleJiraDB.SaveChanges();
+                        List<Sprint> currentProjectList = Globals.simpleJiraDB.Sprints.Include("Project").ToList();
+
+
                     }
-                    Globals.simpleJiraDB.SaveChanges();
-                    List<Sprint> currentProjectList = Globals.simpleJiraDB.Sprints.Include("Project").ToList();
 
-                   
+                    DialogResult = true;
                 }
-
-                DialogResult = true;
+                else
+                {
+                    new MessageBoxCustom("All fields are required", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+                
 
             }
             catch (SystemException ex)
             {
                 new MessageBoxCustom("Database operation failed:\n" + ex.Message, MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
 
+            }
+        }
+
+        private bool validation()
+        {
+            if (cmbStatus.SelectedIndex < 0 || cmbProjectName.SelectedIndex < 0 || dpStartDate.SelectedDate == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 

@@ -259,7 +259,7 @@
                           materialDesign:DataGridAssist.CellPadding="15 13 13 13"
                           materialDesign:DataGridAssist.ColumnHeaderPadding="15 13 13 13" AutoGenerateColumns="False" Margin="20,20,94,20">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding IssueId}" Header="Issue Id" />
+                        <DataGridTextColumn Binding="{Binding IssueId}" Header="Id" />
                         <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
                         <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
                         <DataGridTextColumn Binding="{Binding StartDate, StringFormat=d}" Header="Start Date" />

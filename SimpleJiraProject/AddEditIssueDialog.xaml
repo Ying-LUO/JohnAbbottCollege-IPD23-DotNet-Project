@@ -35,7 +35,7 @@
         <Grid Height="60" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="SteelBlue">
             <TextBlock Name="tbTitle" Text="Add New Issue" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="50,18,0,20" Width="224" TextAlignment="Center"/>
             <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" IsCancel="True">
-                <materialDesign:PackIcon Kind="Power" />
+                <materialDesign:PackIcon Kind="Power" Height="20" Width="20" />
             </Button>
         </Grid>
         <Grid x:Name="GridMenu"  Width="75" Grid.Row="0" Grid.RowSpan="2" Background="LightSteelBlue" >
