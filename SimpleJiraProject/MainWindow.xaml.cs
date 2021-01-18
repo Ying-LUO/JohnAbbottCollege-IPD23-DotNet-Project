@@ -334,12 +334,13 @@ namespace SimpleJiraProject
             TeamUserManagementDialog userManagementDialog = new TeamUserManagementDialog(Globals.currentUser);
             userManagementDialog.Owner = this;
 
-            userManagementDialog.TeamUserUpdateCallback += (u) => { Globals.currentUser = u; };
-            bool? result = userManagementDialog.ShowDialog(); 
-            if (result != null)
-            {
+            //userManagementDialog.TeamUserUpdateCallback += (u) => { Globals.currentUser = u; };
+            //bool? result = 
+            userManagementDialog.ShowDialog(); 
+            //if (result != null)
+            //{
                 LoadDataFromDb(Globals.currentUser);
-            }
+            //}
         }
 
         private void btLogOut_Click(object sender, RoutedEventArgs e)

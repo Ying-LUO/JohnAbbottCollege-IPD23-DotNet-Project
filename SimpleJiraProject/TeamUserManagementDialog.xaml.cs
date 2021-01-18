@@ -23,7 +23,7 @@ namespace SimpleJiraProject
     public partial class TeamUserManagementDialog : Window
     {
         User currentUserInDialog;
-        public event Action<User> TeamUserUpdateCallback;
+        //public event Action<User> TeamUserUpdateCallback;
 
         public TeamUserManagementDialog(User currentUser)
         {
@@ -171,11 +171,11 @@ namespace SimpleJiraProject
                     Globals.simpleJiraDB.SaveChanges();
                     new MessageBoxCustom("My Account Updated", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     ResetAndLoadDataFromDB();
-                    if (currentUserInDialog != null)
-                    {
-                        this.DialogResult = true;
-                        TeamUserUpdateCallback?.Invoke(currentUserInDialog);
-                    }
+                    //if (currentUserInDialog != null)
+                    //{
+                      //  this.DialogResult = true;
+                        //TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                    //}
                 }
                 else
                 {
@@ -216,11 +216,11 @@ namespace SimpleJiraProject
                         Globals.simpleJiraDB.SaveChanges();
                         new MessageBoxCustom("Team Updated", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         ResetAndLoadDataFromDB();
-                        if (currentUserInDialog != null)
-                        {
-                            this.DialogResult = true;
-                            TeamUserUpdateCallback?.Invoke(currentUserInDialog);
-                        }
+                        //if (currentUserInDialog != null)
+                        //{
+                          //  this.DialogResult = true;
+                            //TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                        //}
                     }
                     else
                     {
@@ -268,11 +268,11 @@ namespace SimpleJiraProject
                             Globals.simpleJiraDB.SaveChanges();
                             new MessageBoxCustom("Team deleted", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                             ResetAndLoadDataFromDB();
-                            if (currentUserInDialog != null)
-                            {
-                                this.DialogResult = true;
-                                TeamUserUpdateCallback?.Invoke(currentUserInDialog);
-                            }
+                            //if (currentUserInDialog != null)
+                            //{
+                             //   this.DialogResult = true;
+                              //  TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                            //}
                         } 
                     }
                     else
@@ -320,11 +320,11 @@ namespace SimpleJiraProject
                         Globals.simpleJiraDB.SaveChanges();
                         new MessageBoxCustom("User Updated", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         ResetAndLoadDataFromDB();
-                        if (currentUserInDialog != null)
-                        {
-                            this.DialogResult = true;
-                            TeamUserUpdateCallback?.Invoke(currentUserInDialog);
-                        }
+                        //if (currentUserInDialog != null)
+                        //{
+                         //   this.DialogResult = true;
+                          //  TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                        //}
                     }
                     else
                     {
@@ -367,11 +367,11 @@ namespace SimpleJiraProject
                             Globals.simpleJiraDB.SaveChanges();
                             new MessageBoxCustom("User Deleted", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                             ResetAndLoadDataFromDB();
-                            if (currentUserInDialog != null)
-                            {
-                                this.DialogResult = true;
-                                TeamUserUpdateCallback?.Invoke(currentUserInDialog);
-                            }
+                            //if (currentUserInDialog != null)
+                            //{
+                             //   this.DialogResult = true;
+                              //  TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                            //}
                         }  
                     }
                     else

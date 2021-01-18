@@ -138,7 +138,7 @@ go
 
 ALTER TABLE UserStories
 ADD
-	CONSTRAINT CK_UserStories_Point CHECK (Point<101 AND Point>0),
+	CONSTRAINT CK_UserStories_Point CHECK (Point<100 AND Point>0),
 	CONSTRAINT CK_UserStories_Status CHECK (Status IN ('Todo', 'Documenting', 'InValidation', 'Ready', 'DEV','TEST','DONE')),
 	CONSTRAINT FK_UserStories_Users FOREIGN KEY (OwnerId) REFERENCES Users(UserId),
 	CONSTRAINT FK_UserStories_Sprints FOREIGN KEY (SprintId) REFERENCES Sprints(SprintId)

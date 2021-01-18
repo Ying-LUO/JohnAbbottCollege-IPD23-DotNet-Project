@@ -41,8 +41,6 @@ namespace SimpleJiraProject
                 cmbUserList.ItemsSource = userList;
                 cmbUserStoryList.ItemsSource = userStoryList;
 
-            
-
                 if (issue != null)
                 {
                     if (issue.Category.Equals(IssueCategoryEnum.Defect.ToString()))
