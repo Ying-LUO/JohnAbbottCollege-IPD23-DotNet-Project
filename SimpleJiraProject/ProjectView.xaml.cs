@@ -21,7 +21,6 @@ namespace SimpleJiraProject
     /// </summary>
     public partial class ProjectView : UserControl
     {
-        //Project project;
         string updatedTeamName;
         string projectName;
         
@@ -37,8 +36,6 @@ namespace SimpleJiraProject
                 tbProjectName.Text = projectName;
                 tbEditProjectName.Text = projectName;
                 Globals.SelectedProject.Name = projectName;
-                //Globals.simpleJiraDB.SaveChanges();
-                //return;
             }
             else
             {
