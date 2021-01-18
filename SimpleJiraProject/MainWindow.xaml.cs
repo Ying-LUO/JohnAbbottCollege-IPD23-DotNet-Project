@@ -224,26 +224,26 @@ namespace SimpleJiraProject
                         new MessageBoxCustom("Select Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         return;
                     }
-                    bool? Result = new MessageBoxCustom("Are you sure to delete Selected Sprint? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
-
-                    if (Result.Value)
+                    else
                     {
-                        if(Globals.currentUserStoryList == null)
-                        {
-                            Globals.simpleJiraDB.Sprints.Remove(Globals.SelectedSprint);
-                            Globals.simpleJiraDB.SaveChanges();
-                            LoadDataFromDb(Globals.currentUser);
-                        }
-                        else
+                        Globals.SelectedSprint = Globals.currentSprintList[SprintListView.SelectedIndex];
+                        if (IsSprintHasChild())
                         {
                             new MessageBoxCustom("Selected Sprint has User Stories attached, you need to clear these User Stories to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                             return;
                         }
-                        
+                    }
+                    bool? Result = new MessageBoxCustom("Are you sure to delete Selected Sprint? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
+
+                    if (Result.Value)
+                    {
+                       
+                            Globals.simpleJiraDB.Sprints.Remove(Globals.SelectedSprint);
+                            Globals.simpleJiraDB.SaveChanges();
+                            LoadDataFromDb(Globals.currentUser);   
                     }
                     else
                     {
-                        //new MessageBoxCustom("Cannot find Sprint to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         return;
                     }
                 }
@@ -265,15 +265,13 @@ namespace SimpleJiraProject
                     else
                     {
                         Globals.SelectedUserStory = Globals.currentUserStoryList[UserStoryListView.SelectedIndex];
-                        if (IsUserStoryHasChild(Globals.SelectedUserStory))
+                        if (IsUserStoryHasChild())
                         {
                             new MessageBoxCustom("Selected User Story has Issues attached you need to clear these issues to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                             return;
                         }
-                    }
-                    
+                    } 
                     bool? Result = new MessageBoxCustom("Are you sure to delete Selected User Story? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
-
                     if (Result.Value)
                     {
                         Globals.simpleJiraDB.UserStories.Remove(Globals.SelectedUserStory);
@@ -281,8 +279,7 @@ namespace SimpleJiraProject
                         LoadDataFromDb(Globals.currentUser);
                     }
                     else
-                    {
-                        
+                    {                        
                         return;
                     }
                 }
@@ -301,7 +298,6 @@ namespace SimpleJiraProject
                         new MessageBoxCustom("Select Issue to delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                         return;
                     }
-
                     IssueListItem currentIssue = (IssueListItem)IssueListView.SelectedItem;
 
                     Issue issueDelete = Globals.simpleJiraDB.Issues.Where(iss => iss.IssueId == currentIssue.IssueId).FirstOrDefault<Issue>();
@@ -311,7 +307,6 @@ namespace SimpleJiraProject
 
                         if (Result.Value)
                         {
-
                             Globals.simpleJiraDB.Issues.Remove(issueDelete);
                             Globals.simpleJiraDB.SaveChanges();
                             LoadDataFromDb(Globals.currentUser);
@@ -424,7 +419,7 @@ namespace SimpleJiraProject
             }
         }
 
-        private bool IsUserStoryHasChild(UserStory userStory)
+        private bool IsUserStoryHasChild()
         {
             foreach (Issue issue in Globals.currentIssueList)
             {
@@ -435,11 +430,11 @@ namespace SimpleJiraProject
             }
             return false;
         }
-        private bool IsSprintHasChild(UserStory userStory)
+        private bool IsSprintHasChild()
         {
-            foreach (UserStory userStoru in Globals.currentUserStoryList)
+            foreach (UserStory userStory in Globals.currentUserStoryList)
             {
-                if (Globals.SelectedSprint == userStoru.Sprint)
+                if (Globals.SelectedSprint == userStory.Sprint)
                 {
                     return true;
                 }

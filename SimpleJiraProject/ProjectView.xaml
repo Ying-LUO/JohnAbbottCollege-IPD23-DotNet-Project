@@ -63,7 +63,7 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBox Name="tbEditProjectName" Foreground="#FF7C7575" materialDesign:HintAssist.Hint="Project Name"         materialDesign:HintAssist.IsFloating="True" Margin="0 10 0 0" Text="{Binding Name}"/>
+                                <TextBox Name="tbEditProjectName" Foreground="#FF7C7575" materialDesign:HintAssist.Hint="Project Name"         materialDesign:HintAssist.IsFloating="True" Margin="0 10 0 0"/>
                                 <ComboBox ItemsSource="{Binding Path=AllTeamNamesList}" Name="comboTeam" Foreground="#FF7C7575" Grid.Row="1" materialDesign:HintAssist.Hint="Team" materialDesign:HintAssist.IsFloating="True" Margin="0 14 0 0"  />
 
                                 <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 12 0 0" HorizontalAlignment="Right">

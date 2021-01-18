@@ -16,7 +16,7 @@ namespace SimpleJiraProject
         public static List<Issue> currentIssueList;
         public static MainWindow AppWindow;
         public static User currentUser;
-        //public static Project SelectedProject;
+        public static Project SelectedProject;
         public static Sprint SelectedSprint;
         public static UserStory SelectedUserStory;
         public static Issue SelectedIssue;
