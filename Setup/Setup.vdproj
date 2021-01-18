@@ -51,6 +51,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9F71A014C67551AA63F764DF098437D1"
+        "OwnerKey" = "8:_740435B546AC42F8B700C13490E765F5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_ACC102421DB7CCBAF45FC6DF83906D64"
         "OwnerKey" = "8:_740435B546AC42F8B700C13490E765F5"
         "MsmSig" = "8:_UNDEFINED"
@@ -65,6 +71,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_740435B546AC42F8B700C13490E765F5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9F71A014C67551AA63F764DF098437D1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -277,6 +289,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9F71A014C67551AA63F764DF098437D1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Dragablz, Version=0.0.3.223, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_9F71A014C67551AA63F764DF098437D1"
+                    {
+                    "Name" = "8:Dragablz.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Dragablz.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_84C7AA5EF8B54B77BE9C9FD60209089D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_ACC102421DB7CCBAF45FC6DF83906D64"
             {
             "AssemblyRegister" = "3:1"
@@ -407,7 +450,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Simple Jira Application"
         "ProductCode" = "8:{D79E045E-7295-44D6-A922-B09AE5E600E9}"
-        "PackageCode" = "8:{5B707692-FC87-4613-B244-E7B0BF15251E}"
+        "PackageCode" = "8:{FE161FF9-0434-4673-BD95-2138C09CF1F2}"
         "UpgradeCode" = "8:{3EC7D879-1F18-4386-B3FC-01B9FBE2EC69}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -422,7 +465,7 @@
         "Subject" = "8:"
         "ARPCONTACT" = "8:JohnAbbott College, IPD-23, Team9"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:For VB.NET project App Installer"
+        "ARPCOMMENTS" = "8:Simple Jira Application developed by JohnAbbot College IPD-23 Team9"
         "ARPURLINFOABOUT" = "8:https://trello.com/b/7F3zpxJP/simple-jira-sprint1"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"

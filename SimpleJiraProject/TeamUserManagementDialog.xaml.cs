@@ -31,15 +31,10 @@ namespace SimpleJiraProject
             currentUserInDialog = currentUser;
             ResetAndLoadDataFromDB();
 
-            if (currentUser.LoginName.Equals("Admin"))
+            if (!currentUser.LoginName.Equals("Admin"))
             {
-                tiTeam.Visibility = Visibility.Visible;
-                tiUser.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                tiTeam.Visibility = Visibility.Hidden;
-                tiUser.Visibility = Visibility.Hidden;
+                TabablzControl.Items.Remove(tiTeam);
+                TabablzControl.Items.Remove(tiUser);
             }
         }
 
