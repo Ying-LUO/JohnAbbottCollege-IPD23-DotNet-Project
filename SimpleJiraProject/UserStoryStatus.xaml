@@ -7,18 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Name="btStatus" HorizontalContentAlignment="Center" ToolTip="Right Click to update the Status">
-            <TextBlock Name="tbStatus" Text="{Binding Status , Mode=OneWay}"   Height="18" HorizontalAlignment="Center" />
+        <Button Name="btStatus" HorizontalContentAlignment="Center" ToolTip="Right Click to update the Status" MinWidth="115" Margin="10,209" >
+            <TextBlock Name="tbStatus" Text="{Binding Status , Mode=OneWay}"  Height="18" HorizontalAlignment="Center" />
         </Button>
         <Grid.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Todo" Name="miTodo" Background="#FFECE4E4" Click="miTodo_Click"/>
                 <MenuItem Header="DEV" Name="miDEV" Background="#FF60BAE4" Click="miDEV_Click"/>
-                <MenuItem Header="TEST" Name="miTEST" Background="#FF4CD1A0" Click="miTEST_Click"/>
-                <MenuItem Header="InValidation" Name="miInValidation" Background="#FFECE4E4" Click="miInValidation_Click"/>
-                <MenuItem Header="Ready" Name="miReady" Background="#FF60BAE4" Click="miReady_Click"/>
-                <MenuItem Header="Documenting" Name="miDocumenting" Background="#FF4CD1A0" Click="miDocumenting_Click"/>
-                <MenuItem Header="DONE" Name="miDONE" Background="#FF4CD1A0" Click="miDONE_Click"/>
+                <MenuItem Header="TEST" Name="miTEST" Background="#FFF7ED1B" Click="miTEST_Click"/>
+                <MenuItem Header="InValidation" Name="miInValidation" Background="#FFF55858" Click="miInValidation_Click"/>
+                <MenuItem Header="Ready" Name="miReady" Background="#FFEA9500" Click="miReady_Click"/>
+                <MenuItem Header="Documenting" Name="miDocumenting" Background="#FFBFD14C" Click="miDocumenting_Click"/>
+                <MenuItem Header="DONE" Name="miDONE" Background="#FF5FEA6C" Click="miDONE_Click"/>
 
             </ContextMenu>
         </Grid.ContextMenu>

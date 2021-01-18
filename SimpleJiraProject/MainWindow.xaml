@@ -146,7 +146,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding StartDate, StringFormat=d}" Header="Start Date" />
                             <GridViewColumn DisplayMemberBinding="{Binding ReleaseDate, StringFormat=d}" Header="Release Date"/>
                             <GridViewColumn DisplayMemberBinding="{Binding Project.Name}" Header="Project Name" />
-                            <GridViewColumn Header="Status"  Width="100">
+                            <GridViewColumn Header="Status">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <local:SprintStatus />
@@ -210,7 +210,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding Point}" Header="Point" />
                             <GridViewColumn DisplayMemberBinding="{Binding Sprint.Name}" Header="Sprint" />
                             <GridViewColumn DisplayMemberBinding="{Binding User.FirstName}" Header="Owner" />
-                            <GridViewColumn Header="Status"  Width="128">
+                            <GridViewColumn Header="Status">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <local:UserStoryStatus />

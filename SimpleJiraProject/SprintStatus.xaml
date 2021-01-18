@@ -7,29 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <!--<ComboBox Name="cmbStat"  VerticalContentAlignment="Center" Padding="10,10,5,15"
-              Width="85" >
-            <Border BorderThickness="0 0 1.2 1.2" CornerRadius="20" BorderBrush="Black" />
-            <ComboBoxItem Name="planning" Selected="planning_Selected" Background="#FFEAEAEA" Padding="10"
-                Content="Planning"  />
-            <ComboBoxItem Name="ongoing" Selected="ongoing_Selected" Background="#FF4CAFE8" Padding="10"
-                Content="Ongoing" />
-            <ComboBoxItem Name="released" Selected="released_Selected" Background="#FF47D6A2" Padding="10"
-                Content="Released" />
-        </ComboBox>-->
-
         <Button Name="btStatus" Click="btStatus_Click" ToolTip="Right Click to update the Status">
-            <TextBlock Text="{Binding Status , Mode=OneWay}"  Width="85" />
+            <TextBlock Text="{Binding Status , Mode=OneWay}" />
         </Button>
         <Grid.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Planning" Name="miPlanning" Background="#FFECE4E4" Click="miPlanning_Click"/>
                 <MenuItem Header="Ongoing" Name="miOngoing" Background="#FF60BAE4" Click="miOngoing_Click"/>
                 <MenuItem Header="Released" Name="miReleased" Background="#FF4CD1A0" Click="miReleased_Click"/>
-
             </ContextMenu>
         </Grid.ContextMenu>
-
     </Grid>
 </UserControl>
 
