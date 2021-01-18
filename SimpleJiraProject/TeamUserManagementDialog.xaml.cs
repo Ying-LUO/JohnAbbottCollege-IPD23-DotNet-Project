@@ -351,27 +351,38 @@ namespace SimpleJiraProject
                 if (team != null)
                 {
                     User userDelete = Globals.simpleJiraDB.Users.Where(u => u.LoginName.Equals(cmbUserList.SelectedItem.ToString())).Where(ut => ut.TeamId == team.TeamId).FirstOrDefault<User>();
-                    
-                    if (userDelete != null)
-                    {
-                        bool? Result = new MessageBoxCustom("Are you sure to delete this user? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
 
-                        if (Result.Value)
+                    int userStoryCount = Globals.simpleJiraDB.UserStories.Include("User").Where(ust => ust.OwnerId == userDelete.UserId).ToList<UserStory>().Count;
+
+                    int issueCount = Globals.simpleJiraDB.Issues.Include("User").Where(iss => iss.OwnerId == userDelete.UserId).ToList<Issue>().Count;
+
+                    if (issueCount == 0 && userStoryCount == 0)
+                    {
+                        if (userDelete != null)
                         {
-                            Globals.simpleJiraDB.Users.Remove(userDelete);
-                            Globals.simpleJiraDB.SaveChanges();
-                            new MessageBoxCustom("User Deleted", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
-                            ResetAndLoadDataFromDB();
-                            //if (currentUserInDialog != null)
-                            //{
-                             //   this.DialogResult = true;
-                              //  TeamUserUpdateCallback?.Invoke(currentUserInDialog);
-                            //}
-                        }  
-                    }
+                            bool? Result = new MessageBoxCustom("Are you sure to delete this user? ", MessageBoxCustom.MessageType.Confirmation, MessageBoxCustom.MessageButtons.YesNo).ShowDialog();
+
+                            if (Result.Value)
+                            {
+                                Globals.simpleJiraDB.Users.Remove(userDelete);
+                                Globals.simpleJiraDB.SaveChanges();
+                                new MessageBoxCustom("User Deleted", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                                ResetAndLoadDataFromDB();
+                                //if (currentUserInDialog != null)
+                                //{
+                                //   this.DialogResult = true;
+                                //  TeamUserUpdateCallback?.Invoke(currentUserInDialog);
+                                //}
+                            }
+                        }
+                        else
+                        {
+                            new MessageBoxCustom("Cannot find User to Delete", MessageBoxCustom.MessageType.Warning, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        }
+                    }    
                     else
                     {
-                        new MessageBoxCustom("Cannot find User to Delete", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
+                        new MessageBoxCustom("Please clear related Issue and UserStory before delete User", MessageBoxCustom.MessageType.Info, MessageBoxCustom.MessageButtons.Ok).ShowDialog();
                     }
                 }
             }
